@@ -435,7 +435,7 @@
                     <li><strong>Valor Mínimo:</strong> KZ 2.000,00</li>
                     <li><strong>Valor Máximo:</strong> KZ 2.000.000,00</li>
                     <li><strong>Taxa de Saque:</strong> 18% sobre o valor solicitado</li>
-                    <li><strong>Horário de Saque:</strong> Segunda a sábado, das 10h às 17h</li>
+                    <li><strong>Horário de Saque:</strong> Segunda a sábado, das 9h às 17h</li>
                     <li><strong>Limite Diário:</strong> Apenas um saque por dia</li>
                     <li><strong>Prazo de Recebimento:</strong> 20 minutos à 24h após a solicitação</li>
                 </ul>
@@ -517,7 +517,7 @@
             TAXA_SAQUE: 0.18, // 18%
             SAQUE_MINIMO: 2000, // KZ 2.000,00
             SAQUE_MAXIMO: 2000000, // KZ 2.000.000,00
-            HORA_INICIO: 10, // 10h
+            HORA_INICIO: 9, // 9h (alterado de 10h para 9h)
             HORA_FIM: 17 // 17h
         };
 
@@ -709,7 +709,7 @@
             }
         }
 
-        // Validar horário de saque (segunda a sábado, 10h às 17h)
+        // Validar horário de saque (segunda a sábado, 9h às 17h)
         function validarHorarioSaque() {
             const agora = new Date();
             const diaSemana = agora.getDay(); // 0 = domingo, 1 = segunda, ..., 6 = sábado
@@ -721,9 +721,9 @@
                 return false;
             }
             
-            // Segunda a sábado: apenas das 10h às 17h
+            // Segunda a sábado: apenas das 9h às 17h
             const horaAtual = hora + (minutos / 60);
-            const horaInicio = CONFIG.HORA_INICIO; // 10h
+            const horaInicio = CONFIG.HORA_INICIO; // 9h
             const horaFim = CONFIG.HORA_FIM; // 17h
             
             if (horaAtual < horaInicio || horaAtual >= horaFim) {
@@ -745,7 +745,7 @@
 
             // Validar horário
             if (!validarHorarioSaque()) {
-                showToast('Saques disponíveis apenas de segunda a sábado, das 10h às 17h', 'error');
+                showToast('Saques disponíveis apenas de segunda a sábado, das 9h às 17h', 'error');
                 return;
             }
 
