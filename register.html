@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html class="pixel-ratio-3 retina android android-5 android-5-0 watch-active-state">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>Torres</title>
+    <link rel="stylesheet" href="css/framework7.ios.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+    <!-- Adicionar Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style type="text/css">
+        body {
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .container {
+            margin: 0 auto;
+        }
+
+        .login-header {
+            background: linear-gradient(51deg, #1e3a8a, #1e3a8a, #3b82f6) !important;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .login-header .logo {
+            height: 30px;
+            object-fit: cover;
+        }
+
+        .login-header .logo img {
+            height: 100%;
+        }
+
+        .login-banner {
+            width: 100%;
+        }
+
+        .login-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .login-form {
+            background-color: white;
+            padding: 40px;
+            border-radius: 50px 0px 0 0;
+            margin-top: -50px;
+            position: relative;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-field {
+            width: 100%;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background-color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-field input {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding: 0 10px;
+            font-size: 14px;
+        }
+
+        .input-field span {
+            color: #3b82f6;
+            margin-left: 2px;
+        }
+
+        .input-icon {
+            color: #3b82f6;
+            width: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .input-icon img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .captcha-container {
+            position: relative;
+        }
+
+        .captcha-input {
+            width: 100%;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+            padding: 10px 15px;
+            padding-right: 90px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .captcha-img {
+            height: 36px;
+            width: 80px;
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .register-button {
+            width: 100%;
+            background: linear-gradient(51deg, #1e3a8a, #1e3a8a, #3b82f6) !important;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .register-button:disabled {
+            background: linear-gradient(51deg, #6b7280, #6b7280, #9ca3af) !important;
+            cursor: not-allowed;
+        }
+
+        .bottom-links {
+            display: flex;
+            justify-content: right;
+            margin-top: 15px;
+        }
+
+        .bottom-links a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        /* Cores personalizadas para os toasts */
+        .toast-success {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6) !important;
+        }
+
+        .toast-error {
+            background: linear-gradient(135deg, #6a8fe0, #1fa9e3) !important;
+        }
+
+        .toast-info {
+            background: linear-gradient(135deg, #a0a0a0, #708090) !important;
+        }
+
+        /* Estilo para o código de área clicável */
+        .area-code-selector {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="login-header">
+        <div class="logo">
+            <img src="img/LG1.png++.png" alt="Logo">
+        </div>
+    </div>
+    <div class="login-banner">
+        <img src="img/login.jpg" alt="">
+    </div>
+    <div class="login-form">
+        <form name="form" method="post" id="form">
+            <div class="form-group">
+                <label>Número de Telefone</label>
+                <div class="input-field">
+                    <div class="input-icon">
+                        <img src="img/telefone.png" alt="">
+                    </div>
+                    <span class="area-code-selector" id="area_code" onclick="quhao_select()">244</span>
+                    <input type="text" id="mobile" name="mobile" placeholder="Por favor, insira seu número de telefone" minlength="7" maxlength="9">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Senha</label>
+                <div class="input-field">
+                    <div class="input-icon">
+                        <img src="img/senha.png" alt="">
+                    </div>
+                    <input type="password" id="password" name="password" placeholder="Por favor, insira sua senha" maxlength="16">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Código de Convite</label>
+                <div class="input-field">
+                    <div class="input-icon">
+                        <img src="img/convite.png" alt="">
+                    </div>
+                    <input type="text" id="inviteCode" name="inviteCode" value="" placeholder="Por favor, insira o código de convite">
+                </div>
+            </div>
+            <button type="button" class="register-button btn_submit_my">Criar Conta</button>
+        </form>
+        <div class="bottom-links">
+            <a href="/index.html">Entrar</a>
+        </div>
+    </div>
+</div>
+
+<!-- Loading overlay (inicialmente oculto) -->
+<div id="loadingOverlay" class="loading-overlay" style="display: none;">
+    <div>Carregando...</div>
+</div>
+
+<!-- Scripts -->
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script type="text/javascript">
+    // Configuração da API
+    const API_BASE_URL = 'https://bd-p4q7.onrender.com';
+    const AREA_CODE = '244';
+
+    // Função para mostrar toast
+    function showToast(message, type = 'info') {
+        Toastify({
+            text: message,
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            stopOnFocus: true,
+            className: type === 'error' ? 'toast-error' : 
+                      type === 'success' ? 'toast-success' : 'toast-info',
+            style: {
+                width: "100%",
+                left: "0",
+                right: "0",
+                borderRadius: "0",
+                textAlign: "center",
+                padding: "15px",
+                fontSize: "14px",
+                fontWeight: "bold"
+            }
+        }).showToast();
+    }
+
+    // Função para mostrar/ocultar loading
+    function showLoading() {
+        document.getElementById('loadingOverlay').style.display = 'flex';
+        $('.btn_submit_my').prop('disabled', true);
+    }
+
+    function hideLoading() {
+        document.getElementById('loadingOverlay').style.display = 'none';
+        $('.btn_submit_my').prop('disabled', false);
+    }
+
+    // Função para resetar o estado do botão
+    function resetSubmitState() {
+        window._submit = true;
+        $('.btn_submit_my').prop('disabled', false);
+    }
+
+    // Função para seleção de código de área
+    function quhao_select() {
+        showToast('Código do país: Angola (+244)', 'info');
+    }
+
+    function qhselect(quhao) {
+        $("#area_code").html(quhao);
+    }
+
+    // Função para validar número de telefone
+    function checkMobile(mobile) {
+        const reg = /^\d{9,9}$/; // 9 dígitos para Angola
+        return reg.test(mobile);
+    }
+
+    // Função principal de registro
+    async function performRegister(mobile, password, inviteCode) {
+        const areaCode = $("#area_code").html();
+        const fullMobile = areaCode + mobile;
+        
+        try {
+            // Fazer requisição para a API de registro
+            const response = await fetch(`${API_BASE_URL}/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    mobile: fullMobile,
+                    password: password,
+                    invitation_code: inviteCode || '',
+                    saldo: 0
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                hideLoading();
+                showToast('Registro concluído com sucesso!', 'success');
+                
+                // Redirecionar após um breve delay
+                setTimeout(() => {
+                    window.location.href = "/index.html";
+                }, 1500);
+            } else {
+                hideLoading();
+                showToast(data.message || 'Erro no registro', 'error');
+                resetSubmitState(); // Resetar estado aqui também
+            }
+        } catch (error) {
+            console.error('Erro no registro:', error);
+            hideLoading();
+            showToast('Erro de conexão com o servidor', 'error');
+            resetSubmitState(); // Resetar estado aqui também
+        }
+    }
+
+    // Código principal quando o documento estiver pronto
+    $(document).ready(function() {
+        // Verificar se o código de convite está preenchido e desabilitar se necessário
+        if('' != '') {
+            $('#inviteCode').attr("disabled", "disabled");
+        }
+
+        // Inicializar variável global
+        window._submit = true;
+        
+        $(".btn_submit_my").click(function () {
+            if (!window._submit) {
+                console.log('Submit bloqueado, aguardando...');
+                return false;
+            }
+            
+            window._submit = false;
+            showLoading();
+            
+            var mobile = $.trim($("input[name='mobile']").val());
+            var password = $("input[name='password']").val();
+            var inviteCode = $("input[name='inviteCode']").val();
+
+            console.log('Validando:', { mobile, password: '***', inviteCode });
+
+            // Validações
+            if (!mobile) {
+                hideLoading();
+                showToast('Por favor, insira o número de telefone', 'error');
+                resetSubmitState();
+                return false;
+            }
+
+            if (!checkMobile(mobile)) {
+                hideLoading();
+                showToast('O número de telefone deve ter exatamente 9 dígitos.', 'error');
+                resetSubmitState();
+                return false;
+            }
+            
+            if (!password) {
+                hideLoading();
+                showToast('Por favor, insira a senha', 'error');
+                resetSubmitState();
+                return false;
+            }
+
+            if (password.length < 6) {
+                hideLoading();
+                showToast('A senha deve ter pelo menos 6 caracteres', 'error');
+                resetSubmitState();
+                return false;
+            }
+
+            console.log('Chamando API de registro...');
+            // Chamar função de registro com API
+            performRegister(mobile, password, inviteCode);
+        });
+
+        // Tecla Enter para submeter o formulário
+        $("#password, #inviteCode").keypress(function(e) {
+            if (e.which === 13) {
+                $(".btn_submit_my").click();
+            }
+        });
+
+        // Resetar estado se o usuário mudar algum campo
+        $("input").on('input', function() {
+            resetSubmitState();
+        });
+    });
+
+    // Função para verificar se o token no localStorage ainda é válido (caso venha do login)
+    function isTokenValid() {
+        const tokenData = localStorage.getItem('user_token');
+        
+        if (!tokenData) return false;
+        
+        try {
+            const { token, expiry } = JSON.parse(tokenData);
+            
+            // Verificar se o token expirou
+            if (Date.now() > expiry) {
+                localStorage.removeItem('user_token');
+                localStorage.removeItem('user_id');
+                return false;
+            }
+            
+            return true;
+        } catch (e) {
+            console.error('Erro ao verificar token:', e);
+            return false;
+        }
+    }
+
+    // Verificar se já está logado ao carregar a página
+    document.addEventListener('DOMContentLoaded', function() {
+        if (isTokenValid()) {
+            // Se já tem token válido, redirecionar para página principal
+            window.location.href = '/meu.html';
+        }
+    });
+
+    // Funções auxiliares para compatibilidade
+    function setCookie(name, value, days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + date.toUTCString() + ';path=/';
+    }
+
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return decodeURIComponent(c.substring(nameEQ.length,c.length));
+        }
+        return null;
+    }
+</script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>

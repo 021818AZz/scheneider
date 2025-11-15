@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html class="pixel-ratio-3 retina android android-5 android-5-0 watch-active-state">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>Torres</title>
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+    <!-- Adicionar Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="js/layer.js"></script>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            max-width: 450px;
+            margin: 0 auto;
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1565c0, #1976d2, #1e88e5) !important;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .profile-section {
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            padding: 20px;
+            position: relative;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            height: 30px;
+            margin-right: 15px;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .user-details {
+            color: white;
+            text-align: left;
+        }
+
+        .user-id {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .user-phone {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Seção de Ganhos em cima */
+        .earnings-section {
+            background: transparent;
+            padding: 0;
+            margin-bottom: 15px;
+        }
+
+        .earnings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .earnings-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #1565c0;
+        }
+
+        .earnings-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .earnings-amount {
+            font-size: 14px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        /* Cartões de Saldo mais finos */
+        .balance-cards {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0;
+            gap: 10px;
+        }
+
+        .balance-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            padding: 12px;
+            flex: 1;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #1565c0;
+        }
+
+        .balance-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .balance-amount {
+            font-size: 14px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .action-buttons {
+            display: flex;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .action-button {
+            flex: 1;
+            background: linear-gradient(135deg, #1565c0, #1976d2);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .action-button.recharge {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+        }
+
+        .main-content {
+            background-color: #1a1a1a;
+            padding: 20px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+            text-decoration: none;
+            color: #e0e0e0;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-icon img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .menu-text {
+            flex: 1;
+            font-size: 14px;
+            color: #bbdefb;
+            font-weight: 500;
+        }
+
+        .menu-arrow {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-arrow img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sign-out-btn {
+            background: linear-gradient(135deg, #1565c0, #1976d2) !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 0;
+            width: 100%;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 20px 0 5px;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* Cores personalizadas para os toasts */
+        .toast-success {
+            background: linear-gradient(135deg, #1565c0, #1976d2) !important;
+        }
+
+        .toast-error {
+            background: linear-gradient(135deg, #8b0000, #b22222) !important;
+        }
+
+        .toast-info {
+            background: linear-gradient(135deg, #0d47a1, #1565c0) !important;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #0d47a1;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            box-shadow: 0 -1px 3px rgba(0,0,0,0.1);
+            max-width: 450px;
+            margin: 0 auto;
+            border-top: 1px solid #1565c0;
+        }
+
+        .foot_bo {
+            text-align: center;
+            flex: 1;
+        }
+
+        .foot_bo a {
+            text-decoration: none;
+            color: #bbdefb;
+        }
+
+        .foot_bo img {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 4px;
+        }
+
+        .foot_bo p {
+            font-size: 11px;
+            margin: 0;
+        }
+
+        .xz {
+            color: #4caf50 !important;
+            font-weight: bold;
+        }
+
+        .game1 {
+            border-radius: 50%;
+            animation: rotate1 2s linear infinite;
+        }
+
+        @keyframes rotate1 {
+            0% { transform: rotateZ(0deg); }
+            100% { transform: rotateZ(360deg); }
+        }
+
+        .main-content {
+            padding-bottom: 70px;
+        }
+
+        .loading {
+            color: #ccc !important;
+        }
+
+        /* Adicionando detalhes em verde */
+        .earnings-amount::before {
+            content: "• ";
+            color: #4caf50;
+            font-size: 16px;
+            margin-right: 2px;
+        }
+
+        .balance-amount::before {
+            content: "• ";
+            color: #4caf50;
+            font-size: 16px;
+            margin-right: 2px;
+        }
+
+        .action-button::after {
+            content: " 🟢";
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        Minha Conta
+    </div>
+
+    <!-- Profile Section -->
+    <div class="profile-section">
+        <div class="profile-info">
+            <div class="logo">
+                <img src="img/LG1.png++.png" alt="Logo">
+            </div>
+            <div class="user-details">
+                <div class="user-phone" id="user-phone">Carregando...</div>
+            </div>
+        </div>
+        
+        <!-- Seção de Ganhos EM CIMA -->
+        <div class="earnings-section">
+            <div class="earnings-grid">
+                <div class="earnings-card">
+                    <div class="earnings-label">Ganhos de ontem</div>
+                        <div class="earnings-amount" id="yesterday-earnings">KZ 0,00</div>
+                </div>
+                <div class="earnings-card">
+                    <div class="earnings-label">Ganhos de hoje</div>
+                    <div class="earnings-amount" id="today-earnings">KZ 0,00</div>
+                </div>
+                <div class="earnings-card">
+                    <div class="earnings-label">Ganhos desta semana</div>
+                    <div class="earnings-amount" id="week-earnings">KZ 0,00</div>
+                </div>
+                <div class="earnings-card">
+                    <div class="earnings-label">Ganhos deste mês</div>
+                    <div class="earnings-amount" id="month-earnings">KZ 0,00</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cartões de Saldo -->
+        <div class="balance-cards">
+                <div class="balance-card">
+                <div class="balance-label">Meu Saldo</div>
+                <div class="balance-amount" id="user-balance">KZ 0</div>
+            </div>
+            <div class="balance-card">
+                <div class="balance-label">Rendimento Total</div>
+                <div class="balance-amount" id="total-income">KZ 0</div>
+            </div>
+        </div>
+        
+        <!-- Botões de Ação -->
+        <div class="action-buttons">
+            <a href="sacar.html" class="action-button">Sacar</a>
+            <a href="recarregar.html" class="action-button recharge">Recarregar</a>
+        </div>
+    </div>
+
+    <!-- Menu Items -->
+    <div class="main-content">
+        <a href="https://zkp518.shop/treasure/index" class="menu-item">
+            <div class="menu-icon">
+                <img src="img/contavinculada.png" alt="Conta Vinculada">
+            </div>
+            <div class="menu-text">Tesouro</div>
+            <div class="menu-arrow">
+                <img src="img/seta.png" alt="Seta">
+            </div>
+        </a>
+        <a href="/iban.html" class="menu-item">
+            <div class="menu-icon">
+                <img src="img/contabancaria.png" alt="Conta Bancária">
+            </div>
+            <div class="menu-text">Conta Bancária</div>
+            <div class="menu-arrow">
+                <img src="img/seta.png" alt="Seta">
+            </div>
+        </a>
+        <a href="https://zkp518.shop/user/cash" class="menu-item">
+            <div class="menu-icon">
+                <img src="img/minhastransacoes.png" alt="Meus Registros">
+            </div>
+            <div class="menu-text">Minhas Transações</div>
+            <div class="menu-arrow">
+                <img src="img/seta.png" alt="Seta">
+            </div>
+        </a>
+
+         </a>
+        <a href="/historico-saques.html" class="menu-item">
+            <div class="menu-icon">
+                <img src="img/transacoes.png" alt="Meus Registros">
+            </div>
+            <div class="menu-text">Minhas Retiradas</div>
+            <div class="menu-arrow">
+                <img src="img/seta.png" alt="Seta">
+            </div>
+        </a>
+
+         </a>
+        <a href="/geral.html" class="menu-item">
+            <div class="menu-icon">
+                <img src="img/transacoes.png" alt="Meus Registros">
+            </div>
+            <div class="menu-text">Meus depositos</div>
+            <div class="menu-arrow">
+                <img src="img/seta.png" alt="Seta">
+            </div>
+        </a>
+        <a href="/senha.html" class="menu-item">
+            <div class="menu-icon">
+                <img src="img/senha.png" alt="Minha Senha">
+            </div>
+            <div class="menu-text">Minha Senha</div>
+            <div class="menu-arrow">
+                <img src="img/seta.png" alt="Seta">
+            </div>
+        </a>
+        <a href="" class="menu-item">
+            <div class="menu-icon">
+                <img src="img/aplicativo.png" alt="Aplicativo">
+            </div>
+            <div class="menu-text">Baixar App</div>
+            <div class="menu-arrow">
+                <img src="img/seta.png" alt="Seta">
+            </div>
+        </a>
+        
+        <button onclick="logout()" class="sign-out-btn">Sair</button>
+    </div>
+
+    <footer>
+        <footer>
+     <div class="foot_bo">
+        <a href="/indice.html">
+            <img src="footer/inicio.png"/>
+            <p>Início</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="transacoes.html">
+            <img src="footer/meusprodutos.png"/>
+            <p>Registros</p>
+        </a>
+    </div>
+
+<!--<div class="foot_bo">-->
+<!--    <a href="https://zkp518.shop/task/dayindex">-->
+<!--        <img src="/static/home/img/gift02.png" width="40px" class="game1"/>-->
+<!--        <p>Bônus</p>-->
+<!--    </a>-->
+<!--</div>-->
+
+<!---->
+<!--<div class="foot_bo">-->
+<!--    <a href="https://zkp518.shop/game/index">-->
+<!--        <img src="/static/home/img/ico_zp.png" class="game1"/>-->
+<!--        <p>Jogo</p>-->
+<!--    </a>-->
+<!--</div>-->
+<!---->
+    <div class="foot_bo">
+        <a href="/mostrar.html">
+            <img src="footer/mostrar.png" class="game1"/>
+            <p class="xz" style="color: #1e3a8a;">Mostrar</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="/compartilhar.html">
+            <img src="footer/compartilhar.png"/>
+            <p>Compartilhar</p>
+        </a>
+    </div>
+
+    <!---->
+    <!--    <div class="foot_bo">-->
+    <!--        <a href="https://zkp518.shop/redpacket/index">-->
+    <!--            <img src="/static/home/img/hb2.png"/>-->
+    <!--            <p class="xz">Reward</p>-->
+    <!--        </a>-->
+    <!--    </div>-->
+    <!---->
+    <div class="foot_bo">
+        <a href="meu.html">
+            <img src="footer/meu.png"/>
+            <p>Meu</p>
+        </a>
+    </div>
+    </footer>
+
+    <!-- Toastify JS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script type="text/javascript">
+        // Configuração da API
+        const API_BASE_URL = 'https://bd-p4q7.onrender.com';
+
+        // Função para mostrar toast
+        function showToast(message, type = 'info') {
+            Toastify({
+                text: message,
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                stopOnFocus: true,
+                className: type === 'error' ? 'toast-error' : 
+                          type === 'success' ? 'toast-success' : 'toast-info',
+                style: {
+                    width: "100%",
+                    left: "0",
+                    right: "0",
+                    borderRadius: "0",
+                    textAlign: "center",
+                    padding: "15px",
+                    fontSize: "14px",
+                    fontWeight: "bold"
+                }
+            }).showToast();
+        }
+
+        // Função para obter o token do localStorage
+        function getToken() {
+            const tokenData = localStorage.getItem('user_token');
+            if (!tokenData) return null;
+            
+            try {
+                const { token, expiry } = JSON.parse(tokenData);
+                // Verificar se o token expirou
+                if (Date.now() > expiry) {
+                    localStorage.removeItem('user_token');
+                    localStorage.removeItem('user_id');
+                    return null;
+                }
+                return token;
+            } catch (e) {
+                console.error('Erro ao obter token:', e);
+                return null;
+            }
+        }
+
+        // Função para fazer logout
+        async function logout() {
+            try {
+                const token = getToken();
+                
+                // Limpar localStorage
+                localStorage.removeItem('user_token');
+                localStorage.removeItem('user_id');
+                localStorage.removeItem('rememberMe');
+                localStorage.removeItem('user_mobile');
+                
+                showToast('Sessão terminada com sucesso', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+
+            } catch (error) {
+                console.error('Erro no logout:', error);
+                // Mesmo com erro, limpar localStorage e redirecionar
+                localStorage.removeItem('user_token');
+                localStorage.removeItem('user_id');
+                localStorage.removeItem('rememberMe');
+                localStorage.removeItem('user_mobile');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Função para buscar dados do usuário
+        async function fetchUserData() {
+            try {
+                const token = getToken();
+                if (!token) {
+                    showToast('Sessão expirada. Faça login novamente.', 'error');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                    return;
+                }
+
+                // Buscar dados do usuário
+                const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        showToast('Sessão expirada. Faça login novamente.', 'error');
+                        localStorage.removeItem('user_token');
+                        localStorage.removeItem('user_id');
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 2000);
+                        return;
+                    }
+                    throw new Error('Erro ao carregar dados do usuário');
+                }
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateUserUI(data.data);
+                    // Buscar dados de ganhos após carregar perfil
+                    fetchEarningsData();
+                } else {
+                    throw new Error(data.message || 'Erro ao carregar dados');
+                }
+
+            } catch (error) {
+                console.error('Erro ao buscar dados do usuário:', error);
+                showToast('Erro ao carregar dados', 'error');
+                // Usar dados padrão em caso de erro
+                setDefaultUserData();
+            }
+        }
+
+        // Função para buscar dados de ganhos
+        async function fetchEarningsData() {
+            try {
+                const token = getToken();
+                if (!token) return;
+
+                // Buscar dados de ganhos
+                const response = await fetch(`${API_BASE_URL}/api/user/earnings`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        updateEarningsUI(data.data);
+                    } else {
+                        // Usar dados simulados se a API não retornar
+                        setSimulatedEarnings();
+                    }
+                } else {
+                    // Usar dados simulados em caso de erro
+                    setSimulatedEarnings();
+                }
+
+            } catch (error) {
+                console.error('Erro ao buscar dados de ganhos:', error);
+                // Usar dados simulados em caso de erro
+                setSimulatedEarnings();
+            }
+        }
+
+        // Função para atualizar a UI com dados do usuário
+        function updateUserUI(userData) {
+            // Atualizar telefone do usuário
+            const userPhoneElement = document.getElementById('user-phone');
+            if (userPhoneElement) {
+                if (userData.mobile) {
+                    // Formatar o número de telefone (244923456789 -> 244 923 456 789)
+                    const formattedPhone = userData.mobile.replace(/(\d{3})(\d{3})(\d{3})(\d{3})/, '$1 $2 $3 $4');
+                    userPhoneElement.textContent = formattedPhone;
+                } else {
+                    userPhoneElement.textContent = 'Telefone: N/A';
+                }
+            }
+
+            // Atualizar saldo
+            const userBalanceElement = document.getElementById('user-balance');
+            if (userBalanceElement) {
+                const balance = userData.wallet_balance || userData.balance || 0;
+                userBalanceElement.textContent = `KZ ${formatCurrency(balance)}`;
+            }
+
+            // Atualizar rendimento total
+            const totalIncomeElement = document.getElementById('total-income');
+            if (totalIncomeElement) {
+                const totalIncome = userData.total_income || userData.total_earnings || 0;
+                totalIncomeElement.textContent = `KZ ${formatCurrency(totalIncome)}`;
+            }
+        }
+
+        // Função para atualizar a UI com dados de ganhos
+        function updateEarningsUI(earningsData) {
+            // Ganhos de ontem
+            const yesterdayEarnings = document.getElementById('yesterday-earnings');
+            if (yesterdayEarnings) {
+                yesterdayEarnings.textContent = `KZ ${formatCurrency(earningsData.yesterday || 0)}`;
+            }
+
+            // Ganhos de hoje
+            const todayEarnings = document.getElementById('today-earnings');
+            if (todayEarnings) {
+                todayEarnings.textContent = `KZ ${formatCurrency(earningsData.today || 0)}`;
+            }
+
+            // Ganhos da semana
+            const weekEarnings = document.getElementById('week-earnings');
+            if (weekEarnings) {
+                weekEarnings.textContent = `KZ ${formatCurrency(earningsData.week || 0)}`;
+            }
+
+            // Ganhos do mês
+            const monthEarnings = document.getElementById('month-earnings');
+            if (monthEarnings) {
+                monthEarnings.textContent = `KZ ${formatCurrency(earningsData.month || 0)}`;
+            }
+        }
+
+        // Função para definir dados simulados de ganhos (fallback)
+        function setSimulatedEarnings() {
+            const earningsElements = {
+                'yesterday-earnings': 0,
+                'today-earnings': 0,
+                'week-earnings': 0,
+                'month-earnings': 0
+            };
+
+            Object.keys(earningsElements).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = `KZ ${formatCurrency(earningsElements[id])}`;
+                }
+            });
+        }
+
+        // Função para definir dados padrão do usuário
+        function setDefaultUserData() {
+            const userPhoneElement = document.getElementById('user-phone');
+            const userBalanceElement = document.getElementById('user-balance');
+            const totalIncomeElement = document.getElementById('total-income');
+
+            if (userPhoneElement) userPhoneElement.textContent = 'Usuário';
+            if (userBalanceElement) userBalanceElement.textContent = 'KZ 0';
+            if (totalIncomeElement) totalIncomeElement.textContent = 'KZ 0';
+        }
+
+        // Função para formatar valores monetários
+        function formatCurrency(value) {
+            if (typeof value !== 'number') {
+                value = parseFloat(value) || 0;
+            }
+            return value.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        // Função para verificar autenticação e carregar dados
+        function initializePage() {
+            const token = getToken();
+            
+            if (!token) {
+                showToast('Sessão expirada. Redirecionando para login...', 'error');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+                return;
+            }
+
+            // Carregar dados do usuário
+            fetchUserData();
+        }
+
+        // Inicializar a página quando carregada
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+        });
+
+        // Funções auxiliares para compatibilidade
+        function showmsg() {
+            var count = 0;
+            if(count > 0) {
+                layer.open({
+                   content: 'Nova mensagem Precisa ver??',
+                    btn: ['Yes', 'No'],
+                    yes: function(index){
+                    window.location.href= "https://zkp518.shop/user/message";
+                    layer.close(index);
+                    }
+                });
+            }
+        }
+
+        // Chamar função de mensagens
+        showmsg();
+    </script>
+</body>
+</html>

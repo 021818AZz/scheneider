@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="pt" style="font-size: 16px;">
+<head>
+    <meta charset="utf-8">
+    <title>Histórico de Depósitos - Schneider</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
+    <!-- Adicionar Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            background-color: #0a0a0a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            padding: 0 12px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .head {
+            padding: 12px 0;
+            background: linear-gradient(135deg, #1565c0, #1976d2, #1e88e5);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(21, 101, 192, 0.2);
+        }
+
+        .back {
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .back img {
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(1);
+        }
+
+        .name {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+        }
+
+        .flex1 {
+            flex: 1;
+        }
+
+        .tac {
+            text-align: center;
+        }
+
+        /* Cartão Compacto de Depósito */
+        .deposit-card {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 3px rgba(21, 101, 192, 0.1);
+            border: 1px solid #333;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deposit-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: #1565c0;
+            opacity: 0.7;
+        }
+
+        .deposit-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(21, 101, 192, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .amount {
+            font-size: 14px;
+            font-weight: bold;
+            color: #4caf50;
+        }
+
+        .status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .status-pending {
+            background-color: #1a237e;
+            color: #bbdefb;
+            border: 1px solid #1565c0;
+        }
+
+        .status-completed {
+            background-color: #1a237e;
+            color: #4caf50;
+            border: 1px solid #4caf50;
+        }
+
+        .status-failed {
+            background-color: #1a237e;
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+
+        .card-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            font-size: 11px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            color: #bbdefb;
+            font-weight: 500;
+            margin-bottom: 2px;
+            font-size: 10px;
+        }
+
+        .detail-value {
+            color: #ffffff;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-footer {
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .receipt-btn {
+            background: linear-gradient(135deg, #1565c0, #1976d2);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .receipt-btn:hover {
+            background: linear-gradient(135deg, #1976d2, #1e88e5);
+            transform: translateY(-1px);
+        }
+
+        .no-receipt {
+            color: #90caf9;
+            font-size: 10px;
+            font-style: italic;
+        }
+
+        .date {
+            color: #bbdefb;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        /* Layout de Subcamadas - Cartões lado a lado */
+        .deposits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Estados vazios */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #bbdefb;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state img {
+            width: 60px;
+            margin-bottom: 12px;
+            opacity: 0.6;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+            margin-top: 8px;
+            color: #bbdefb;
+        }
+
+        .empty-state .subtext {
+            font-size: 11px;
+            color: #90caf9;
+            margin-top: 4px;
+        }
+
+        /* Filtros Compactos */
+        .filter-tabs {
+            display: flex;
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 3px;
+            margin: 12px 0;
+            box-shadow: 0 1px 3px rgba(21, 101, 192, 0.1);
+            border: 1px solid #333;
+        }
+
+        .filter-tab {
+            flex: 1;
+            text-align: center;
+            padding: 8px 6px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #bbdefb;
+        }
+
+        .filter-tab.active {
+            background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%);
+            color: white;
+            box-shadow: 0 1px 3px rgba(21, 101, 192, 0.2);
+        }
+
+        /* Resumo Compacto */
+        .summary-card {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+            box-shadow: 0 1px 3px rgba(21, 101, 192, 0.1);
+            border: 1px solid #333;
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 0 5px;
+        }
+
+        .stat-value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #4caf50;
+            margin-bottom: 3px;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #bbdefb;
+            font-weight: 500;
+        }
+
+        /* Modal para Comprovante */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border-radius: 12px;
+            max-width: 100%;
+            max-height: 80vh;
+            overflow: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(10, 10, 10, 0.3);
+            border: 1px solid #333;
+            padding: 15px;
+        }
+
+        .modal-img {
+            max-width: 100%;
+            max-height: 60vh;
+            border-radius: 6px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(21, 101, 192, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+            z-index: 1001;
+        }
+
+        .modal-close:hover {
+            background: rgba(21, 101, 192, 1);
+        }
+
+        .modal-title {
+            text-align: center;
+            color: #bbdefb;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* Toast styles */
+        .toast-success {
+            background: linear-gradient(135deg, #1565c0, #1976d2) !important;
+        }
+
+        .toast-error {
+            background: linear-gradient(135deg, #0d47a1, #1565c0) !important;
+        }
+
+        .toast-info {
+            background: linear-gradient(135deg, #1976d2, #42a5f5) !important;
+        }
+
+        /* Footer Compacto */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #0d47a1;
+            display: flex;
+            justify-content: space-around;
+            padding: 6px 0;
+            box-shadow: 0 -1px 3px rgba(0,0,0,0.3);
+            max-width: 480px;
+            margin: 0 auto;
+            border-top: 1px solid #1565c0;
+            z-index: 99;
+        }
+
+        .foot_bo {
+            text-align: center;
+            flex: 1;
+        }
+
+        .foot_bo a {
+            text-decoration: none;
+            color: #bbdefb;
+        }
+
+        .foot_bo img {
+            width: 18px;
+            height: 18px;
+            margin-bottom: 2px;
+        }
+
+        .foot_bo p {
+            font-size: 10px;
+            margin: 0;
+        }
+
+        .xz {
+            color: #4caf50 !important;
+            font-weight: bold;
+        }
+
+        .game1 {
+            border-radius: 50%;
+            animation: rotate1 2s linear infinite;
+        }
+
+        @keyframes rotate1 {
+            0% {
+                transform: rotateZ(0deg);
+            }
+            100% {
+                transform: rotateZ(360deg);
+            }
+        }
+
+        /* Espaço para o footer */
+        .content-container {
+            padding-bottom: 50px;
+        }
+
+        /* Animações */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1565c0;
+            border-radius: 2px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1976d2;
+        }
+
+        /* Melhorias para telas muito pequenas */
+        @media (max-width: 360px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .deposits-grid {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            
+            .summary-card, .deposit-card {
+                padding: 10px;
+            }
+            
+            .amount {
+                font-size: 13px;
+            }
+            
+            .card-details {
+                font-size: 10px;
+            }
+            
+            .filter-tab {
+                padding: 6px 4px;
+                font-size: 11px;
+            }
+        }
+
+        /* Melhorias para dispositivos com notch */
+        @supports(padding: max(0px)) {
+            .head {
+                padding-top: max(12px, env(safe-area-inset-top));
+                padding-bottom: max(12px, env(safe-area-inset-bottom));
+            }
+            
+            .container {
+                padding-left: max(12px, env(safe-area-inset-left));
+                padding-right: max(12px, env(safe-area-inset-right));
+            }
+            
+            .content-container {
+                padding-bottom: max(50px, env(safe-area-inset-bottom));
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="page">
+        <div class="headers">
+            <div class="head">
+                <div class="container flex">
+                    <div class="back" onclick="goBack()">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE1IDRMNy41IDExLjVMMTUgMTlMMTMuNSAyMEw0LjUgMTFMMTMuNSAyTDE1IDRaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K" alt="Voltar">
+                    </div>
+                    <div class="name tac flex1">Histórico de Depósitos</div>
+                    <div class="flex1"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-container">
+            <div class="content-scroll">
+                <div class="container fade-in">
+                    
+                    <!-- Cartão de Resumo Compacto -->
+                    <div class="summary-card">
+                        <div class="summary-stats">
+                            <div class="stat-item">
+                                <div class="stat-value" id="totalDeposits">0</div>
+                                <div class="stat-label">Total</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="totalAmount">0 KZ</div>
+                                <div class="stat-label">Valor Total</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="pendingCount">0</div>
+                                <div class="stat-label">Pendentes</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filtros Compactos -->
+                    <div class="filter-tabs">
+                        <div class="filter-tab active" onclick="filterDeposits('all')">Todos</div>
+                        <div class="filter-tab" onclick="filterDeposits('pending')">Pendentes</div>
+                        <div class="filter-tab" onclick="filterDeposits('completed')">Concluídos</div>
+                        <div class="filter-tab" onclick="filterDeposits('failed')">Falhados</div>
+                    </div>
+
+                    <!-- Grid de Depósitos - Subcamadas -->
+                    <div class="deposits-grid" id="depositsGrid">
+                        <!-- Os cartões serão inseridos aqui via JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para visualizar comprovante -->
+<div class="modal-overlay" id="receiptModal">
+    <button class="modal-close" onclick="closeReceiptModal()">&times;</button>
+    <div class="modal-content">
+        <div class="modal-title">Comprovante de Depósito</div>
+        <img id="modalReceipt" class="modal-img" src="" alt="Comprovante de Depósito">
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="foot_bo">
+        <a href="indice.html">
+            <img src="footer/inicio.png"/>
+            <p>Início</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="meus-produtos.html">
+            <img src="footer/meusprodutos.png"/>
+            <p>Meus produtos</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="mostrar.html">
+            <img src="footer/mostrar.png" class="game1"/>
+            <p>Mostrar</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="compartilhar.html">
+            <img src="footer/compartilhar.png"/>
+            <p>Compartilhar</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="meu.html">
+            <img src="footer/meu.png"/>
+            <p class="xz">Meu</p>
+        </a>
+    </div>
+</footer>
+
+<!-- Toastify JS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script>
+    // Configurações
+    const API_BASE_URL = 'https://bd-p4q7.onrender.com';
+    let currentFilter = 'all';
+    let allDeposits = [];
+
+    // Função para mostrar toast
+    function showToast(message, type = 'info') {
+        Toastify({
+            text: message,
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            stopOnFocus: true,
+            className: type === 'error' ? 'toast-error' : 
+                      type === 'success' ? 'toast-success' : 'toast-info',
+            style: {
+                width: "100%",
+                left: "0",
+                right: "0",
+                borderRadius: "0",
+                textAlign: "center",
+                padding: "15px",
+                fontSize: "14px",
+                fontWeight: "bold"
+            }
+        }).showToast();
+    }
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', function() {
+        if (!isTokenValid()) {
+            showToast('Sessão expirada. Faça login novamente.', 'error');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+            return;
+        }
+        loadDepositHistory();
+    });
+
+    // Função para voltar
+    function goBack() {
+        window.history.back();
+    }
+
+    // Carregar histórico de depósitos
+    async function loadDepositHistory() {
+        try {
+            showLoading(true);
+            const token = getToken();
+            
+            const response = await fetch(`${API_BASE_URL}/api/deposits`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error('Erro ao carregar histórico');
+            }
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                allDeposits = data.data.deposits || [];
+                updateSummary();
+                displayDeposits(allDeposits);
+                showToast('Histórico carregado com sucesso', 'success');
+            } else {
+                throw new Error(data.message || 'Erro ao carregar dados');
+            }
+        } catch (error) {
+            console.error('Erro ao carregar histórico:', error);
+            showError('Erro ao carregar histórico: ' + error.message);
+            showToast('Erro ao carregar histórico', 'error');
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Atualizar resumo
+    function updateSummary() {
+        const totalDeposits = allDeposits.length;
+        const totalAmount = allDeposits.reduce((sum, d) => sum + d.amount, 0);
+        const pendingCount = allDeposits.filter(d => d.status === 'pending').length;
+        
+        document.getElementById('totalDeposits').textContent = totalDeposits;
+        document.getElementById('totalAmount').textContent = totalAmount.toLocaleString('pt-AO') + ' KZ';
+        document.getElementById('pendingCount').textContent = pendingCount;
+    }
+
+    // Filtrar depósitos
+    function filterDeposits(filter) {
+        currentFilter = filter;
+        
+        // Atualizar tabs ativas
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        
+        let filteredDeposits = allDeposits;
+        
+        if (filter !== 'all') {
+            filteredDeposits = allDeposits.filter(d => d.status === filter);
+        }
+        
+        displayDeposits(filteredDeposits);
+    }
+
+    // Exibir lista de depósitos em grid
+    function displayDeposits(deposits) {
+        const depositsGrid = document.getElementById('depositsGrid');
+        
+        if (deposits.length === 0) {
+            depositsGrid.innerHTML = `
+                <div class="empty-state">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMwIDU0QzQzLjI1NDggNTQgNTQgNDMuMjU0OCA1NCAzMEM1NCAxNi43NDUyIDQzLjI1NDggNiAzMCA2QzE2Ljc0NTIgNiA2IDE2Ljc0NTIgNiAzMEM2IDQzLjI1NDggMTYuNzQ1MiA1NCAzMCA1NFoiIGZpbGw9IiMzMzMiLz4KPHBhdGggZD0iTTMxLjUgMjRIMjhWNDJIMzEuNVYyNFpNMzEuNSA0NUgyOFY0OEgzMS41VjQ1WiIgZmlsbD0iI2JiZGVmYiIvPgo8L3N2Zz4K" alt="Nenhum depósito">
+                    <p></p>
+                    <p class="subtext">${currentFilter === 'all' ? 'Você ainda não realizou nenhum depósito' : `Nenhum depósito com status "${getStatusText(currentFilter)}"`}</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Ordenar por data (mais recente primeiro)
+        deposits.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        
+        let html = '';
+        
+        deposits.forEach(deposit => {
+            const date = new Date(deposit.created_at);
+            const time = date.toLocaleTimeString('pt-AO', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            const statusText = getStatusText(deposit.status);
+            const statusClass = `status-${deposit.status}`;
+            
+            html += `
+                <div class="deposit-card">
+                    <div class="card-header">
+                        <div class="amount">+${deposit.amount.toLocaleString('pt-AO')} KZ</div>
+                        <div class="status ${statusClass}">${statusText}</div>
+                    </div>
+                    
+                    <div class="card-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Banco</span>
+                            <span class="detail-value">${deposit.bank_name || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Conta</span>
+                            <span class="detail-value">${deposit.account_name || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">IBAN</span>
+                            <span class="detail-value">${deposit.iban ? deposit.iban.substring(0, 8) + '...' : 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Hora</span>
+                            <span class="detail-value">${time}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <span class="date">${date.toLocaleDateString('pt-AO')}</span>
+                        ${deposit.receipt_image ? `
+                        <button class="receipt-btn" onclick="viewReceipt('${deposit.receipt_image}')">
+                            Ver Comprovante
+                        </button>
+                        ` : `
+                        <span class="no-receipt">Sem comprovante</span>
+                        `}
+                    </div>
+                </div>
+            `;
+        });
+        
+        depositsGrid.innerHTML = html;
+    }
+
+    // Visualizar comprovante
+    function viewReceipt(imageUrl) {
+        document.getElementById('modalReceipt').src = imageUrl;
+        document.getElementById('receiptModal').classList.add('active');
+    }
+
+    function closeReceiptModal() {
+        document.getElementById('receiptModal').classList.remove('active');
+    }
+
+    // Obter texto do status
+    function getStatusText(status) {
+        const statusMap = {
+            'pending': 'Pendente',
+            'completed': 'Concluído',
+            'failed': 'Falhou'
+        };
+        
+        return statusMap[status] || status;
+    }
+
+    // Mostrar loading
+    function showLoading(show) {
+        const depositsGrid = document.getElementById('depositsGrid');
+        if (show) {
+            depositsGrid.innerHTML = '<div class="empty-state">Carregando histórico...</div>';
+        }
+    }
+
+    // Mostrar erro
+    function showError(message) {
+        const depositsGrid = document.getElementById('depositsGrid');
+        depositsGrid.innerHTML = `
+            <div class="empty-state">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMwIDU0QzQzLjI1NDggNTQgNTQgNDMuMjU0OCA1NCAzMEM1NCAxNi43NDUyIDQzLjI1NDggNiAzMCA2QzE2Ljc0NTIgNiA2IDE2Ljc0NTIgNiAzMEM2IDQzLjI1NDggMTYuNzQ1MiA1NCAzMCA1NFoiIGZpbGw9IiMzMzMiLz4KPHBhdGggZD0iTTM1IDQ1SDI1TDMwIDMwTDM1IDQ1Wk0zMi41IDQySDI3LjVMMzAgMzcuNUwzMi41IDQyWk0zMiAyNEgyOFYyN0gzMlYyNFoiIGZpbGw9IiNmNDQzMzYiLz4KPC9zdmc+Cg==" alt="Erro">
+                <p>${message}</p>
+            </div>
+        `;
+    }
+
+    // Funções de autenticação
+    function isTokenValid() {
+        const tokenData = localStorage.getItem('user_token');
+        
+        if (!tokenData) return false;
+        
+        try {
+            const { expiry } = JSON.parse(tokenData);
+            return Date.now() < expiry;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function getToken() {
+        const tokenData = localStorage.getItem('user_token');
+        if (!tokenData) return null;
+        
+        try {
+            const { token } = JSON.parse(tokenData);
+            return token;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // Fechar modal ao clicar fora
+    document.getElementById('receiptModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeReceiptModal();
+        }
+    });
+
+    // Fechar modal com ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeReceiptModal();
+        }
+    });
+</script>
+</body>
+</html>

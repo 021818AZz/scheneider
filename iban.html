@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html class="pixel-ratio-3 retina android android-5 android-5-0 watch-active-state">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>Schneider</title>
+    <!-- Adicionar Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-y: auto;
+            color: #e0e0e0;
+        }
+
+        .bank-card-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        /* Header Section */
+        .header-banner {
+            position: relative;
+            background: linear-gradient(135deg, #1565c0, #1976d2, #1e88e5) !important;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+        }
+
+        .back-button {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .back-arrow {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header-title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .placeholder {
+            width: 24px;
+        }
+
+        /* Balance Section */
+        .balance-container {
+            background-image: url('img/0098.png');
+            background-size: cover;
+            background-position: center;
+            padding: 20px 150px 20px 20px;
+            color: #1565c0;
+            position: relative;
+        }
+
+        .balance-label {
+            color: #bbdefb;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .balance-amount {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        /* Form styles */
+        .main-content {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            margin: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            border: 1px solid #333;
+        }
+
+        .form-container {
+            padding: 0;
+        }
+
+        .form-group {
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: normal;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: SFPro-Regular, SFPro;
+            color: #bbdefb;
+        }
+
+        .form-label-img {
+            width: 21px;
+            height: 21px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 50px;
+            padding: 0 15px;
+            box-sizing: border-box;
+            border: 1px solid #333;
+            border-radius: 10px;
+            font-size: 14px;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            border-color: #1565c0;
+            box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+            outline: none;
+        }
+
+        select.form-input {
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6"><path d="M0 0h12L6 6z" fill="%23bbdefb"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 12px 6px;
+            padding-right: 30px;
+        }
+
+        /* Submit button style */
+        .submit-button {
+            width: 100%;
+            background: linear-gradient(135deg, #1565c0, #1976d2) !important;
+            box-shadow: 2px 2px 10px rgb(0 0 0 / 30%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 0;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 0 0;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            box-shadow: 0 4px 10px rgba(21, 101, 192, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .balance-cards {
+            height: 150px;
+        }
+
+        /* Toast styles */
+        .toast-success {
+            background: linear-gradient(135deg, #1565c0, #1976d2) !important;
+        }
+
+        .toast-error {
+            background: linear-gradient(135deg, #0d47a1, #1565c0) !important;
+        }
+
+        .toast-info {
+            background: linear-gradient(135deg, #1976d2, #42a5f5) !important;
+        }
+
+        /* Footer styles */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #0d47a1;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            box-shadow: 0 -1px 3px rgba(0,0,0,0.3);
+            max-width: 480px;
+            margin: 0 auto;
+            border-top: 1px solid #1565c0;
+        }
+
+        .foot_bo {
+            text-align: center;
+            flex: 1;
+        }
+
+        .foot_bo a {
+            text-decoration: none;
+            color: #bbdefb;
+        }
+
+        .foot_bo img {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 4px;
+        }
+
+        .foot_bo p {
+            font-size: 11px;
+            margin: 0;
+        }
+
+        .xz {
+            color: #4caf50 !important;
+            font-weight: bold;
+        }
+
+        .game1 {
+            border-radius: 50%;
+            animation: rotate1 2s linear infinite;
+        }
+
+        @keyframes rotate1 {
+            0% {
+                transform: rotateZ(0deg);
+            }
+            100% {
+                transform: rotateZ(360deg);
+            }
+        }
+
+        .account-info {
+            background: #1a237e;
+            border: 1px solid #1565c0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .info-label {
+            color: #bbdefb;
+        }
+
+        .info-value {
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* REMOVIDOS TODOS OS DETALHES EM VERDE */
+        .balance-amount::before {
+            content: "• ";
+            color: #1565c0; /* MUDADO DE VERDE PARA AZUL */
+            font-size: 18px;
+            margin-right: 2px;
+        }
+
+        .submit-button::after {
+            content: " 🔵"; /* MUDADO DE EMOJI VERDE PARA AZUL */
+            font-size: 12px;
+        }
+
+        h3 {
+            color: #bbdefb !important;
+        }
+
+        h4 {
+            color: #bbdefb !important;
+        }
+    </style>
+</head>
+<body>
+<div class="bank-card-container">
+    <!-- Top banner -->
+    <div class="header-banner">
+        <div class="back-button" onclick="javascript:history.back();">
+            <span class="back-arrow">❮</span>
+        </div>
+        <div class="header-title">Conta Bancária</div>
+        <div class="placeholder"></div>
+    </div>
+
+    <!-- Balance section -->
+    <div class="balance-container">
+        <div class="balance-cards">
+            <div class="balance-card">
+                <div class="balance-label">Saldo Disponível</div>
+                <div class="balance-amount" id="userBalance">KZ 0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form section -->
+    <div class="main-content">
+        <div class="form-container">
+            <!-- Informações da Conta Atual -->
+            <div id="contaAtual" class="account-info hidden">
+                <h3 style="margin-bottom: 15px; font-size: 16px; font-weight: bold;">Conta Cadastrada</h3>
+                <div class="info-row">
+                    <span class="info-label">Banco:</span>
+                    <span id="infoBankName" class="info-value">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Titular:</span>
+                    <span id="infoAccountHolder" class="info-value">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Número da Conta:</span>
+                    <span id="infoAccountNumber" class="info-value">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Provincia:</span>
+                    <span id="infoBranchCode" class="info-value">-</span>
+                </div>
+                <button id="btnEditar" class="submit-button" style="margin-top: 15px; background: linear-gradient(135deg, #1976d2, #1565c0) !important;">
+                    Editar Conta
+                </button>
+            </div>
+
+            <!-- Formulário -->
+            <form id="formIban">
+                <!-- Nome do Banco -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Nome do Banco:
+                    </label>
+                    <select id="bankName" name="bank_name" class="form-input" required>
+                        <option value="" disabled selected>Selecione o banco</option>
+                        <option value="BAI">BAI</option>
+                        <option value="BFA">BFA</option>
+                        <option value="ATLANTICO">ATLÂNTICO</option>
+                        <option value="BIC">BIC</option>
+                        <option value="SOL">SOL</option>
+                        <option value="KEVE">KEVE</option>
+                        <option value="OUTRO">Outro</option>
+                    </select>
+                </div>
+
+                <!-- Titular da Conta -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Titular da Conta:
+                    </label>
+                    <input type="text" id="accountHolder" name="account_holder" class="form-input" placeholder="Digite seu nome completo" required>
+                </div>
+
+                <!-- Número da Conta -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Número da Conta:
+                    </label>
+                    <input type="text" id="accountNumber" name="account_number" class="form-input" placeholder="Digite o número da sua conta" required>
+                </div>
+
+                <!-- Código da Agência -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Código da Agência:
+                    </label>
+                    <input type="text" id="branchCode" name="branch_code" class="form-input" placeholder="Digite o código da agência" required>
+                </div>
+
+                <!-- Botão de confirmação -->
+                <button type="submit" class="submit-button" id="btnSalvar">Salvar Conta Bancária</button>
+            </form>
+
+            <!-- Informações Importantes -->
+            <div style="margin-top: 20px; padding: 15px; background: #1a237e; border-radius: 10px; border-left: 4px solid #1565c0;">
+                <h4 style="margin-bottom: 10px; font-size: 14px; font-weight: bold;">Informações Importantes:</h4>
+                <ul style="color: #bbdefb; font-size: 12px; line-height: 1.5; padding-left: 15px;">
+                    <li>Certifique-se de que todos os dados estão corretos para receber seus saques</li>
+                    <li>A conta deve estar em seu nome para processarmos os saques</li>
+                    <li>Seus dados bancários são armazenados com segurança</li>
+                    <li>Você pode atualizar seus dados a qualquer momento</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="height: 60px;"></div>
+
+<footer>
+    <footer>
+     <div class="foot_bo">
+        <a href="/indice.html">
+            <img src="footer/inicio.png"/>
+            <p>Início</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="transacoes.html">
+            <img src="footer/meusprodutos.png"/>
+            <p>Registros</p>
+        </a>
+    </div>
+
+<!--<div class="foot_bo">-->
+<!--    <a href="https://zkp518.shop/task/dayindex">-->
+<!--        <img src="/static/home/img/gift02.png" width="40px" class="game1"/>-->
+<!--        <p>Bônus</p>-->
+<!--    </a>-->
+<!--</div>-->
+
+<!---->
+<!--<div class="foot_bo">-->
+<!--    <a href="https://zkp518.shop/game/index">-->
+<!--        <img src="/static/home/img/ico_zp.png" class="game1"/>-->
+<!--        <p>Jogo</p>-->
+<!--    </a>-->
+<!--</div>-->
+<!---->
+    <div class="foot_bo">
+        <a href="/mostrar.html">
+            <img src="footer/mostrar.png" class="game1"/>
+            <p class="xz" style="color: #1e3a8a;">Mostrar</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="/compartilhar.html">
+            <img src="footer/compartilhar.png"/>
+            <p>Compartilhar</p>
+        </a>
+    </div>
+
+    <!---->
+    <!--    <div class="foot_bo">-->
+    <!--        <a href="https://zkp518.shop/redpacket/index">-->
+    <!--            <img src="/static/home/img/hb2.png"/>-->
+    <!--            <p class="xz">Reward</p>-->
+    <!--        </a>-->
+    <!--    </div>-->
+    <!---->
+    <div class="foot_bo">
+        <a href="meu.html">
+            <img src="footer/meu.png"/>
+            <p>Meu</p>
+        </a>
+    </div>
+</footer>
+
+<!-- Toastify JS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script>
+    // Configuração da API
+    const API_BASE_URL = 'https://bd-p4q7.onrender.com';
+
+    // Função para obter o token do usuário
+    function getUserToken() {
+        const tokenData = localStorage.getItem('user_token');
+        if (!tokenData) return null;
+        
+        try {
+            const { token, expiry } = JSON.parse(tokenData);
+            if (Date.now() > expiry) {
+                localStorage.removeItem('user_token');
+                localStorage.removeItem('user_id');
+                return null;
+            }
+            return token;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // Função para obter o ID do usuário
+    function getUserId() {
+        return localStorage.getItem('user_id');
+    }
+
+    // Toast personalizado
+    function showToast(message, type = 'info') {
+        Toastify({
+            text: message,
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            stopOnFocus: true,
+            className: type === 'error' ? 'toast-error' : 
+                      type === 'success' ? 'toast-success' : 'toast-info',
+            style: {
+                width: "100%",
+                left: "0",
+                right: "0",
+                borderRadius: "0",
+                textAlign: "center",
+                padding: "15px",
+                fontSize: "14px",
+                fontWeight: "bold"
+            }
+        }).showToast();
+    }
+
+    // Carregar dados do usuário
+    async function loadUserData() {
+        const token = getUserToken();
+        const userId = getUserId();
+        
+        if (!token || !userId) {
+            showToast('Faça login para continuar', 'error');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+            return;
+        }
+
+        try {
+            // Carregar perfil do usuário
+            const profileResponse = await fetch(`${API_BASE_URL}/api/user/profile`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!profileResponse.ok) {
+                throw new Error('Erro ao carregar dados do usuário');
+            }
+
+            const profileData = await profileResponse.json();
+            
+            if (profileData.success) {
+                // Atualizar saldo
+                document.getElementById('userBalance').textContent = `KZ ${profileData.data.wallet_balance.toLocaleString('pt-BR')}`;
+            }
+
+        } catch (error) {
+            console.error('Erro ao carregar dados:', error);
+            showToast('Erro ao carregar dados', 'error');
+        }
+    }
+
+    // Carregar dados da conta bancária
+    async function loadBankAccount() {
+        const token = getUserToken();
+        
+        if (!token) {
+            showToast('Faça login para continuar', 'error');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/user/bank-account`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    // Mostrar informações da conta
+                    showBankAccountInfo(data.data);
+                } else {
+                    // Mostrar formulário para cadastrar
+                    showBankAccountForm();
+                }
+            } else {
+                showBankAccountForm();
+            }
+        } catch (error) {
+            console.error('Erro ao carregar conta bancária:', error);
+            showBankAccountForm();
+        }
+    }
+
+    // Mostrar informações da conta
+    function showBankAccountInfo(bankAccount) {
+        document.getElementById('infoBankName').textContent = bankAccount.bank_name || '-';
+        document.getElementById('infoAccountHolder').textContent = bankAccount.account_holder || '-';
+        document.getElementById('infoAccountNumber').textContent = bankAccount.account_number || '-';
+        document.getElementById('infoBranchCode').textContent = bankAccount.branch_code || '-';
+        
+        document.getElementById('formIban').classList.add('hidden');
+        document.getElementById('contaAtual').classList.remove('hidden');
+    }
+
+    // Mostrar formulário para cadastrar
+    function showBankAccountForm() {
+        document.getElementById('formIban').classList.remove('hidden');
+        document.getElementById('contaAtual').classList.add('hidden');
+    }
+
+    // Validar formulário
+    function validateForm() {
+        const bankName = document.getElementById('bankName').value;
+        const accountHolder = document.getElementById('accountHolder').value;
+        const accountNumber = document.getElementById('accountNumber').value;
+        const branchCode = document.getElementById('branchCode').value;
+
+        if (!bankName) {
+            showToast('Por favor, selecione o banco', 'error');
+            return false;
+        }
+
+        if (!accountHolder) {
+            showToast('Por favor, insira o nome do titular', 'error');
+            return false;
+        }
+
+        if (!accountNumber) {
+            showToast('Por favor, insira o número da conta', 'error');
+            return false;
+        }
+
+        if (!branchCode) {
+            showToast('Por favor, insira o código da agência', 'error');
+            return false;
+        }
+
+        return true;
+    }
+
+    // Salvar conta bancária
+    async function salvarContaBancaria(event) {
+        event.preventDefault();
+        
+        // Validar formulário
+        if (!validateForm()) {
+            return false;
+        }
+
+        const token = getUserToken();
+        if (!token) {
+            showToast('Faça login para continuar', 'error');
+            return;
+        }
+
+        const formData = {
+            bank_name: document.getElementById('bankName').value,
+            account_holder: document.getElementById('accountHolder').value,
+            account_number: document.getElementById('accountNumber').value,
+            branch_code: document.getElementById('branchCode').value
+        };
+
+        // Desabilitar botão e mostrar loading
+        const btnSalvar = document.getElementById('btnSalvar');
+        btnSalvar.disabled = true;
+        btnSalvar.innerHTML = 'Salvando...';
+
+        try {
+            // Verificar se já existe conta
+            const checkResponse = await fetch(`${API_BASE_URL}/api/user/bank-account`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            let response;
+            if (checkResponse.ok) {
+                const checkData = await checkResponse.json();
+                if (checkData.success && checkData.data) {
+                    // Atualizar conta existente
+                    response = await fetch(`${API_BASE_URL}/api/user/bank-account`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                } else {
+                    // Criar nova conta
+                    response = await fetch(`${API_BASE_URL}/api/user/bank-account`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                }
+            } else {
+                // Criar nova conta
+                response = await fetch(`${API_BASE_URL}/api/user/bank-account`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+            }
+
+            const data = await response.json();
+
+            if (data.success) {
+                showToast('Conta bancária salva com sucesso!', 'success');
+                await loadBankAccount();
+            } else {
+                showToast(data.message || 'Erro ao salvar conta bancária', 'error');
+            }
+
+        } catch (error) {
+            console.error('Erro ao salvar conta:', error);
+            showToast('Erro de conexão', 'error');
+        } finally {
+            // Reabilitar botão
+            btnSalvar.disabled = false;
+            btnSalvar.textContent = 'Salvar Conta Bancária';
+        }
+    }
+
+    // Editar conta
+    function editarConta() {
+        document.getElementById('formIban').classList.remove('hidden');
+        document.getElementById('contaAtual').classList.add('hidden');
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        // Carregar dados do usuário
+        loadUserData();
+        
+        // Carregar dados da conta bancária
+        loadBankAccount();
+        
+        // Event listener para o formulário
+        const formIban = document.getElementById('formIban');
+        if (formIban) {
+            formIban.addEventListener('submit', salvarContaBancaria);
+        }
+        
+        // Event listener para botão editar
+        const btnEditar = document.getElementById('btnEditar');
+        if (btnEditar) {
+            btnEditar.addEventListener('click', editarConta);
+        }
+    });
+
+    // Verificar autenticação
+    function checkAuth() {
+        const token = getUserToken();
+        if (!token) {
+            window.location.href = 'index.html';
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

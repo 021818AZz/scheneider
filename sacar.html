@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html class="pixel-ratio-3 retina android android-5 android-5-0 watch-active-state">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>Schneider</title>
+    <!-- Adicionar Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-y: auto;
+            color: #e0e0e0;
+        }
+
+        .withdrawal-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        /* Header Section */
+        .header-banner {
+            position: relative;
+            background: linear-gradient(135deg, #1565c0, #1976d2, #1e88e5) !important;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+        }
+
+        .back-button {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .back-arrow {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header-title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .placeholder {
+            width: 24px;
+        }
+
+        /* Balance Section - Cartão de Saldo */
+        .balance-section {
+            padding: 15px;
+        }
+
+        .balance-card {
+            background: #1a1a1a;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+        }
+
+        .balance-info {
+            flex: 1;
+        }
+
+        .balance-label {
+            color: #bbdefb;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .balance-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .history-button {
+            background: linear-gradient(135deg, #1565c0, #1976d2);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(21, 101, 192, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .history-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(21, 101, 192, 0.4);
+        }
+
+        .history-icon {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0) invert(1); /* Torna o ícone branco */
+        }
+
+        .record-link {
+            display: inline-block;
+            color: #bbdefb;
+            text-decoration: none;
+            font-size: 14px;
+            background-color: #1a1a1a;
+            padding: 10px 20px;
+            border-radius: 25px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            text-align: center;
+            border: 1px solid #1565c0;
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-content {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            margin: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            border: 1px solid #333;
+        }
+
+        .amount-input-container {
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .amount-input {
+            width: 100%;
+            height: 50px;
+            padding: 0 15px 0 45px;
+            font-size: 16px;
+            border: 1px solid #333;
+            border-radius: 10px;
+            background-color: #2a2a2a;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.2s ease;
+            color: #e0e0e0;
+        }
+
+        .amount-input:focus {
+            border: 1px solid #1565c0;
+            box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #1565c0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Bank information styles */
+        .bank-info-container {
+            margin-bottom: 25px;
+        }
+
+        .bank-info-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #1a237e;
+            border-radius: 10px;
+            border-left: 3px solid #1565c0;
+        }
+
+        .bank-info-label {
+            color: #bbdefb;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .bank-info-value {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Submit button styles */
+        .withdraw-button {
+            width: 100%;
+            background: linear-gradient(135deg, #1565c0, #1976d2) !important;
+            box-shadow: 2px 2px 10px rgb(0 0 0 / 30%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 0;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .withdraw-button:hover {
+            box-shadow: 0 4px 10px rgba(21, 101, 192, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .withdraw-button:disabled {
+            background: #555555 !important;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Withdrawal instructions styles */
+        .withdrawal-instructions {
+            background: #1a237e;
+            border-radius: 10px;
+            padding: 18px;
+            margin: 20px 0;
+            border-left: 4px solid #1565c0;
+        }
+
+        .withdrawal-instructions ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .withdrawal-instructions li {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #bbdefb;
+            margin-bottom: 8px;
+        }
+
+        .withdrawal-instructions strong {
+            color: #ffffff;
+        }
+
+        /* Toast styles */
+        .toast-success {
+            background: linear-gradient(135deg, #1565c0, #1976d2) !important;
+        }
+
+        .toast-error {
+            background: linear-gradient(135deg, #0d47a1, #1565c0) !important;
+        }
+
+        .toast-info {
+            background: linear-gradient(135deg, #1976d2, #42a5f5) !important;
+        }
+
+        /* Footer styles */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #0d47a1;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            box-shadow: 0 -1px 3px rgba(0,0,0,0.3);
+            max-width: 480px;
+            margin: 0 auto;
+            border-top: 1px solid #1565c0;
+        }
+
+        .foot_bo {
+            text-align: center;
+            flex: 1;
+        }
+
+        .foot_bo a {
+            text-decoration: none;
+            color: #bbdefb;
+        }
+
+        .foot_bo img {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 4px;
+        }
+
+        .foot_bo p {
+            font-size: 11px;
+            margin: 0;
+        }
+
+        .xz {
+            color: #4caf50 !important;
+            font-weight: bold;
+        }
+
+        .game1 {
+            border-radius: 50%;
+            animation: rotate1 2s linear infinite;
+        }
+
+        @keyframes rotate1 {
+            0% {
+                transform: rotateZ(0deg);
+            }
+            100% {
+                transform: rotateZ(360deg);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Adicionando detalhes em verde */
+        .balance-amount::before {
+            content: "• ";
+            color: #1565c0; /* AZUL em vez de verde */
+            font-size: 24px;
+            margin-right: 2px;
+        }
+
+        .withdraw-button::after {
+            content: " 🔵"; /* EMOJI AZUL em vez de verde */
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="withdrawal-container">
+        <!-- Header Banner -->
+        <div class="header-banner">
+            <div class="back-button" onclick="javascript:history.back();">
+                <span class="back-arrow">❮</span>
+            </div>
+            <div class="header-title">Sacar</div>
+            <div class="placeholder"></div>
+        </div>
+
+        <!-- Balance Section - Cartão de Saldo -->
+        <div class="balance-section">
+            <div class="balance-card">
+                <div class="balance-info">
+                    <div class="balance-label">Saldo Disponível</div>
+                    <div class="balance-amount" id="userBalance">KZ 0</div>
+                </div>
+                <button class="history-button" onclick="window.location.href='historico-saques.html'" title="Histórico de Saques">
+                    <img src="img/recharge.png" alt="Histórico" class="history-icon">
+                </button>
+            </div>
+            <a href="historico-saques.html" class="record-link">Ver Registro Completo de Saques</a>
+        </div>
+
+        <div class="main-content">
+            <!-- Formulário de Saque -->
+            <form id="formSaque">
+                <!-- Valor do Saque -->
+                <div class="amount-input-container">
+                    <span class="currency-symbol">KZ</span>
+                    <input type="text" id="valorSaque" name="amount" class="amount-input" placeholder="0,00" oninput="formatarMoeda(this)" required>
+                </div>
+
+                <!-- Informações da Conta Bancária -->
+                <div class="bank-info-container" id="bankInfoContainer">
+                    <div class="bank-info-item">
+                        <div class="bank-info-label">Conta Bancária:</div>
+                        <select id="contaBancaria" name="bank_account" class="amount-input" style="width: 100%; height: 45px; margin-top: 8px;" required>
+                            <option value="" disabled selected>Selecione sua conta</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Valor Líquido -->
+                <div id="valorLiquido" class="bank-info-item hidden">
+                    <div class="bank-info-label">Valor Líquido após taxa de 18%:</div>
+                    <div class="bank-info-value" id="valorLiquidoDisplay">KZ 0,00</div>
+                </div>
+
+                <!-- Botão de Saque -->
+                <button type="submit" class="withdraw-button" id="btnSaque">Confirmar Saque</button>
+            </form>
+
+            <!-- Withdrawal instructions -->
+            <div class="withdrawal-instructions">
+                <p><strong>Instruções para Saque:</strong></p>
+                <ul>
+                    <li><strong>Valor Mínimo:</strong> KZ 2.000,00</li>
+                    <li><strong>Valor Máximo:</strong> KZ 2.000.000,00</li>
+                    <li><strong>Taxa de Saque:</strong> 18% sobre o valor solicitado</li>
+                    <li><strong>Horário de Saque:</strong> Segunda a sábado, das 10h às 17h</li>
+                    <li><strong>Limite Diário:</strong> Apenas um saque por dia</li>
+                    <li><strong>Prazo de Recebimento:</strong> 20 minutos à 24h após a solicitação</li>
+                </ul>
+            </div>
+        </div>
+        <div style="height: 60px;"></div>
+    </div>
+
+    <footer>
+       <footer>
+     <div class="foot_bo">
+        <a href="/indice.html">
+            <img src="footer/inicio.png"/>
+            <p>Início</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="transacoes.html">
+            <img src="footer/meusprodutos.png"/>
+            <p>Registros</p>
+        </a>
+    </div>
+
+<!--<div class="foot_bo">-->
+<!--    <a href="https://zkp518.shop/task/dayindex">-->
+<!--        <img src="/static/home/img/gift02.png" width="40px" class="game1"/>-->
+<!--        <p>Bônus</p>-->
+<!--    </a>-->
+<!--</div>-->
+
+<!---->
+<!--<div class="foot_bo">-->
+<!--    <a href="https://zkp518.shop/game/index">-->
+<!--        <img src="/static/home/img/ico_zp.png" class="game1"/>-->
+<!--        <p>Jogo</p>-->
+<!--    </a>-->
+<!--</div>-->
+<!---->
+    <div class="foot_bo">
+        <a href="/mostrar.html">
+            <img src="footer/mostrar.png" class="game1"/>
+            <p class="xz" style="color: #1e3a8a;">Mostrar</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="/compartilhar.html">
+            <img src="footer/compartilhar.png"/>
+            <p>Compartilhar</p>
+        </a>
+    </div>
+
+    <!---->
+    <!--    <div class="foot_bo">-->
+    <!--        <a href="https://zkp518.shop/redpacket/index">-->
+    <!--            <img src="/static/home/img/hb2.png"/>-->
+    <!--            <p class="xz">Reward</p>-->
+    <!--        </a>-->
+    <!--    </div>-->
+    <!---->
+    <div class="foot_bo">
+        <a href="meu.html">
+            <img src="footer/meu.png"/>
+            <p>Meu</p>
+        </a>
+    </div>
+    </footer>
+
+    <!-- Toastify JS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script>
+        // Configuração da API
+        const API_BASE_URL = 'https://bd-p4q7.onrender.com';
+
+        // Configurações de saque
+        const CONFIG = {
+            TAXA_SAQUE: 0.18, // 18%
+            SAQUE_MINIMO: 2000, // KZ 2.000,00
+            SAQUE_MAXIMO: 2000000, // KZ 2.000.000,00
+            HORA_INICIO: 10, // 10h
+            HORA_FIM: 17 // 17h
+        };
+
+        // Função para obter o token do usuário
+        function getUserToken() {
+            const tokenData = localStorage.getItem('user_token');
+            if (!tokenData) return null;
+            
+            try {
+                const { token, expiry } = JSON.parse(tokenData);
+                if (Date.now() > expiry) {
+                    localStorage.removeItem('user_token');
+                    localStorage.removeItem('user_id');
+                    return null;
+                }
+                return token;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // Função para obter o ID do usuário
+        function getUserId() {
+            return localStorage.getItem('user_id');
+        }
+
+        // Toast personalizado
+        function showToast(message, type = 'info') {
+            Toastify({
+                text: message,
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                stopOnFocus: true,
+                className: type === 'error' ? 'toast-error' : 
+                          type === 'success' ? 'toast-success' : 'toast-info',
+                style: {
+                    width: "100%",
+                    left: "0",
+                    right: "0",
+                    borderRadius: "0",
+                    textAlign: "center",
+                    padding: "15px",
+                    fontSize: "14px",
+                    fontWeight: "bold"
+                }
+            }).showToast();
+        }
+
+        // Carregar dados do usuário
+        async function loadUserData() {
+            const token = getUserToken();
+            const userId = getUserId();
+            
+            if (!token || !userId) {
+                showToast('Faça login para continuar', 'error');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+                return;
+            }
+
+            try {
+                // Carregar perfil do usuário
+                const profileResponse = await fetch(`${API_BASE_URL}/api/user/profile`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!profileResponse.ok) {
+                    throw new Error('Erro ao carregar dados do usuário');
+                }
+
+                const profileData = await profileResponse.json();
+                
+                if (profileData.success) {
+                    // Atualizar saldo
+                    document.getElementById('userBalance').textContent = `KZ ${profileData.data.wallet_balance.toLocaleString('pt-BR')}`;
+                }
+
+                // Carregar contas bancárias
+                await loadBankAccounts(token);
+
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                showToast('Erro ao carregar dados', 'error');
+            }
+        }
+
+        // Carregar contas bancárias
+        async function loadBankAccounts(token) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/user/bank-account`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const select = document.getElementById('contaBancaria');
+                    
+                    if (data.success && data.data) {
+                        // Limpar opções existentes (exceto a primeira)
+                        while (select.children.length > 1) {
+                            select.removeChild(select.lastChild);
+                        }
+                        
+                        // Adicionar conta bancária
+                        const option = document.createElement('option');
+                        option.value = data.data.id;
+                        option.textContent = `${data.data.bank_name} - ${data.data.account_holder} (${data.data.account_number})`;
+                        select.appendChild(option);
+                    } else {
+                        // Se não tiver conta cadastrada
+                        const option = document.createElement('option');
+                        option.value = '';
+                        option.textContent = 'Nenhuma conta cadastrada';
+                        option.disabled = true;
+                        select.appendChild(option);
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao carregar contas bancárias:', error);
+            }
+        }
+
+        // Verificar se usuário já sacou hoje
+        async function checkDailyWithdrawal(token) {
+            try {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                const response = await fetch(`${API_BASE_URL}/api/withdrawals`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        const todayWithdrawals = data.data.withdrawals.filter(withdrawal => {
+                            const withdrawalDate = new Date(withdrawal.created_at);
+                            withdrawalDate.setHours(0, 0, 0, 0);
+                            return withdrawalDate.getTime() === today.getTime();
+                        });
+                        
+                        return todayWithdrawals.length > 0;
+                    }
+                }
+                return false;
+            } catch (error) {
+                console.error('Erro ao verificar saques diários:', error);
+                return false;
+            }
+        }
+
+        // Formatar moeda
+        function formatarMoeda(input) {
+            let value = input.value.replace(/\D/g, '');
+            value = (value / 100).toFixed(2);
+            value = value.replace('.', ',');
+            value = value.replace(/(\d)(?=(\d{3})+\,)/g, '$1.');
+            
+            input.value = value;
+            
+            // Calcular valor líquido
+            calcularValorLiquido();
+        }
+
+        // Calcular valor líquido após taxa
+        function calcularValorLiquido() {
+            const valorSaque = document.getElementById('valorSaque');
+            const valorLiquido = document.getElementById('valorLiquido');
+            const valorLiquidoDisplay = document.getElementById('valorLiquidoDisplay');
+            
+            let valor = parseFloat(valorSaque.value.replace(/\./g, '').replace(',', '.'));
+            
+            if (!isNaN(valor) && valor > 0) {
+                const taxa = valor * CONFIG.TAXA_SAQUE; // 18% de taxa
+                const liquido = valor - taxa;
+                
+                valorLiquidoDisplay.textContent = `KZ ${liquido.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                valorLiquido.classList.remove('hidden');
+            } else {
+                valorLiquido.classList.add('hidden');
+            }
+        }
+
+        // Validar horário de saque (segunda a sábado, 10h às 17h)
+        function validarHorarioSaque() {
+            const agora = new Date();
+            const diaSemana = agora.getDay(); // 0 = domingo, 1 = segunda, ..., 6 = sábado
+            const hora = agora.getHours();
+            const minutos = agora.getMinutes();
+            
+            // Apenas segunda a sábado (1 a 6)
+            if (diaSemana === 0) { // Domingo (0)
+                return false;
+            }
+            
+            // Segunda a sábado: apenas das 10h às 17h
+            const horaAtual = hora + (minutos / 60);
+            const horaInicio = CONFIG.HORA_INICIO; // 10h
+            const horaFim = CONFIG.HORA_FIM; // 17h
+            
+            if (horaAtual < horaInicio || horaAtual >= horaFim) {
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Processar saque
+        async function processarSaque(event) {
+            event.preventDefault();
+            
+            const token = getUserToken();
+            if (!token) {
+                showToast('Faça login para continuar', 'error');
+                return;
+            }
+
+            // Validar horário
+            if (!validarHorarioSaque()) {
+                showToast('Saques disponíveis apenas de segunda a sábado, das 10h às 17h', 'error');
+                return;
+            }
+
+            // Verificar se já sacou hoje
+            const jaSacouHoje = await checkDailyWithdrawal(token);
+            if (jaSacouHoje) {
+                showToast('Você já realizou um saque hoje. Volte amanhã!', 'error');
+                return;
+            }
+
+            const valorSaque = document.getElementById('valorSaque');
+            const contaBancaria = document.getElementById('contaBancaria');
+            
+            let valor = parseFloat(valorSaque.value.replace(/\./g, '').replace(',', '.'));
+            
+            // Validar valor mínimo e máximo
+            if (valor < CONFIG.SAQUE_MINIMO) {
+                showToast(`Valor mínimo para saque é KZ ${CONFIG.SAQUE_MINIMO.toLocaleString('pt-BR')}`, 'error');
+                return;
+            }
+            
+            if (valor > CONFIG.SAQUE_MAXIMO) {
+                showToast(`Valor máximo para saque é KZ ${CONFIG.SAQUE_MAXIMO.toLocaleString('pt-BR')}`, 'error');
+                return;
+            }
+
+            // Verificar saldo
+            const saldoAtual = parseFloat(document.getElementById('userBalance').textContent.replace('KZ', '').replace(/\./g, '').replace(',', '.'));
+            if (valor > saldoAtual) {
+                showToast('Saldo insuficiente para realizar o saque', 'error');
+                return;
+            }
+
+            // Calcular taxa e valor líquido
+            const taxa = valor * CONFIG.TAXA_SAQUE; // 18% de taxa
+            const valorLiquido = valor - taxa;
+
+            // Desabilitar botão e mostrar loading
+            const btnSaque = document.getElementById('btnSaque');
+            btnSaque.disabled = true;
+            btnSaque.innerHTML = '<div class="loading-spinner"></div> Processando...';
+
+            try {
+                // Buscar informações da conta bancária
+                const bankResponse = await fetch(`${API_BASE_URL}/api/user/bank-account`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!bankResponse.ok) {
+                    throw new Error('Erro ao buscar informações da conta bancária');
+                }
+
+                const bankData = await bankResponse.json();
+                
+                if (!bankData.success || !bankData.data) {
+                    showToast('Cadastre uma conta bancária antes de sacar', 'error');
+                    setTimeout(() => {
+                        window.location.href = 'iban.html';
+                    }, 2000);
+                    return;
+                }
+
+                const bankAccount = bankData.data;
+
+                // Enviar solicitação de saque
+                const response = await fetch(`${API_BASE_URL}/api/withdraw`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        amount: valor,
+                        tax: taxa,
+                        net_amount: valorLiquido,
+                        account_name: bankAccount.account_holder,
+                        iban: bankAccount.account_number,
+                        bank_name: bankAccount.bank_name,
+                        bank_code: bankAccount.branch_code
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showToast('Saque solicitado com sucesso!', 'success');
+                    
+                    // Atualizar saldo
+                    await loadUserData();
+                    
+                    // Limpar formulário
+                    document.getElementById('formSaque').reset();
+                    document.getElementById('valorLiquido').classList.add('hidden');
+                    
+                    // Redirecionar para histórico após 2 segundos
+                    setTimeout(() => {
+                        window.location.href = 'historico-saques.html';
+                    }, 2000);
+                } else {
+                    showToast(data.message || 'Erro ao processar saque', 'error');
+                }
+
+            } catch (error) {
+                console.error('Erro no saque:', error);
+                showToast('Erro de conexão: ' + error.message, 'error');
+            } finally {
+                // Reabilitar botão
+                btnSaque.disabled = false;
+                btnSaque.textContent = 'Confirmar Saque';
+            }
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar autenticação
+            if (!getUserToken()) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Carregar dados do usuário
+            loadUserData();
+            
+            // Event listener para o formulário de saque
+            const formSaque = document.getElementById('formSaque');
+            if (formSaque) {
+                formSaque.addEventListener('submit', processarSaque);
+            }
+            
+            // Event listener para input do valor
+            const valorSaque = document.getElementById('valorSaque');
+            if (valorSaque) {
+                valorSaque.addEventListener('input', calcularValorLiquido);
+            }
+        });
+    </script>
+</body>
+</html>

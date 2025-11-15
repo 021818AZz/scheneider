@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html class="pixel-ratio-3 retina android android-5 android-5-0 watch-active-state">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>Histórico de Retiradas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Adicionar Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            list-style: none;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+
+        .content-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            overflow: hidden;
+            background-color: #0a0a0a;
+        }
+
+        /* Header Section */
+        .header-banner {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, #1565c0, #1976d2, #1e88e5) !important;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(21, 101, 192, 0.2);
+        }
+
+        .back-button {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .back-arrow {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header-title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .placeholder {
+            width: 24px;
+        }
+
+        /* Balance Section */
+        .balance-container {
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            padding: 20px;
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(13, 71, 161, 0.2);
+        }
+
+        .balance-amount {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .balance-label {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Content Section */
+        .content {
+            background-color: #1a1a1a;
+            border-radius: 15px 15px 0 0;
+            position: relative;
+            z-index: 2;
+            padding: 20px 15px;
+            margin: 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            min-height: calc(100vh - 200px);
+            border: 1px solid #333;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #bbdefb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 20px;
+        }
+
+        /* Withdrawal Card Styles */
+        .withdrawal-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #1565c0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #333;
+        }
+
+        .withdrawal-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(21, 101, 192, 0.2);
+        }
+
+        .withdrawal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .withdrawal-date {
+            font-size: 14px;
+            color: #bbdefb;
+            font-weight: 500;
+        }
+
+        .withdrawal-status {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .status-completed {
+            background-color: #1a237e;
+            color: #4caf50;
+            border: 1px solid #4caf50;
+        }
+
+        .status-pending {
+            background-color: #1a237e;
+            color: #ff9800;
+            border: 1px solid #ff9800;
+        }
+
+        .status-failed {
+            background-color: #1a237e;
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+
+        .withdrawal-amount {
+            font-size: 22px;
+            font-weight: 700;
+            color: #4caf50;
+            margin: 10px 0;
+        }
+
+        .withdrawal-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .detail-label {
+            color: #bbdefb;
+            min-width: 100px;
+        }
+
+        .detail-value {
+            color: #ffffff;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .iban-value {
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+
+        .empty-state {
+            padding: 50px 20px;
+            text-align: center;
+            background: #1a1a1a;
+            margin: 20px 0;
+            border-radius: 12px;
+            border: 2px dashed #333;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .empty-state-text {
+            font-size: 16px;
+            color: #bbdefb;
+            line-height: 1.5;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(21, 101, 192, 0.3);
+            border-radius: 50%;
+            border-top-color: #1565c0;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Filter Section */
+        .filter-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: #2a2a2a;
+            border: 1px solid #333;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #bbdefb;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #1565c0, #1976d2);
+            color: white;
+            border-color: #1565c0;
+        }
+
+        /* Toast styles */
+        .toast-success {
+            background: linear-gradient(135deg, #1565c0, #1976d2) !important;
+        }
+
+        .toast-error {
+            background: linear-gradient(135deg, #0d47a1, #1565c0) !important;
+        }
+
+        .toast-info {
+            background: linear-gradient(135deg, #1976d2, #42a5f5) !important;
+        }
+
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #0d47a1;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            max-width: 480px;
+            margin: 0 auto;
+            border-top: 1px solid #1565c0;
+            z-index: 100;
+        }
+
+        .foot_bo {
+            text-align: center;
+            flex: 1;
+        }
+
+        .foot_bo a {
+            text-decoration: none;
+            color: #bbdefb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .foot_bo img {
+            width: 22px;
+            height: 22px;
+            margin-bottom: 4px;
+        }
+
+        .foot_bo p {
+            font-size: 11px;
+            margin: 0;
+        }
+
+        .xz {
+            color: #4caf50 !important;
+            font-weight: bold;
+        }
+
+        .game1 {
+            border-radius: 50%;
+            animation: rotate1 2s linear infinite;
+        }
+
+        @keyframes rotate1 {
+            0% {
+                transform: rotateZ(0deg);
+            }
+            100% {
+                transform: rotateZ(360deg);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-container">
+        <div class="header-banner">
+            <div class="back-button" onclick="javascript:history.back();">
+                <span class="back-arrow">❮</span>
+            </div>
+            <div class="header-title">Histórico de Retiradas</div>
+            <div class="placeholder"></div>
+        </div>
+
+        <div class="balance-container">
+            <div class="balance-label">Saldo Disponível</div>
+            <div class="balance-amount" id="userBalance">KZ 0,00</div>
+        </div>
+
+        <div class="content">
+            <div class="section-title">
+                <i class="fas fa-history"></i>
+                <span>Minhas Retiradas</span>
+            </div>
+
+            <!-- Filtros -->
+            <div class="filter-section">
+                <button class="filter-btn active" data-filter="all">Todas</button>
+                <button class="filter-btn" data-filter="completed">Concluídas</button>
+                <button class="filter-btn" data-filter="pending">Pendentes</button>
+                <button class="filter-btn" data-filter="failed">Falhadas</button>
+            </div>
+
+            <!-- Lista de Retiradas -->
+            <div id="withdrawalsList">
+                <!-- As retiradas serão carregadas aqui via JavaScript -->
+            </div>
+
+            <!-- Estado vazio -->
+            <div id="emptyState" class="empty-state hidden">
+                <div class="empty-state-icon">
+                    <i class="fas fa-inbox"></i>
+                </div>
+                <div class="empty-state-text">
+                    Nenhuma retirada encontrada.<br>
+                    Suas retiradas aparecerão aqui.
+                </div>
+            </div>
+
+            <!-- Carregando -->
+            <div id="loadingState" class="empty-state">
+                <div class="empty-state-icon">
+                    <div class="loading-spinner"></div>
+                </div>
+                <div class="empty-state-text">
+                    Carregando suas retiradas...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="foot_bo">
+            <a href="indice.html">
+                <img src="footer/inicio.png"/>
+                <p>Início</p>
+            </a>
+        </div>
+
+        <div class="foot_bo">
+            <a href="meus-produtos.html">
+                <img src="footer/meusprodutos.png"/>
+                <p>Meus produtos</p>
+            </a>
+        </div>
+
+        <div class="foot_bo">
+            <a href="mostrar.html">
+                <img src="footer/mostrar.png" class="game1"/>
+                <p>Mostrar</p>
+            </a>
+        </div>
+
+        <div class="foot_bo">
+            <a href="compartilhar.html">
+                <img src="footer/compartilhar.png"/>
+                <p>Compartilhar</p>
+            </a>
+        </div>
+
+        <div class="foot_bo">
+            <a href="meu.html">
+                <img src="footer/meu.png"/>
+                <p class="xz">Meu</p>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Toastify JS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script>
+        // Configuração da API
+        const API_BASE_URL = 'https://bd-p4q7.onrender.com';
+
+        // Função para mostrar toast
+        function showToast(message, type = 'info') {
+            Toastify({
+                text: message,
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                stopOnFocus: true,
+                className: type === 'error' ? 'toast-error' : 
+                          type === 'success' ? 'toast-success' : 'toast-info',
+                style: {
+                    width: "100%",
+                    left: "0",
+                    right: "0",
+                    borderRadius: "0",
+                    textAlign: "center",
+                    padding: "15px",
+                    fontSize: "14px",
+                    fontWeight: "bold"
+                }
+            }).showToast();
+        }
+
+        // Função para obter o token do usuário
+        function getUserToken() {
+            const tokenData = localStorage.getItem('user_token');
+            if (!tokenData) return null;
+            
+            try {
+                const { token, expiry } = JSON.parse(tokenData);
+                if (Date.now() > expiry) {
+                    localStorage.removeItem('user_token');
+                    localStorage.removeItem('user_id');
+                    return null;
+                }
+                return token;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // Função para mostrar/ocultar elementos
+        function toggleElement(id, show) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.classList.toggle('hidden', !show);
+            }
+        }
+
+        // Formatar data
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Formatar moeda
+        function formatCurrency(amount) {
+            return 'KZ ' + parseFloat(amount).toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        // Formatar IBAN (mostrar apenas últimos 4 dígitos)
+        function formatIBAN(iban) {
+            if (!iban) return 'Não informado';
+            return '****' + iban.slice(-4);
+        }
+
+        // Carregar histórico de retiradas
+        async function loadWithdrawalHistory() {
+            const token = getUserToken();
+            
+            if (!token) {
+                showToast('Sessão expirada. Faça login novamente.', 'error');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+                return;
+            }
+
+            try {
+                toggleElement('loadingState', true);
+                toggleElement('emptyState', false);
+                
+                const response = await fetch(`${API_BASE_URL}/api/withdrawals`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar histórico');
+                }
+
+                const data = await response.json();
+                
+                toggleElement('loadingState', false);
+                
+                if (data.success && data.data.withdrawals.length > 0) {
+                    displayWithdrawals(data.data.withdrawals);
+                    toggleElement('emptyState', false);
+                    showToast('Histórico carregado com sucesso', 'success');
+                } else {
+                    toggleElement('emptyState', true);
+                }
+
+                // Carregar saldo do usuário
+                await loadUserBalance(token);
+
+            } catch (error) {
+                console.error('Erro ao carregar histórico:', error);
+                toggleElement('loadingState', false);
+                toggleElement('emptyState', true);
+                showToast('Erro ao carregar histórico', 'error');
+            }
+        }
+
+        // Carregar saldo do usuário
+        async function loadUserBalance(token) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        document.getElementById('userBalance').textContent = 
+                            formatCurrency(data.data.wallet_balance || 0);
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao carregar saldo:', error);
+            }
+        }
+
+        // Exibir retiradas na lista
+        function displayWithdrawals(withdrawals) {
+            const container = document.getElementById('withdrawalsList');
+            container.innerHTML = '';
+
+            withdrawals.forEach(withdrawal => {
+                const card = document.createElement('div');
+                card.className = 'withdrawal-card';
+                card.dataset.status = withdrawal.status;
+
+                const statusClass = 
+                    withdrawal.status === 'completed' ? 'status-completed' :
+                    withdrawal.status === 'pending' ? 'status-pending' :
+                    'status-failed';
+
+                const statusText = 
+                    withdrawal.status === 'completed' ? 'Concluído' :
+                    withdrawal.status === 'pending' ? 'Pendente' :
+                    'Falhou';
+
+                card.innerHTML = `
+                    <div class="withdrawal-header">
+                        <div class="withdrawal-date">${formatDate(withdrawal.created_at)}</div>
+                        <div class="withdrawal-status ${statusClass}">${statusText}</div>
+                    </div>
+                    <div class="withdrawal-amount">${formatCurrency(withdrawal.net_amount)}</div>
+                    <div class="withdrawal-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Valor solicitado:</span>
+                            <span class="detail-value">${formatCurrency(withdrawal.amount)}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Taxa:</span>
+                            <span class="detail-value">${formatCurrency(withdrawal.tax)}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">IBAN:</span>
+                            <span class="detail-value iban-value">${formatIBAN(withdrawal.iban)}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Banco:</span>
+                            <span class="detail-value">${withdrawal.bank_name || 'Não informado'}</span>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+
+            // Aplicar filtros
+            setupFilters();
+        }
+
+        // Configurar filtros
+        function setupFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const withdrawalCards = document.querySelectorAll('.withdrawal-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Ativar botão clicado
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    const filter = button.dataset.filter;
+
+                    // Mostrar/ocultar cartões baseado no filtro
+                    withdrawalCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.status === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    // Verificar se há cartões visíveis
+                    const visibleCards = Array.from(withdrawalCards).filter(card => 
+                        card.style.display !== 'none'
+                    );
+
+                    toggleElement('emptyState', visibleCards.length === 0);
+                });
+            });
+        }
+
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carregar histórico
+            loadWithdrawalHistory();
+            
+            // Configurar botão de voltar
+            document.querySelector('.back-button').addEventListener('click', () => {
+                window.history.back();
+            });
+        });
+    </script>
+</body>
+</html>

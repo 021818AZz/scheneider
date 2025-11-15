@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html class="pixel-ratio-3 retina android android-5 android-5-0 watch-active-state">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>Torres - Registro Geral</title>
+    <!--<link rel="stylesheet" href="/static/home/css/framework7.ios.min.css">-->
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/dropload.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="js/dropload.min.js"></script>
+    <script type="text/javascript" src="js/layui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .page-container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 0;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Header Section */
+        .header-banner {
+            position: relative;
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+
+        /* Filter Buttons */
+        .filter-container {
+            display: flex;
+            gap: 8px;
+            padding: 15px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .filter-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .filter-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .filter-button.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Transactions List */
+        .transactions-list {
+            list-style: none;
+            padding: 0 10px;
+            margin: 0;
+            min-height: 60vh;
+        }
+
+        /* Transaction Card - Thin Design */
+        .transaction-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin: 8px 0;
+            padding: 15px;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .transaction-card:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .transaction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .transaction-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            flex: 1;
+        }
+
+        .transaction-amount {
+            font-size: 16px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .amount-positive {
+            color: #10b981;
+            text-shadow: 0 2px 4px rgba(16, 185, 129, 0.4);
+        }
+
+        .amount-negative {
+            color: #ef4444;
+            text-shadow: 0 2px 4px rgba(239, 68, 68, 0.4);
+        }
+
+        .transaction-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #cbd5e1;
+        }
+
+        .transaction-type {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .transaction-date {
+            opacity: 0.8;
+        }
+
+        .border-income {
+            border-left-color: #10b981;
+        }
+
+        .border-expense {
+            border-left-color: #ef4444;
+        }
+
+        /* Loading States */
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: #cbd5e1;
+            font-size: 16px;
+        }
+
+        .loading-dots {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .loading-dots div {
+            position: absolute;
+            top: 33px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #3b82f6;
+            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+        }
+
+        .loading-dots div:nth-child(1) {
+            left: 8px;
+            animation: loading-dots1 0.6s infinite;
+        }
+
+        .loading-dots div:nth-child(2) {
+            left: 8px;
+            animation: loading-dots2 0.6s infinite;
+        }
+
+        .loading-dots div:nth-child(3) {
+            left: 32px;
+            animation: loading-dots2 0.6s infinite;
+        }
+
+        .loading-dots div:nth-child(4) {
+            left: 56px;
+            animation: loading-dots3 0.6s infinite;
+        }
+
+        @keyframes loading-dots1 {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes loading-dots3 {
+            0% { transform: scale(1); }
+            100% { transform: scale(0); }
+        }
+
+        @keyframes loading-dots2 {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(24px, 0); }
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(30, 58, 138, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .foot_bo a {
+            transition: all 0.3s ease;
+            color: #cbd5e1;
+        }
+
+        .foot_bo a:hover {
+            transform: translateY(-3px);
+            color: white;
+        }
+
+        .foot_bo a:hover img {
+            filter: brightness(1.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="header-banner">
+            <div class="header-title">
+                Registro Geral
+            </div>
+        </div>
+        
+        <!-- Filter Buttons -->
+        <div class="filter-container">
+            <button class="filter-button active" data-filter="all">Todas</button>
+            <button class="filter-button" data-filter="income">Entradas</button>
+            <button class="filter-button" data-filter="expense">Saídas</button>
+            <button class="filter-button" data-filter="deposit">Depósitos</button>
+            <button class="filter-button" data-filter="withdrawal">Saques</button>
+            <button class="filter-button" data-filter="bonus">Bônus</button>
+            <button class="filter-button" data-filter="purchase">Compras</button>
+        </div>
+
+        <!-- Transactions List -->
+        <ul class="transactions-list" id="transactions-list">
+            <div class="loading">
+                <div class="loading-dots">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div style="margin-top: 20px;">Carregando transações...</div>
+            </div>
+        </ul>
+    </div>
+
+    <div style="height: 80px;"></div>
+
+    <footer>
+        <div class="foot_bo">
+            <a href="/indice.html">
+                <img src="footer/inicio.png"/>
+                <p>Início</p>
+            </a>
+        </div>
+
+        <div class="foot_bo">
+            <a href="transacoes.html">
+                <img src="footer/meusprodutos.png"/>
+                <p>Registros</p>
+            </a>
+        </div>
+
+        <div class="foot_bo">
+            <a href="/mostrar.html">
+                <img src="footer/mostrar.png" class="game1"/>
+                <p>Mostrar</p>
+            </a>
+        </div>
+
+        <div class="foot_bo">
+            <a href="/compartilhar.html">
+                <img src="footer/compartilhar.png"/>
+                <p>Compartilhar</p>
+            </a>
+        </div>
+
+        <div class="foot_bo">
+            <a href="meu.html">
+                <img src="footer/meu.png"/>
+                <p class="xz">Meu</p>
+            </a>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+    // Configuração da API
+    const API_BASE_URL = 'https://bd-p4q7.onrender.com';
+
+    // Variáveis globais
+    let allTransactions = [];
+    let filteredTransactions = [];
+    let currentPage = 0;
+    let isLoading = false;
+    let currentFilter = 'all';
+    const PAGE_SIZE = 10;
+
+    // Função para mostrar toast
+    function showToast(message, type = 'info') {
+        Toastify({
+            text: message,
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            stopOnFocus: true,
+            className: type === 'error' ? 'toast-error' : 
+                      type === 'success' ? 'toast-success' : 'toast-info',
+            style: {
+                width: "100%",
+                left: "0",
+                right: "0",
+                borderRadius: "0",
+                textAlign: "center",
+                padding: "15px",
+                fontSize: "14px",
+                fontWeight: "bold"
+            }
+        }).showToast();
+    }
+
+    // Função para obter o token do localStorage
+    function getToken() {
+        const tokenData = localStorage.getItem('user_token');
+        if (!tokenData) {
+            return null;
+        }
+        
+        try {
+            const { token, expiry } = JSON.parse(tokenData);
+            
+            // Verificar se o token expirou
+            if (Date.now() > expiry) {
+                localStorage.removeItem('user_token');
+                localStorage.removeItem('user_id');
+                return null;
+            }
+            
+            return token;
+        } catch (e) {
+            console.error('Erro ao obter token:', e);
+            return null;
+        }
+    }
+
+    // Função para redirecionar para login se não estiver autenticado
+    function redirectToLogin() {
+        showToast('Sessão expirada. Faça login novamente.', 'error');
+        setTimeout(() => {
+            window.location.href = '/login.html';
+        }, 2000);
+    }
+
+    // Função principal para buscar transações
+    async function fetchUserTransactions() {
+        const token = getToken();
+        
+        if (!token) {
+            redirectToLogin();
+            return;
+        }
+
+        try {
+            console.log('🚀 Iniciando busca de transações...');
+            
+            // Buscar dados de múltiplas fontes EM PARALELO
+            await fetchAllTransactionsData(token);
+            
+        } catch (error) {
+            console.error('Erro ao buscar transações:', error);
+            showToast('Erro ao carregar transações', 'error');
+        }
+    }
+
+    // Buscar TODOS os dados de transações de fontes diferentes
+    async function fetchAllTransactionsData(token) {
+        try {
+            console.log('🔍 Buscando dados de múltiplas fontes...');
+            
+            // Buscar dados em PARALELO para melhor performance
+            const [
+                depositsData,
+                withdrawalsData, 
+                purchasesData,
+                commissionsData,
+                tasksData
+            ] = await Promise.all([
+                fetchDeposits(token),
+                fetchWithdrawals(token),
+                fetchPurchases(token),
+                fetchCommissions(token),
+                fetchTasksHistory(token)
+            ]);
+
+            console.log('✅ Dados coletados:', {
+                deposits: depositsData.length,
+                withdrawals: withdrawalsData.length,
+                purchases: purchasesData.length,
+                commissions: commissionsData.length,
+                tasks: tasksData.length
+            });
+
+            // Combinar todos os dados
+            combineAllTransactions({
+                deposits: depositsData,
+                withdrawals: withdrawalsData,
+                purchases: purchasesData,
+                commissions: commissionsData,
+                tasks: tasksData
+            });
+
+        } catch (error) {
+            console.error('Erro ao buscar dados combinados:', error);
+            showEmptyState();
+        }
+    }
+
+    // 1. Buscar DEPÓSITOS
+    async function fetchDeposits(token) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/deposits`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.data) {
+                    return Array.isArray(data.data) ? data.data : [];
+                }
+            }
+            return [];
+        } catch (error) {
+            console.warn('Erro ao buscar depósitos:', error);
+            return [];
+        }
+    }
+
+    // 2. Buscar SAQUES
+    async function fetchWithdrawals(token) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/withdrawals`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.data) {
+                    return Array.isArray(data.data) ? data.data : [];
+                }
+            }
+            return [];
+        } catch (error) {
+            console.warn('Erro ao buscar saques:', error);
+            return [];
+        }
+    }
+
+    // 3. Buscar COMPRAS
+    async function fetchPurchases(token) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/user/recent-purchases`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.data && data.data.recent_purchases) {
+                    return Array.isArray(data.data.recent_purchases) ? data.data.recent_purchases : [];
+                }
+            }
+            return [];
+        } catch (error) {
+            console.warn('Erro ao buscar compras:', error);
+            return [];
+        }
+    }
+
+    // 4. Buscar COMISSÕES/BÔNUS
+    async function fetchCommissions(token) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/team/commissions`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.data && data.data.commissions) {
+                    return Array.isArray(data.data.commissions) ? data.data.commissions : [];
+                }
+            }
+            return [];
+        } catch (error) {
+            console.warn('Erro ao buscar comissões:', error);
+            return [];
+        }
+    }
+
+    // 5. Buscar HISTÓRICO DE TAREFAS (check-ins, etc)
+    async function fetchTasksHistory(token) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/tasks/history`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.data && data.data.tasks) {
+                    return Array.isArray(data.data.tasks) ? data.data.tasks : [];
+                }
+            }
+            return [];
+        } catch (error) {
+            console.warn('Erro ao buscar histórico de tarefas:', error);
+            return [];
+        }
+    }
+
+    // Combinar todos os dados em transações únicas
+    function combineAllTransactions(data) {
+        console.log('🔄 Combinando todas as transações...');
+        
+        allTransactions = [];
+
+        // 1. Processar DEPÓSITOS
+        if (Array.isArray(data.deposits)) {
+            data.deposits.forEach(deposit => {
+                if (deposit.status === 'completed') {
+                    allTransactions.push({
+                        id: `deposit_${deposit.id}`,
+                        type: 'deposit',
+                        amount: deposit.amount,
+                        description: `Depósito - ${deposit.bank_name || 'Banco'}`,
+                        created_at: deposit.processed_at || deposit.created_at,
+                        source: 'deposit'
+                    });
+                }
+            });
+        }
+
+        // 2. Processar SAQUES
+        if (Array.isArray(data.withdrawals)) {
+            data.withdrawals.forEach(withdrawal => {
+                allTransactions.push({
+                    id: `withdrawal_${withdrawal.id}`,
+                    type: 'withdrawal',
+                    amount: -Math.abs(withdrawal.amount), // Negativo
+                    description: `Saque - ${withdrawal.bank_name || 'Banco'}`,
+                    created_at: withdrawal.processed_at || withdrawal.created_at,
+                    source: 'withdrawal'
+                });
+            });
+        }
+
+        // 3. Processar COMPRAS
+        if (Array.isArray(data.purchases)) {
+            data.purchases.forEach(purchase => {
+                allTransactions.push({
+                    id: `purchase_${purchase.id}`,
+                    type: 'purchase',
+                    amount: -Math.abs(purchase.amount), // Negativo
+                    description: `Compra - ${purchase.product_name || 'Produto'}`,
+                    created_at: purchase.purchase_date || purchase.created_at,
+                    source: 'purchase'
+                });
+            });
+        }
+
+        // 4. Processar COMISSÕES/BÔNUS
+        if (Array.isArray(data.commissions)) {
+            data.commissions.forEach(commission => {
+                allTransactions.push({
+                    id: `commission_${commission.id}`,
+                    type: 'referral_bonus',
+                    amount: commission.bonus_amount,
+                    description: `Bônus Nível ${commission.level} - ${commission.referred_user?.mobile || 'Indicação'}`,
+                    created_at: commission.created_at,
+                    source: 'commission'
+                });
+            });
+        }
+
+        // 5. Processar TAREFAS (check-ins, etc)
+        if (Array.isArray(data.tasks)) {
+            data.tasks.forEach(task => {
+                if (task.status === 'completed') {
+                    let type = 'task';
+                    let description = `Tarefa - ${task.task_type}`;
+                    
+                    if (task.task_type === 'daily_checkin') {
+                        type = 'daily_checkin';
+                        description = 'Check-in Diário';
+                    } else if (task.task_type === 'product_income') {
+                        type = 'product_income';
+                        description = 'Rendimento de Produtos';
+                    }
+                    
+                    allTransactions.push({
+                        id: `task_${task.id}`,
+                        type: type,
+                        amount: task.amount || 0,
+                        description: description,
+                        created_at: task.task_date || task.created_at,
+                        source: 'task'
+                    });
+                }
+            });
+        }
+
+        // Ordenar por data (mais recente primeiro)
+        allTransactions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        
+        console.log(`✅ ${allTransactions.length} transações combinadas`);
+        
+        if (allTransactions.length === 0) {
+            showEmptyState();
+        } else {
+            applyFilter(currentFilter);
+        }
+    }
+
+    // Mostrar estado vazio
+    function showEmptyState() {
+        const transactionsList = document.getElementById('transactions-list');
+        if (!transactionsList) return;
+        
+        transactionsList.innerHTML = `
+            <div class="loading">
+                <div style="color: #cbd5e1; font-size: 16px; text-align: center;">
+                    📝 Nenhuma transação encontrada
+                </div>
+            </div>
+        `;
+    }
+
+    // Função para aplicar filtro
+    function applyFilter(filter) {
+        currentFilter = filter;
+        currentPage = 0;
+        
+        switch(filter) {
+            case 'income':
+                filteredTransactions = allTransactions.filter(t => t.amount > 0);
+                break;
+            case 'expense':
+                filteredTransactions = allTransactions.filter(t => t.amount < 0);
+                break;
+            case 'deposit':
+                filteredTransactions = allTransactions.filter(t => t.type === 'deposit');
+                break;
+            case 'withdrawal':
+                filteredTransactions = allTransactions.filter(t => t.type === 'withdrawal');
+                break;
+            case 'bonus':
+                filteredTransactions = allTransactions.filter(t => 
+                    t.type.includes('bonus') || 
+                    t.type.includes('referral') || 
+                    t.type.includes('checkin') ||
+                    t.type.includes('task')
+                );
+                break;
+            case 'purchase':
+                filteredTransactions = allTransactions.filter(t => 
+                    t.type === 'purchase'
+                );
+                break;
+            default:
+                filteredTransactions = [...allTransactions];
+        }
+        
+        console.log(`🎯 Filtro "${filter}" aplicado: ${filteredTransactions.length} transações`);
+        
+        // Limpar lista e recarregar
+        const transactionsList = document.getElementById('transactions-list');
+        if (transactionsList) {
+            transactionsList.innerHTML = '';
+            
+            if (filteredTransactions.length === 0) {
+                showEmptyState();
+            } else {
+                loadMoreTransactions();
+            }
+        }
+    }
+
+    // Função para carregar mais transações
+    function loadMoreTransactions() {
+        if (isLoading) return;
+        
+        const startIndex = currentPage * PAGE_SIZE;
+        const endIndex = startIndex + PAGE_SIZE;
+        const transactionsToShow = filteredTransactions.slice(startIndex, endIndex);
+        
+        if (transactionsToShow.length === 0 && currentPage === 0) {
+            return;
+        }
+        
+        displayTransactions(transactionsToShow);
+        currentPage++;
+    }
+
+    // Função para exibir transações
+    function displayTransactions(transactions) {
+        const transactionsList = document.getElementById('transactions-list');
+        if (!transactionsList) return;
+
+        // Remover loading state se existir
+        const loadingElement = transactionsList.querySelector('.loading');
+        if (loadingElement) {
+            loadingElement.remove();
+        }
+
+        transactions.forEach(transaction => {
+            const transactionCard = createTransactionCard(transaction);
+            transactionsList.appendChild(transactionCard);
+        });
+    }
+
+    // Função para criar card de transação
+    function createTransactionCard(transaction) {
+        const li = document.createElement('li');
+        li.className = 'transaction-card';
+        
+        const isPositive = transaction.amount > 0;
+        const amountClass = isPositive ? 'amount-positive' : 'amount-negative';
+        const borderClass = isPositive ? 'border-income' : 'border-expense';
+        const amountSign = isPositive ? '+' : '';
+        const absoluteAmount = Math.abs(transaction.amount);
+        
+        // Mapear tipos para nomes amigáveis
+        const typeNames = {
+            'deposit': 'Depósito',
+            'withdrawal': 'Saque',
+            'purchase': 'Compra',
+            'referral_bonus': 'Bônus Indicação',
+            'daily_checkin': 'Check-in Diário',
+            'product_income': 'Rendimento Produto',
+            'task': 'Tarefa Concluída'
+        };
+        
+        const typeName = typeNames[transaction.type] || transaction.type;
+        const formattedDate = new Date(transaction.created_at).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        li.className = `transaction-card ${borderClass}`;
+        li.innerHTML = `
+            <div class="transaction-header">
+                <div class="transaction-name">${transaction.description || typeName}</div>
+                <div class="transaction-amount ${amountClass}">
+                    ${amountSign}${absoluteAmount} KZ
+                </div>
+            </div>
+            <div class="transaction-details">
+                <div class="transaction-type">${typeName}</div>
+                <div class="transaction-date">${formattedDate}</div>
+            </div>
+        `;
+
+        return li;
+    }
+
+    // Função para configurar scroll infinito
+    function setupInfiniteScroll() {
+        const transactionsList = document.getElementById('transactions-list');
+        if (!transactionsList) return;
+        
+        window.addEventListener('scroll', () => {
+            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+            
+            // Verificar se chegou perto do final
+            if (scrollTop + clientHeight >= scrollHeight - 100 && !isLoading) {
+                loadMoreTransactions();
+            }
+        });
+    }
+
+    // Função para configurar filtros
+    function setupFilters() {
+        const filterButtons = document.querySelectorAll('.filter-button');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remover classe active de todos os botões
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Adicionar classe active ao botão clicado
+                button.classList.add('active');
+                
+                // Aplicar filtro
+                const filter = button.getAttribute('data-filter');
+                applyFilter(filter);
+            });
+        });
+    }
+
+    // Função de inicialização
+    function init() {
+        const token = getToken();
+        
+        if (!token) {
+            redirectToLogin();
+            return;
+        }
+
+        // Configurar funcionalidades
+        setupInfiniteScroll();
+        setupFilters();
+        
+        // Carregar transações
+        fetchUserTransactions();
+    }
+
+    // Inicializar quando o documento estiver pronto
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(init, 100);
+    });
+</script>
+    <style>
+        .game1 {
+            border-radius: 50%;
+            animation: rotate1 2s linear infinite;
+        }
+        
+        @keyframes rotate1 {
+            0% {
+                transform: rotateZ(0deg);
+            }
+            100% {
+                transform: rotateZ(360deg);
+            }
+        }
+
+        /* Estilos para os toasts */
+        .toast-success {
+            background: linear-gradient(135deg, #10b981, #059669, #047857) !important;
+        }
+        
+        .toast-error {
+            background: linear-gradient(135deg, #ef4444, #dc2626, #b91c1c) !important;
+        }
+        
+        .toast-info {
+            background: linear-gradient(135deg, #3b82f6, #2563eb, #1d4ed8) !important;
+        }
+    </style>
+</body>
+</html>

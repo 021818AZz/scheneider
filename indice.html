@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html class="pixel-ratio-3 retina android android-5 android-5-0 watch-active-state">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>Schneider</title>
+    <!-- Adicionar Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        /* Header Section */
+        .header-banner {
+            position: relative;
+            background: linear-gradient(135deg, #1565c0, #1976d2, #1e88e5) !important;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Farm Image Section */
+        .farm-image {
+            width: 100%;
+            height: auto;
+        }
+
+        .farm-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Balance Section */
+        .balance-container {
+            background-color: #0d47a1;
+            border-radius: 10px;
+            margin: -40px 15px 15px;
+            padding: 8px;
+            box-shadow: 2px 2px 10px rgb(0 0 0 / 50%);
+            position: relative;
+            z-index: 10;
+            border: 1px solid #1565c0;
+        }
+
+        .balance-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .balance-box {
+            flex: 1;
+            text-align: center;
+        }
+
+        .balance-label {
+            color: #bbdefb;
+            font-size: 12px;
+            margin-bottom: 5px;
+            margin-top: 8px;
+        }
+
+        .balance-amount {
+            font-size: 15px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .balance-amount.withdraw {
+            color: #ffffff;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            justify-content: space-around;
+            background-color: #0d47a1;
+            border-radius: 10px;
+            margin: 0 15px 15px;
+            padding: 15px 0;
+            box-shadow: 2px 2px 10px rgb(0 0 0 / 50%);
+            border: 1px solid #1565c0;
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #e3f2fd;
+        }
+
+        .action-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .action-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .action-label {
+            font-size: 12px;
+        }
+
+        /* Product Cards */
+        .product-section {
+            padding: 0 15px;
+        }
+
+        .product-card {
+            background-color: #0d47a1;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 2px 2px 10px rgb(0 0 0 / 50%);
+            border: 1px solid #1565c0;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #bbdefb;
+        }
+
+        .product-detail {
+            display: flex;
+            gap: 15px;
+            line-height: 2.8;
+        }
+
+        .detail-label {
+            color: #bbdefb;
+            font-size: 16px;
+        }
+
+        .detail-value {
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 16px;
+            text-align: right;
+        }
+
+        .product-image {
+            width: 100px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-left: 1px;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 15px;
+            background: linear-gradient(135deg, #1565c0, #1976d2) !important;
+        }
+
+        .price-display {
+            font-weight: bold;
+            font-size: 18px;
+            color: white;
+        }
+
+        .invest-btn {
+            background: #ffffff;
+            color: #0d47a1;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 2px 2px 10px rgb(0 0 0 / 30%);
+            transition: all 0.3s ease;
+        }
+
+        .invest-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 2px 4px 15px rgb(0 0 0 / 40%);
+            background: #4caf50;
+            color: #000;
+        }
+
+        .invest-btn-disabled {
+            background: #555 !important;
+            color: #aaa;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: not-allowed;
+        }
+
+        /* Cores personalizadas para os toasts */
+        .toast-success {
+            background: linear-gradient(135deg, #1565c0, #1976d2) !important;
+        }
+
+        .toast-error {
+            background: linear-gradient(135deg, #0d47a1, #1565c0) !important;
+        }
+
+        .toast-info {
+            background: linear-gradient(135deg, #1976d2, #42a5f5) !important;
+        }
+
+        /* Welcome Modal Styles */
+        .welcome-modal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #0d47a1;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+            border: 1px solid #1565c0;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1565c0, #1976d2);
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .modal-header span {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-body {
+            max-height: 400px;
+            overflow: auto;
+            padding: 10px;
+            background: linear-gradient(180deg, #0d47a1 0%, #1565c0 100%);
+        }
+
+        .welcome-text {
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .welcome-text p {
+            color: #e3f2fd;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .modal-footer {
+            padding: 10px;
+            background: #0d47a1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .telegram-button {
+            background: linear-gradient(135deg, #1565c0, #1976d2);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(21, 101, 192, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .telegram-button:hover {
+            background: linear-gradient(135deg, #1976d2, #1e88e5);
+        }
+
+        .confirm-button {
+            background: linear-gradient(135deg, #1565c0, #1976d2);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(21, 101, 192, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .confirm-button:hover {
+            background: linear-gradient(135deg, #1976d2, #1e88e5);
+        }
+
+        .button-icon {
+            margin-right: 10px;
+            font-size: 20px;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button-icon img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .game1 {
+            border-radius: 50%;
+            animation: rotate1 2s linear infinite;
+        }
+
+        @keyframes rotate1 {
+            0% {
+                transform: rotateZ(0deg);
+            }
+            100% {
+                transform: rotateZ(360deg);
+            }
+        }
+
+        .zxc {
+            width: 60px !important;
+            height: 60px !important;
+            margin-top: -30px !important;
+            border-radius: 50% !important;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #0d47a1;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            box-shadow: 0 -1px 3px rgba(0,0,0,0.5);
+            max-width: 480px;
+            margin: 0 auto;
+            border-top: 1px solid #1565c0;
+        }
+
+        .foot_bo {
+            text-align: center;
+            flex: 1;
+        }
+
+        .foot_bo a {
+            text-decoration: none;
+            color: #bbdefb;
+        }
+
+        .foot_bo img {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 4px;
+        }
+
+        .foot_bo p {
+            font-size: 11px;
+            margin: 0;
+        }
+
+        .xz {
+            color: #4caf50 !important;
+            font-weight: bold;
+        }
+
+        .main-content {
+            padding-bottom: 70px;
+        }
+
+        /* Adicionando um pouco de verde como solicitado */
+        .highlight-green {
+            color: #4caf50;
+        }
+
+        .product-title::after {
+            content: " •";
+            color: #4caf50;
+        }
+
+        .balance-amount::before {
+            content: "• ";
+            color: #4caf50;
+            font-size: 18px;
+            margin-right: 2px;
+        }
+        
+        .invest-btn::after {
+            content: " 🟢";
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Header Banner -->
+    <div class="header-banner">
+        Início
+    </div>
+
+    <!-- Farm Image -->
+    <div class="farm-image">
+        <img src="img/0102.png" alt="Farm">
+    </div>
+
+    <!-- Balance Section -->
+    <div class="balance-container">
+        <div class="balance-row">
+            <div class="balance-box">
+                <div class="balance-label">Saldo</div>
+                <div class="balance-amount" id="userBalance">KZ 20</div>
+            </div>
+            <div class="balance-box">
+                <div class="balance-label">Retirada Total</div>
+                <div class="balance-amount withdraw" id="totalWithdrawals">KZ 0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="quick-actions">
+        <a href="/recarregar.html" class="action-btn">
+            <div class="action-icon">
+                <img src="img/recarregar.png" alt="Recharge">
+            </div>
+            <span class="action-label">Recarregar</span>
+        </a>
+        <a href="/sacar.html" class="action-btn">
+            <div class="action-icon">
+                <img src="img/retirar.png" alt="Withdraw">
+            </div>
+            <span class="action-label">Retirar</span>
+        </a>
+        <a href="chekin.html" class="action-btn" id="checkin-btn">
+            <div class="action-icon">
+                <img src="img/checkin.png" alt="Income">
+            </div>
+            <span class="action-label">Check-in</span>
+        </a>
+        <a href="https://zkp518.shop/user/service" class="action-btn">
+            <div class="action-icon">
+                <img src="img/telegrama.png" alt="Telegram">
+            </div>
+            <span class="action-label">Serviço</span>
+        </a>
+    </div>
+
+    <!-- Products Section -->
+    <div class="product-section">
+        <!-- Produtos Schneider atualizados -->
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-info">
+                    <div class="product-title">Scheneider 1</div>
+                    <div class="product-detail">
+                        <div class="detail-label">Preço do produto:</div>
+                        <div class="detail-value"> KZ 5.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Ciclo do produto:</div>
+                        <div class="detail-value">50 dias</div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Rendimento diário:</div>
+                        <div class="detail-value">KZ 700 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label" style="font-size:13px">Rendimento esperado:</div>
+                        <div class="detail-value" style="font-size:13px">KZ 35.000 </div>
+                    </div>
+                </div>
+                <img src="img/produto.jpg" alt="Scheneider 1" class="product-image">
+            </div>
+            <div class="product-footer">
+                <div class="price-display">KZ 5.000 </div>
+                <div class="invest-btn" onclick="investir(1, 5000);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Investir agora&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-info">
+                    <div class="product-title">Scheneider 2</div>
+                    <div class="product-detail">
+                        <div class="detail-label">Preço do produto:</div>
+                        <div class="detail-value"> KZ 15.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Ciclo do produto:</div>
+                        <div class="detail-value">50 dias</div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Rendimento diário:</div>
+                        <div class="detail-value">KZ 2.100 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label" style="font-size:13px">Rendimento esperado:</div>
+                        <div class="detail-value" style="font-size:13px">KZ 105.000 </div>
+                    </div>
+                </div>
+                <img src="img/produto.jpg" alt="Scheneider 2" class="product-image">
+            </div>
+            <div class="product-footer">
+                <div class="price-display">KZ 15.000 </div>
+                <div class="invest-btn" onclick="investir(2, 15000);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Investir agora&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-info">
+                    <div class="product-title">Scheneider 3</div>
+                    <div class="product-detail">
+                        <div class="detail-label">Preço do produto:</div>
+                        <div class="detail-value"> KZ 30.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Ciclo do produto:</div>
+                        <div class="detail-value">50 dias</div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Rendimento diário:</div>
+                        <div class="detail-value">KZ 4.200 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label" style="font-size:13px">Rendimento esperado:</div>
+                        <div class="detail-value" style="font-size:13px">KZ 210.000 </div>
+                    </div>
+                </div>
+                <img src="img/produto.jpg" alt="Scheneider 3" class="product-image">
+            </div>
+            <div class="product-footer">
+                <div class="price-display">KZ 30.000 </div>
+                <div class="invest-btn" onclick="investir(3, 30000);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Investir agora&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-info">
+                    <div class="product-title">Scheneider 4</div>
+                    <div class="product-detail">
+                        <div class="detail-label">Preço do produto:</div>
+                        <div class="detail-value"> KZ 50.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Ciclo do produto:</div>
+                        <div class="detail-value">50 dias</div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Rendimento diário:</div>
+                        <div class="detail-value">KZ 7.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label" style="font-size:13px">Rendimento esperado:</div>
+                        <div class="detail-value" style="font-size:13px">KZ 350.000 </div>
+                    </div>
+                </div>
+                <img src="img/produto.jpg" alt="Scheneider 4" class="product-image">
+            </div>
+            <div class="product-footer">
+                <div class="price-display">KZ 50.000 </div>
+                <div class="invest-btn" onclick="investir(4, 50000);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Investir agora&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-info">
+                    <div class="product-title">Scheneider 5</div>
+                    <div class="product-detail">
+                        <div class="detail-label">Preço do produto:</div>
+                        <div class="detail-value"> KZ 100.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Ciclo do produto:</div>
+                        <div class="detail-value">50 dias</div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Rendimento diário:</div>
+                        <div class="detail-value">KZ 14.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label" style="font-size:13px">Rendimento esperado:</div>
+                        <div class="detail-value" style="font-size:13px">KZ 700.000 </div>
+                    </div>
+                </div>
+                <img src="img/produto.jpg" alt="Scheneider 5" class="product-image">
+            </div>
+            <div class="product-footer">
+                <div class="price-display">KZ 100.000 </div>
+                <div class="invest-btn" onclick="investir(5, 100000);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Investir agora&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-info">
+                    <div class="product-title">Scheneider 6</div>
+                    <div class="product-detail">
+                        <div class="detail-label">Preço do produto:</div>
+                        <div class="detail-value"> KZ 150.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Ciclo do produto:</div>
+                        <div class="detail-value">50 dias</div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Rendimento diário:</div>
+                        <div class="detail-value">KZ 21.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label" style="font-size:13px">Rendimento esperado:</div>
+                        <div class="detail-value" style="font-size:13px">KZ 1.050.000 </div>
+                    </div>
+                </div>
+                <img src="img/produto.jpg" alt="Scheneider 6" class="product-image">
+            </div>
+            <div class="product-footer">
+                <div class="price-display">KZ 150.000 </div>
+                <div class="invest-btn" onclick="investir(6, 150000);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Investir agora&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-info">
+                    <div class="product-title">Scheneider 7</div>
+                    <div class="product-detail">
+                        <div class="detail-label">Preço do produto:</div>
+                        <div class="detail-value"> KZ 250.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Ciclo do produto:</div>
+                        <div class="detail-value">50 dias</div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Rendimento diário:</div>
+                        <div class="detail-value">KZ 35.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label" style="font-size:13px">Rendimento esperado:</div>
+                        <div class="detail-value" style="font-size:13px">KZ 1.750.000 </div>
+                    </div>
+                </div>
+                <img src="img/produto.jpg" alt="Scheneider 7" class="product-image">
+            </div>
+            <div class="product-footer">
+                <div class="price-display">KZ 250.000 </div>
+                <div class="invest-btn" onclick="investir(7, 250000);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Investir agora&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-info">
+                    <div class="product-title">Scheneider 8</div>
+                    <div class="product-detail">
+                        <div class="detail-label">Preço do produto:</div>
+                        <div class="detail-value"> KZ 400.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Ciclo do produto:</div>
+                        <div class="detail-value">50 dias</div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Rendimento diário:</div>
+                        <div class="detail-value">KZ 56.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label" style="font-size:13px">Rendimento esperado:</div>
+                        <div class="detail-value" style="font-size:13px">KZ 2.800.000 </div>
+                    </div>
+                </div>
+                <img src="img/produto.jpg" alt="Scheneider 8" class="product-image">
+            </div>
+            <div class="product-footer">
+                <div class="price-display">KZ 400.000 </div>
+                <div class="invest-btn" onclick="investir(8, 400000);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Investir agora&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-info">
+                    <div class="product-title">Scheneider 9</div>
+                    <div class="product-detail">
+                        <div class="detail-label">Preço do produto:</div>
+                        <div class="detail-value"> KZ 600.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Ciclo do produto:</div>
+                        <div class="detail-value">50 dias</div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Rendimento diário:</div>
+                        <div class="detail-value">KZ 84.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label" style="font-size:13px">Rendimento esperado:</div>
+                        <div class="detail-value" style="font-size:13px">KZ 4.200.000 </div>
+                    </div>
+                </div>
+                <img src="img/produto.jpg" alt="Scheneider 9" class="product-image">
+            </div>
+            <div class="product-footer">
+                <div class="price-display">KZ 600.000 </div>
+                <div class="invest-btn" onclick="investir(9, 600000);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Investir agora&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-info">
+                    <div class="product-title">Scheneider 10</div>
+                    <div class="product-detail">
+                        <div class="detail-label">Preço do produto:</div>
+                        <div class="detail-value"> KZ 1.000.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Ciclo do produto:</div>
+                        <div class="detail-value">50 dias</div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label">Rendimento diário:</div>
+                        <div class="detail-value">KZ 140.000 </div>
+                    </div>
+                    <div class="product-detail">
+                        <div class="detail-label" style="font-size:13px">Rendimento esperado:</div>
+                        <div class="detail-value" style="font-size:13px">KZ 7.000.000 </div>
+                    </div>
+                </div>
+                <img src="img/produto.jpg" alt="Scheneider 10" class="product-image">
+            </div>
+            <div class="product-footer">
+                <div class="price-display">KZ 1.000.000 </div>
+                <div class="invest-btn" onclick="investir(10, 1000000);">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Investir agora&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="height:60px;"></div>
+
+<!-- Welcome Modal Popup -->
+<div class="welcome-modal" style="display: flex;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span>Bem-vindo(a) a Schneider!</span>
+        </div>
+        <div class="modal-body">
+            <div class="welcome-text">
+                <p>Benefícios Especiais</p>
+                <p>Bônus de Cadastro: KZ20</p>
+                <p>Bônus de Check-in Diário: KZ0,50</p>
+                <p>Bônus de Indicação: Incentiva o investimento do usuário</p>
+                <p>Ganhe 30% + 2% + 1% de retorno.</p>
+                <p>Quanto maior sua equipe, maiores as recompensas.</p>
+                <p>Mais recompensas esperam por você!</p>
+                <p>📢 Bônus: Junte-se ao nosso canal oficial no Telegram para mais detalhes!</p>
+                <p>📢🔥 Não perca esta oportunidade, junte-se agora!</p>
+                <p>Aproveite o momento!</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="https://t.me/Torres_VIP1" target="_blank" class="telegram-button">
+                <span class="button-icon"><img src="img/telegram.png" alt="Telegram"></span>
+                <span>Telegram</span>
+            </a>
+            <button class="confirm-button" onclick="closeWelcomeModal()">
+                <span>OK</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <footer>
+     <div class="foot_bo">
+        <a href="/indice.html">
+            <img src="footer/inicio.png"/>
+            <p>Início</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="transacoes.html">
+            <img src="footer/meusprodutos.png"/>
+            <p>Registros</p>
+        </a>
+    </div>
+
+<!--<div class="foot_bo">-->
+<!--    <a href="https://zkp518.shop/task/dayindex">-->
+<!--        <img src="/static/home/img/gift02.png" width="40px" class="game1"/>-->
+<!--        <p>Bônus</p>-->
+<!--    </a>-->
+<!--</div>-->
+
+<!---->
+<!--<div class="foot_bo">-->
+<!--    <a href="https://zkp518.shop/game/index">-->
+<!--        <img src="/static/home/img/ico_zp.png" class="game1"/>-->
+<!--        <p>Jogo</p>-->
+<!--    </a>-->
+<!--</div>-->
+<!---->
+    <div class="foot_bo">
+        <a href="/mostrar.html">
+            <img src="footer/mostrar.png" class="game1"/>
+            <p class="xz" style="color: #1e3a8a;">Mostrar</p>
+        </a>
+    </div>
+
+    <div class="foot_bo">
+        <a href="/compartilhar.html">
+            <img src="footer/compartilhar.png"/>
+            <p>Compartilhar</p>
+        </a>
+    </div>
+
+    <!---->
+    <!--    <div class="foot_bo">-->
+    <!--        <a href="https://zkp518.shop/redpacket/index">-->
+    <!--            <img src="/static/home/img/hb2.png"/>-->
+    <!--            <p class="xz">Reward</p>-->
+    <!--        </a>-->
+    <!--    </div>-->
+    <!---->
+    <div class="foot_bo">
+        <a href="meu.html">
+            <img src="footer/meu.png"/>
+            <p>Meu</p>
+        </a>
+    </div>
+</footer>
+
+<!-- Toastify JS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script>
+    // Configuração da API
+    const API_BASE_URL = 'https://bd-p4q7.onrender.com';
+
+    // Função para obter o token do usuário
+    function getUserToken() {
+        const tokenData = localStorage.getItem('user_token');
+        if (!tokenData) return null;
+        
+        try {
+            const { token, expiry } = JSON.parse(tokenData);
+            if (Date.now() > expiry) {
+                localStorage.removeItem('user_token');
+                localStorage.removeItem('user_id');
+                return null;
+            }
+            return token;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // Função para obter o ID do usuário
+    function getUserId() {
+        return localStorage.getItem('user_id');
+    }
+
+    // Toast personalizado
+    function showToast(message, type = 'info') {
+        Toastify({
+            text: message,
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            stopOnFocus: true,
+            className: type === 'error' ? 'toast-error' : 
+                      type === 'success' ? 'toast-success' : 'toast-info',
+            style: {
+                width: "100%",
+                left: "0",
+                right: "0",
+                borderRadius: "0",
+                textAlign: "center",
+                padding: "15px",
+                fontSize: "14px",
+                fontWeight: "bold"
+            }
+        }).showToast();
+    }
+
+    // Carregar dados do usuário
+    async function loadUserData() {
+        const token = getUserToken();
+        const userId = getUserId();
+        
+        if (!token || !userId) {
+            showToast('Faça login para continuar', 'error');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+            return;
+        }
+
+        try {
+            // Carregar perfil do usuário
+            const profileResponse = await fetch(`${API_BASE_URL}/api/user/profile`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!profileResponse.ok) {
+                throw new Error('Erro ao carregar dados do usuário');
+            }
+
+            const profileData = await profileResponse.json();
+            
+            if (profileData.success) {
+                // Atualizar saldo
+                document.getElementById('userBalance').textContent = `KZ ${profileData.data.wallet_balance.toLocaleString('pt-BR')}`;
+            }
+
+            // Carregar total de retiradas
+            await loadTotalWithdrawals(token);
+            
+            // Verificar status do check-in
+            await checkCheckinStatus(token);
+
+        } catch (error) {
+            console.error('Erro ao carregar dados:', error);
+            showToast('Erro ao carregar dados', 'error');
+        }
+    }
+
+    // Carregar total de retiradas
+    async function loadTotalWithdrawals(token) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/withdrawals`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    const totalWithdrawals = data.data.withdrawals
+                        .filter(w => w.status === 'completed')
+                        .reduce((sum, withdrawal) => sum + withdrawal.amount, 0);
+                    
+                    document.getElementById('totalWithdrawals').textContent = `KZ ${totalWithdrawals.toLocaleString('pt-BR')}`;
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao carregar retiradas:', error);
+        }
+    }
+
+    // Verificar status do check-in
+    async function checkCheckinStatus(token) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/checkin/status`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const checkinBtn = document.getElementById('checkin-btn');
+                
+                if (data.success) {
+                    if (!data.data.can_checkin) {
+                        checkinBtn.style.opacity = '0.6';
+                        checkinBtn.style.pointerEvents = 'none';
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao verificar check-in:', error);
+        }
+    }
+
+    // Realizar check-in
+    async function performCheckin() {
+        const token = getUserToken();
+        const checkinBtn = document.getElementById('checkin-btn');
+        
+        if (!token) {
+            showToast('Faça login para continuar', 'error');
+            return;
+        }
+
+        checkinBtn.disabled = true;
+        checkinBtn.style.opacity = '0.6';
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/checkin`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showToast('Check-in realizado! +10 KZ adicionados', 'success');
+                
+                // Atualizar saldo
+                await loadUserData();
+                
+                // Desabilitar botão de check-in
+                checkinBtn.style.pointerEvents = 'none';
+            } else {
+                showToast(data.message || 'Erro no check-in', 'error');
+                checkinBtn.disabled = false;
+                checkinBtn.style.opacity = '1';
+            }
+
+        } catch (error) {
+            console.error('Erro no check-in:', error);
+            showToast('Erro de conexão', 'error');
+            checkinBtn.disabled = false;
+            checkinBtn.style.opacity = '1';
+        }
+    }
+
+    // Função de investimento
+    async function investir(productId, amount) {
+        const token = getUserToken();
+        
+        if (!token) {
+            showToast('Faça login para continuar', 'error');
+            return;
+        }
+
+        try {
+            showToast('Processando investimento...', 'info');
+
+            const response = await fetch(`${API_BASE_URL}/api/purchase`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    product_id: `schneider_${productId}`,
+                    product_name: `Scheneider ${productId}`,
+                    amount: amount,
+                    quantity: 1,
+                    daily_return: calculateDailyReturn(amount),
+                    cycle_days: 50
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                let bonusMessage = 'Investimento realizado com sucesso!';
+                
+                // Adicionar informações sobre bônus distribuídos
+                if (data.data.bonuses_distributed && data.data.bonuses_distributed.total > 0) {
+                    const bonuses = data.data.bonuses_distributed;
+                    bonusMessage += ` Bônus distribuídos: N1: KZ ${bonuses.level1}, N2: KZ ${bonuses.level2}, N3: KZ ${bonuses.level3}`;
+                }
+                
+                showToast(bonusMessage, 'success');
+                
+                // Atualizar saldo
+                document.getElementById('userBalance').textContent = `KZ ${data.data.confirmed_balance.toLocaleString('pt-BR')}`;
+                
+            } else {
+                showToast(data.message || 'Erro ao realizar investimento', 'error');
+            }
+
+        } catch (error) {
+            console.error('Erro no investimento:', error);
+            showToast('Erro de conexão com o servidor', 'error');
+        }
+    }
+
+    // Na função calculateDailyReturn, ajuste os valores para 50 dias:
+function calculateDailyReturn(price) {
+    const returns = {
+        5000: 700,      // 700 × 50 = 35.000 ✓
+        15000: 2100,    // 2.100 × 50 = 105.000 ✓
+        30000: 4200,    // 4.200 × 50 = 210.000 ✓
+        50000: 7000,    // 7.000 × 50 = 350.000 ✓
+        100000: 14000,  // 14.000 × 50 = 700.000 ✓
+        150000: 21000,  // 21.000 × 50 = 1.050.000 ✓
+        250000: 35000,  // 35.000 × 50 = 1.750.000 ✓
+        400000: 56000,  // 56.000 × 50 = 2.800.000 ✓
+        600000: 84000,  // 84.000 × 50 = 4.200.000 ✓
+        1000000: 140000 // 140.000 × 50 = 7.000.000 ✓
+    };
+    
+    return returns[price] || Math.floor(price * 0.14);
+}
+    // Modal de boas-vindas
+    function showWelcomeModal() {
+        const modal = document.querySelector('.welcome-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeWelcomeModal() {
+        const modal = document.querySelector('.welcome-modal');
+        if (modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        // Carregar dados do usuário
+        loadUserData();
+        
+        // Mostrar modal de boas-vindas
+        setTimeout(showWelcomeModal, 1000);
+        
+        // Event listener para check-in
+        const checkinBtn = document.getElementById('checkin-btn');
+        if (checkinBtn) {
+            checkinBtn.addEventListener('click', performCheckin);
+        }
+    });
+
+    // Função para formatar valores em KZ
+    function formatCurrency(value) {
+        return `KZ ${value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    // Verificar autenticação em todas as páginas
+    function checkAuth() {
+        const token = getUserToken();
+        if (!token) {
+            window.location.href = 'index.html';
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>
