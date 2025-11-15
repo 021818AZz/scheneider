@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Equipe - Visual Azul</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        :root {
+            --blue-light: #3b82f6;
+            --blue-medium: #1e40af;
+            --blue-dark: #1e3a8a;
+            --blue-darker: #0c1b4d;
+            --blue-gradient: linear-gradient(135deg, #3b82f6, #1e40af, #1e3a8a);
+            --blue-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            --blue-glow: 0 0 10px rgba(59, 130, 246, 0.5);
+            --green-accent: #10b981;
+            --green-glow: 0 0 8px rgba(16, 185, 129, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0c1b4d 0%, #1e3a8a 100%);
+            color: #f5f5f5;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+            overflow-x: hidden;
+        }
+
+        #app {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .headers {
+            background: var(--blue-gradient);
+            padding: 10px 15px;
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 50px;
+        }
+
+        .head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .myName img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .name {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .lang, .notice {
+            width: 24px;
+            height: 24px;
+        }
+
+        .lang img, .notice img {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Content Area */
+        .content-container {
+            flex: 1;
+            padding: 60px 12px 60px 12px;
+            background-color: #0c1b4d;
+            overflow-y: auto;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Cards */
+        .itemBox {
+            background: #1e3a8a;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            position: relative;
+        }
+
+        .itemBox::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--green-accent), transparent);
+            box-shadow: var(--green-glow);
+        }
+
+        .tab {
+            background: var(--blue-gradient);
+            padding: 12px 15px;
+            color: #ffffff;
+            font-weight: bold;
+            position: relative;
+            border-radius: 16px 16px 0 0;
+            font-size: 15px;
+        }
+
+        .tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--green-accent), transparent);
+            box-shadow: var(--green-glow);
+        }
+
+        /* URL Container */
+        .url-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 15px;
+            background: var(--blue-gradient);
+            padding: 12px;
+            border-radius: 16px;
+            box-shadow: var(--blue-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .url-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--green-accent), transparent);
+            box-shadow: var(--green-glow);
+        }
+
+        .url-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            flex-shrink: 0;
+        }
+
+        .url {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .url .n {
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .url .val {
+            color: #ffffff;
+            background-color: rgba(30, 64, 175, 0.8);
+            padding: 8px 10px;
+            border-radius: 12px;
+            word-break: break-all;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Buttons */
+        .btn2 {
+            background: var(--blue-gradient);
+            color: #ffffff;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--blue-shadow);
+            width: calc(100% - 30px);
+            margin: 15px;
+            font-size: 15px;
+            display: block;
+        }
+
+        .btn2:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Info Items */
+        .info-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--blue-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .info-icon img {
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(1);
+        }
+
+        .info-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .info-title {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--blue-light);
+        }
+
+        /* Data Grid */
+        .db {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px 5px;
+            gap: 8px;
+        }
+
+        .db li {
+            text-align: center;
+            flex: 1;
+            min-width: 45%;
+            padding: 8px 5px;
+        }
+
+        .db .s {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--blue-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 6px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            box-shadow: var(--blue-shadow);
+        }
+
+        .db .n {
+            font-size: 11px;
+            color: #aaa;
+            line-height: 1.2;
+        }
+
+        /* Levels */
+        .level-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .level-badge {
+            position: absolute;
+            top: -8px;
+            right: 12px;
+            background: var(--blue-gradient);
+            color: #ffffff;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 10px;
+            z-index: 2;
+            box-shadow: var(--blue-shadow);
+        }
+
+        .level-content {
+            padding: 15px 12px 12px;
+            background: #1e3a8a;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            margin: 0 12px;
+        }
+
+        .level-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--green-accent), transparent);
+            box-shadow: var(--green-glow);
+        }
+
+        .level-content .name {
+            text-align: left;
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: var(--blue-light);
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--blue-gradient);
+            box-shadow: 0 -2px 10px rgba(59, 130, 246, 0.5);
+            z-index: 1000;
+            height: 50px;
+        }
+
+        .footers {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .footers .item {
+            flex: 1;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .footers .item div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .footers .item img {
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footers .item span {
+            color: #ffffff !important;
+            font-weight: 600;
+            font-size: 10px;
+        }
+
+        /* Loading */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(59, 130, 246, 0.3);
+            border-top: 4px solid var(--blue-light);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: var(--blue-glow);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Toast */
+        .copy-toast {
+            position: fixed;
+            left: 50%;
+            top: 70px;
+            transform: translateX(-50%);
+            background: rgba(15, 30, 80, 0.95);
+            color: #3b82f6;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity .3s ease, transform .3s ease;
+            pointer-events: none;
+            border: 1px solid var(--blue-medium);
+            box-shadow: var(--blue-glow);
+            max-width: 80%;
+            text-align: center;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Utility Classes */
+        .wrap {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .bet {
+            justify-content: space-between;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .flex1 {
+            flex: 1;
+        }
+
+        .tac {
+            text-align: center;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 320px) {
+            .content-container {
+                padding: 60px 8px 60px 8px;
+            }
+            
+            .url-container, .btn2 {
+                margin-left: 8px;
+                margin-right: 8px;
+            }
+            
+            .db .s {
+                width: 45px;
+                height: 45px;
+                font-size: 11px;
+            }
+            
+            .db .n {
+                font-size: 10px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="page">
+            <!-- Header -->
+            <div class="headers">
+                <div class="head">
+                    <div class="myName">
+                        <img src="img/login.jpg" alt="Logo">
+                    </div>
+                    <div class="name">Equipe</div>
+                    <div class="flex1"></div>
+                    <div class="lang">
+                        <img src="data:image/png;base64,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" alt="">
+                    </div>
+                    <div class="notice">
+                        <img src="data:image/png;base64,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" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="content-container">
+                <div class="container">
+                    <!-- Team Overview -->
+                    <div class="itemBox">
+                        <div class="tab wrap bet">
+                            <div class="name">Visão geral da equipe</div>
+                        </div>
+                        <div class="url-container">
+                            <img src="img/link.png" alt="Link" class="url-image">
+                            <div class="url">
+                                <div class="n">Link de convite</div>
+                                <div class="val" id="invitationLink">https://scheneider.pages.dev/?ref=61806841</div>
+                            </div>
+                        </div>
+                        <button class="btn2" onclick="copyLink()">Copiar link do convite</button>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <img src="img/transferir.png" alt="">
+                            </div>
+                            <div class="info-content">
+                                <div class="info-title">Pessoas adicionadas</div>
+                                <div class="info-value" id="peopleAdded">0</div>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <img src="img/transferir.png" alt="">
+                            </div>
+                            <div class="info-content">
+                                <div class="info-title">Renda adicionada</div>
+                                <div class="info-value" id="incomeAdded">KZ 0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Income Analysis -->
+                    <div class="itemBox">
+                        <div class="tab wrap bet">
+                            <div class="name">Análise de receita</div>
+                            <div class="set">
+                                <span id="lastUpdate">Última atualização</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-content">
+                                <div class="info-title">Tamanho cumulativo da equipe</div>
+                                <div class="info-value" id="teamSize">0</div>
+                            </div>
+                            <div class="s" onclick="window.location.href='/comicao.html'">Ver comissões</div>
+                        </div>
+                        <ul class="db">
+                            <li>
+                                <div class="s" id="cumulativeRecharge">KZ 0</div>
+                                <div class="n">Recarga cumulativa</div>
+                            </li>
+                            <li>
+                                <div class="s" id="processingRecharge">KZ 0</div>
+                                <div class="n">Processando recarga</div>
+                            </li>
+                            <li>
+                                <div class="s" id="validWithdrawal">KZ 0</div>
+                                <div class="n">Retirada Válida</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Level Data -->
+                    <div class="itemBox">
+                        <div class="tab wrap bet">
+                            <div class="name">Últimas três gerações</div>
+                        </div>
+                        
+                        <!-- Level 1 -->
+                        <div class="level-container">
+                            <div class="level-badge">Nível 1</div>
+                            <div class="level-content">
+                                <div class="name">Dados Nível 1</div>
+                                <ul class="db">
+                                    <li>
+                                        <div class="s" id="level1Members">0</div>
+                                        <div class="n">Membro Válido</div>
+                                    </li>
+                                    <li>
+                                        <div class="s" id="level1Recharge">KZ 0</div>
+                                        <div class="n">Recarga de equipe</div>
+                                    </li>
+                                    <li>
+                                        <div class="s" id="level1Withdrawal">KZ 0</div>
+                                        <div class="n">Retirada da equipe</div>
+                                    </li>
+                                    <li>
+                                        <div class="s">27%</div>
+                                        <div class="n">Comissão</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Level 2 -->
+                        <div class="level-container">
+                            <div class="level-badge">Nível 2</div>
+                            <div class="level-content">
+                                <div class="name">Dados Nível 2</div>
+                                <ul class="db">
+                                    <li>
+                                        <div class="s" id="level2Members">0</div>
+                                        <div class="n">Membro Válido</div>
+                                    </li>
+                                    <li>
+                                        <div class="s" id="level2Recharge">KZ 0</div>
+                                        <div class="n">Recarga de equipe</div>
+                                    </li>
+                                    <li>
+                                        <div class="s" id="level2Withdrawal">KZ 0</div>
+                                        <div class="n">Retirada da equipe</div>
+                                    </li>
+                                    <li>
+                                        <div class="s">3%</div>
+                                        <div class="n">Comissão</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Level 3 -->
+                        <div class="level-container">
+                            <div class="level-badge">Nível 3</div>
+                            <div class="level-content">
+                                <div class="name">Dados Nível 3</div>
+                                <ul class="db">
+                                    <li>
+                                        <div class="s" id="level3Members">0</div>
+                                        <div class="n">Membro Válido</div>
+                                    </li>
+                                    <li>
+                                        <div class="s" id="level3Recharge">KZ 0</div>
+                                        <div class="n">Recarga de equipe</div>
+                                    </li>
+                                    <li>
+                                        <div class="s" id="level3Withdrawal">KZ 0</div>
+                                        <div class="n">Retirada da equipe</div>
+                                    </li>
+                                    <li>
+                                        <div class="s">1%</div>
+                                        <div class="n">Comissão</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="footers">
+                    <div class="item" onclick="window.location.href='/indice.html'">
+                        <div>
+                            <img src="footer/inicio.png" alt="Lar">
+                            <span>Inicio</span>
+                        </div>
+                    </div>
+                    <div class="item" onclick="window.location.href='transacoes.html'">
+                        <div>
+                            <img src="footer/meusprodutos.png" alt="Registros">
+                            <span>Registros</span>
+                        </div>
+                    </div>
+                    <div class="item" onclick="window.location.href='/mostrar.html'">
+                        <div>
+                            <img src="footer/mostrar.png" alt="Produtos">
+                            <span>Mostrar</span>
+                        </div>
+                    </div>
+                    <div class="item" onclick="window.location.href='/compartilhar.html'">
+                        <div>
+                            <img src="footer/compartilhar.png" alt="Equipe">
+                            <span>Compartilhar</span>
+                        </div>
+                    </div>
+                    <div class="item" onclick="window.location.href='meu.html'">
+                        <div>
+                            <img src="footer/meu.png" alt="Meu">
+                            <span>Meu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script>
+        // Configuração da API
+        const API_BASE_URL = 'https://bd-p4q7.onrender.com';
+        
+        // Função para obter token do localStorage
+        function getAuthToken() {
+            const tokenData = localStorage.getItem('user_token');
+            if (!tokenData) return null;
+
+            try {
+                const { token, expiry } = JSON.parse(tokenData);
+                // Verificar expiração
+                if (Date.now() > expiry) {
+                    localStorage.removeItem('user_token');
+                    localStorage.removeItem('user_id');
+                    return null;
+                }
+                return token;
+            } catch (e) {
+                console.error('Erro ao processar token:', e);
+                return null;
+            }
+        }
+
+        // Função para mostrar loading
+        function showLoading() {
+            document.getElementById('loading').style.display = 'flex';
+        }
+
+        // Função para esconder loading
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Função para mostrar toast
+        function showCopyToast(text = 'Copiado!') {
+            let t = document.getElementById('copyToast');
+            if (!t) {
+                t = document.createElement('div');
+                t.id = 'copyToast';
+                t.className = 'copy-toast';
+                document.body.appendChild(t);
+            }
+            t.textContent = text;
+            t.classList.add('show');
+            clearTimeout(t._h);
+            t._h = setTimeout(() => t.classList.remove('show'), 1400);
+        }
+
+        // Copiar link
+        async function copyLink() {
+            const text = document.getElementById('invitationLink').textContent;
+            const toCopy = String(text || '').replace(/\s+/g, '');
+
+            let ok = false;
+            try {
+                await navigator.clipboard.writeText(toCopy);
+                ok = true;
+            } catch (e) {
+                try {
+                    const input = document.createElement('input');
+                    input.value = toCopy;
+                    input.style.position = 'fixed';
+                    input.style.opacity = '0';
+                    document.body.appendChild(input);
+                    input.select();
+                    input.setSelectionRange(0, input.value.length);
+                    ok = document.execCommand('copy');
+                    document.body.removeChild(input);
+                } catch (_) {}
+            }
+
+            if (ok) {
+                showCopyToast('Link de convite copiado!');
+            } else {
+                alert('Não foi possível copiar. Toque e segure para copiar manualmente.');
+            }
+        }
+
+        // Buscar dados da equipe
+        async function fetchTeamData() {
+            const authToken = getAuthToken();
+            const userId = localStorage.getItem('user_id');
+
+            if (!authToken || !userId) {
+                console.error('Usuário não autenticado');
+                window.location.href = '/index.html';
+                return;
+            }
+
+            showLoading();
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/team/statistics`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    updateTeamData(data.data);
+                } else {
+                    console.error('Erro ao buscar dados da equipe:', response.status);
+                    // Fallback para dados de exemplo se a API falhar
+                    useMockData();
+                }
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                // Fallback para dados de exemplo em caso de erro
+                useMockData();
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Fallback para dados de exemplo
+        function useMockData() {
+            const mockData = {
+                team_overview: {
+                    people_added: 15,
+                    income_added: 2500,
+                    invitation_link: 'https://scheneider.pages.dev/?ref=61806841'
+                },
+                income_analysis: {
+                    team_size: 45,
+                    cumulative_recharge: 12500,
+                    processing_recharge: 3200,
+                    valid_withdrawal: 7800
+                },
+                level_data: {
+                    level1: {
+                        valid_members: 8,
+                        team_recharge: 8500,
+                        team_withdrawal: 5200
+                    },
+                    level2: {
+                        valid_members: 12,
+                        team_recharge: 2800,
+                        team_withdrawal: 1800
+                    },
+                    level3: {
+                        valid_members: 25,
+                        team_recharge: 1200,
+                        team_withdrawal: 800
+                    }
+                }
+            };
+            updateTeamData(mockData);
+        }
+
+        // Atualizar interface
+        function updateTeamData(data) {
+            if (!data) return;
+
+            if (data.team_overview) {
+                document.getElementById('peopleAdded').textContent = data.team_overview.people_added || '0';
+                document.getElementById('incomeAdded').textContent = `KZ ${data.team_overview.income_added || '0'}`;
+                if (data.team_overview.invitation_link) {
+                    document.getElementById('invitationLink').textContent = data.team_overview.invitation_link;
+                }
+            }
+
+            if (data.income_analysis) {
+                document.getElementById('teamSize').textContent = data.income_analysis.team_size || '0';
+                document.getElementById('cumulativeRecharge').textContent = `KZ ${data.income_analysis.cumulative_recharge || '0'}`;
+                document.getElementById('processingRecharge').textContent = `KZ ${data.income_analysis.processing_recharge || '0'}`;
+                document.getElementById('validWithdrawal').textContent = `KZ ${data.income_analysis.valid_withdrawal || '0'}`;
+            }
+
+            if (data.level_data) {
+                if (data.level_data.level1) {
+                    document.getElementById('level1Members').textContent = data.level_data.level1.valid_members || '0';
+                    document.getElementById('level1Recharge').textContent = `KZ ${data.level_data.level1.team_recharge || '0'}`;
+                    document.getElementById('level1Withdrawal').textContent = `KZ ${data.level_data.level1.team_withdrawal || '0'}`;
+                }
+                if (data.level_data.level2) {
+                    document.getElementById('level2Members').textContent = data.level_data.level2.valid_members || '0';
+                    document.getElementById('level2Recharge').textContent = `KZ ${data.level_data.level2.team_recharge || '0'}`;
+                    document.getElementById('level2Withdrawal').textContent = `KZ ${data.level_data.level2.team_withdrawal || '0'}`;
+                }
+                if (data.level_data.level3) {
+                    document.getElementById('level3Members').textContent = data.level_data.level3.valid_members || '0';
+                    document.getElementById('level3Recharge').textContent = `KZ ${data.level_data.level3.team_recharge || '0'}`;
+                    document.getElementById('level3Withdrawal').textContent = `KZ ${data.level_data.level3.team_withdrawal || '0'}`;
+                }
+            }
+
+            document.getElementById('lastUpdate').textContent = `Atualizado: ${new Date().toLocaleTimeString()}`;
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function () {
+            if (getAuthToken() && localStorage.getItem('user_id')) {
+                fetchTeamData();
+                setInterval(fetchTeamData, 30000); // Atualizar a cada 30 segundos
+            } else {
+                window.location.href = '/index.html';
+            }
+        });
+
+        // Função para formatar números
+        function formatNumber(num) {
+            return new Intl.NumberFormat('pt-AO').format(num);
+        }
+
+        function formatAllNumbers() {
+            const numberElements = document.querySelectorAll('.info-value, .s');
+            numberElements.forEach(element => {
+                const text = element.textContent;
+                const match = text.match(/(KZ\s*)?([\d,\.]+)/);
+                if (match) {
+                    const currency = match[1] || '';
+                    const number = parseFloat(match[2].replace(/[^\d]/g, ''));
+                    if (!isNaN(number)) {
+                        element.textContent = currency + formatNumber(number);
+                    }
+                }
+            });
+        }
+
+        setTimeout(formatAllNumbers, 100);
+    </script>
+</body>
+</html>
