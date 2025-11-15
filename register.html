@@ -202,6 +202,19 @@
             color: white;
             font-size: 18px;
         }
+        
+        /* Estilo para código de convite preenchido automaticamente */
+        .invite-code-auto {
+            background-color: #f0f8ff;
+            border: 1px solid #3b82f6;
+        }
+        
+        .invite-code-info {
+            font-size: 12px;
+            color: #3b82f6;
+            margin-top: 5px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -243,6 +256,7 @@
                     </div>
                     <input type="text" id="inviteCode" name="inviteCode" value="" placeholder="Por favor, insira o código de convite">
                 </div>
+                <div id="inviteCodeInfo" class="invite-code-info" style="display: none;"></div>
             </div>
             <button type="button" class="register-button btn_submit_my">Criar Conta</button>
         </form>
@@ -265,6 +279,36 @@
     // Configuração da API
     const API_BASE_URL = 'https://bd-p4q7.onrender.com';
     const AREA_CODE = '244';
+
+    // Função para extrair parâmetros da URL
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        const results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    // Função para preencher automaticamente o código de convite
+    function autoFillInviteCode() {
+        const inviteCodeParam = getUrlParameter('ref');
+        
+        if (inviteCodeParam) {
+            const inviteCodeInput = document.getElementById('inviteCode');
+            const inviteCodeInfo = document.getElementById('inviteCodeInfo');
+            
+            // Preencher o campo com o código da URL
+            inviteCodeInput.value = inviteCodeParam;
+            
+            // Adicionar classe de estilo para indicar preenchimento automático
+            inviteCodeInput.classList.add('invite-code-auto');
+            
+            // Mostrar informação sobre o código preenchido automaticamente
+            inviteCodeInfo.textContent = `Código de convite preenchido automaticamente: ${inviteCodeParam}`;
+            inviteCodeInfo.style.display = 'block';
+            
+            console.log('Código de convite preenchido automaticamente:', inviteCodeParam);
+        }
+    }
 
     // Função para mostrar toast
     function showToast(message, type = 'info') {
@@ -366,6 +410,9 @@
 
     // Código principal quando o documento estiver pronto
     $(document).ready(function() {
+        // Preencher automaticamente o código de convite se estiver na URL
+        autoFillInviteCode();
+        
         // Verificar se o código de convite está preenchido e desabilitar se necessário
         if('' != '') {
             $('#inviteCode').attr("disabled", "disabled");
