@@ -483,7 +483,7 @@
     function redirectToLogin() {
         showToast('Sessão expirada. Faça login novamente.', 'error');
         setTimeout(() => {
-            window.location.href = '/login.html';
+            window.location.href = '/index.html';
         }, 2000);
     }
 
@@ -670,7 +670,7 @@
                     <div class="metric-label">Pagamentos</div>
                 </div>
                 <div class="metric">
-                    <div class="metric-value">${product.cycle_days || 30}</div>
+                    <div class="metric-value">${product.cycle_days || 50}</div>
                     <div class="metric-label">Dias</div>
                 </div>
             </div>
