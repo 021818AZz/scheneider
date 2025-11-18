@@ -1,12 +1,18 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html class="pixel-ratio-3 retina android android-5 android-5-0 watch-active-state">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
     <title>Histórico de Retiradas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Adicionar Toastify CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <style>
+    <style type="text/css">
         * {
             margin: 0;
             padding: 0;
@@ -526,49 +532,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script>
-        // Dados de exemplo para demonstração
-        const sampleWithdrawals = [
-            {
-                id: 1,
-                created_at: "2023-11-15T14:30:00Z",
-                status: "completed",
-                net_amount: 2500.00,
-                iban: "AO06004000001123123450101",
-                bank_name: "Banco de Angola"
-            },
-            {
-                id: 2,
-                created_at: "2023-11-10T09:15:00Z",
-                status: "pending",
-                net_amount: 1800.50,
-                iban: "AO06004000001123123450102",
-                bank_name: "BFA"
-            },
-            {
-                id: 3,
-                created_at: "2023-11-05T16:45:00Z",
-                status: "completed",
-                net_amount: 3200.75,
-                iban: "AO06004000001123123450103",
-                bank_name: "BIC"
-            },
-            {
-                id: 4,
-                created_at: "2023-10-28T11:20:00Z",
-                status: "failed",
-                net_amount: 1500.00,
-                iban: "AO06004000001123123450104",
-                bank_name: "Standard Bank"
-            },
-            {
-                id: 5,
-                created_at: "2023-10-20T13:10:00Z",
-                status: "completed",
-                net_amount: 2750.25,
-                iban: "AO06004000001123123450105",
-                bank_name: "Banco Económico"
-            }
-        ];
+        // Configuração da API
+        const API_BASE_URL = 'https://bd-p4q7.onrender.com';
 
         // Função para mostrar toast
         function showToast(message, type = 'info') {
@@ -650,18 +615,10 @@
             const token = getUserToken();
             
             if (!token) {
-                // Para demonstração, vamos usar dados de exemplo
-                toggleElement('loadingState', true);
-                toggleElement('emptyState', false);
-                
+                showToast('Sessão expirada. Faça login novamente.', 'error');
                 setTimeout(() => {
-                    toggleElement('loadingState', false);
-                    displayWithdrawals(sampleWithdrawals);
-                    toggleElement('emptyState', false);
-                    document.getElementById('userBalance').textContent = formatCurrency(12500.75);
-                    showToast('Histórico carregado com sucesso', 'success');
-                }, 1500);
-                
+                    window.location.href = 'index.html';
+                }, 2000);
                 return;
             }
 
@@ -669,27 +626,57 @@
                 toggleElement('loadingState', true);
                 toggleElement('emptyState', false);
                 
-                // Aqui iria a chamada real à API
-                // const response = await fetch(`${API_BASE_URL}/api/withdrawals`, {
-                //     headers: {
-                //         'Authorization': `Bearer ${token}`
-                //     }
-                // });
+                const response = await fetch(`${API_BASE_URL}/api/withdrawals`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
 
-                // Para demonstração, vamos usar dados de exemplo
-                setTimeout(() => {
-                    toggleElement('loadingState', false);
-                    displayWithdrawals(sampleWithdrawals);
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar histórico');
+                }
+
+                const data = await response.json();
+                
+                toggleElement('loadingState', false);
+                
+                if (data.success && data.data.withdrawals.length > 0) {
+                    displayWithdrawals(data.data.withdrawals);
                     toggleElement('emptyState', false);
-                    document.getElementById('userBalance').textContent = formatCurrency(12500.75);
                     showToast('Histórico carregado com sucesso', 'success');
-                }, 1500);
+                } else {
+                    toggleElement('emptyState', true);
+                }
+
+                // Carregar saldo do usuário
+                await loadUserBalance(token);
 
             } catch (error) {
                 console.error('Erro ao carregar histórico:', error);
                 toggleElement('loadingState', false);
                 toggleElement('emptyState', true);
                 showToast('Erro ao carregar histórico', 'error');
+            }
+        }
+
+        // Carregar saldo do usuário
+        async function loadUserBalance(token) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        document.getElementById('userBalance').textContent = 
+                            formatCurrency(data.data.wallet_balance || 0);
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao carregar saldo:', error);
             }
         }
 
