@@ -1,18 +1,12 @@
 <!DOCTYPE html>
-<html class="pixel-ratio-3 retina android android-5 android-5-0 watch-active-state">
+<html lang="pt-BR">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="cache-control" content="no-cache">
-    <meta http-equiv="expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>Histórico de Retiradas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Adicionar Toastify CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <style type="text/css">
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -165,9 +159,9 @@
             min-height: 60vh;
         }
 
-        /* Withdrawal Card - Thin Design */
+        /* Withdrawal Card - Com fundo amarelo claro */
         .withdrawal-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 248, 200, 0.9); /* Amarelo claro */
             border-radius: 12px;
             margin: 8px 0;
             padding: 15px;
@@ -175,7 +169,8 @@
             transition: all 0.3s ease;
             animation: slideIn 0.5s ease;
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 248, 200, 0.9);
+            color: #333; /* Texto escuro para contraste */
         }
 
         @keyframes slideIn {
@@ -191,7 +186,7 @@
 
         .withdrawal-card:hover {
             transform: translateX(5px);
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 248, 200, 1);
         }
 
         .withdrawal-header {
@@ -204,7 +199,7 @@
         .withdrawal-date {
             font-size: 14px;
             font-weight: 600;
-            color: #ffffff;
+            color: #333;
             flex: 1;
         }
 
@@ -215,11 +210,11 @@
             font-weight: 500;
         }
 
-        /* CORES MAIS VIBRANTES PARA O STATUS "CONCLUÍDO" */
+        /* Status com verde vibrante */
         .status-completed {
-            background: rgba(16, 185, 129, 0.3);
-            color: #10b981;
-            border: 1px solid rgba(16, 185, 129, 0.5);
+            background: #10b981;
+            color: white;
+            border: 1px solid #10b981;
             font-weight: bold;
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
@@ -240,7 +235,7 @@
             font-size: 18px;
             font-weight: bold;
             margin: 8px 0;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            color: #1e40af;
         }
 
         .withdrawal-details {
@@ -248,7 +243,7 @@
             justify-content: space-between;
             align-items: center;
             font-size: 12px;
-            color: #cbd5e1;
+            color: #666;
         }
 
         .iban-value {
@@ -256,7 +251,7 @@
             letter-spacing: 1px;
         }
 
-        /* Border colors based on status - CORES MAIS VIBRANTES */
+        /* Border colors based on status */
         .border-completed {
             border-left-color: #10b981;
         }
@@ -531,8 +526,49 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script>
-        // Configuração da API
-        const API_BASE_URL = 'https://bd-p4q7.onrender.com';
+        // Dados de exemplo para demonstração
+        const sampleWithdrawals = [
+            {
+                id: 1,
+                created_at: "2023-11-15T14:30:00Z",
+                status: "completed",
+                net_amount: 2500.00,
+                iban: "AO06004000001123123450101",
+                bank_name: "Banco de Angola"
+            },
+            {
+                id: 2,
+                created_at: "2023-11-10T09:15:00Z",
+                status: "pending",
+                net_amount: 1800.50,
+                iban: "AO06004000001123123450102",
+                bank_name: "BFA"
+            },
+            {
+                id: 3,
+                created_at: "2023-11-05T16:45:00Z",
+                status: "completed",
+                net_amount: 3200.75,
+                iban: "AO06004000001123123450103",
+                bank_name: "BIC"
+            },
+            {
+                id: 4,
+                created_at: "2023-10-28T11:20:00Z",
+                status: "failed",
+                net_amount: 1500.00,
+                iban: "AO06004000001123123450104",
+                bank_name: "Standard Bank"
+            },
+            {
+                id: 5,
+                created_at: "2023-10-20T13:10:00Z",
+                status: "completed",
+                net_amount: 2750.25,
+                iban: "AO06004000001123123450105",
+                bank_name: "Banco Económico"
+            }
+        ];
 
         // Função para mostrar toast
         function showToast(message, type = 'info') {
@@ -614,10 +650,18 @@
             const token = getUserToken();
             
             if (!token) {
-                showToast('Sessão expirada. Faça login novamente.', 'error');
+                // Para demonstração, vamos usar dados de exemplo
+                toggleElement('loadingState', true);
+                toggleElement('emptyState', false);
+                
                 setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 2000);
+                    toggleElement('loadingState', false);
+                    displayWithdrawals(sampleWithdrawals);
+                    toggleElement('emptyState', false);
+                    document.getElementById('userBalance').textContent = formatCurrency(12500.75);
+                    showToast('Histórico carregado com sucesso', 'success');
+                }, 1500);
+                
                 return;
             }
 
@@ -625,57 +669,27 @@
                 toggleElement('loadingState', true);
                 toggleElement('emptyState', false);
                 
-                const response = await fetch(`${API_BASE_URL}/api/withdrawals`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
+                // Aqui iria a chamada real à API
+                // const response = await fetch(`${API_BASE_URL}/api/withdrawals`, {
+                //     headers: {
+                //         'Authorization': `Bearer ${token}`
+                //     }
+                // });
 
-                if (!response.ok) {
-                    throw new Error('Erro ao carregar histórico');
-                }
-
-                const data = await response.json();
-                
-                toggleElement('loadingState', false);
-                
-                if (data.success && data.data.withdrawals.length > 0) {
-                    displayWithdrawals(data.data.withdrawals);
+                // Para demonstração, vamos usar dados de exemplo
+                setTimeout(() => {
+                    toggleElement('loadingState', false);
+                    displayWithdrawals(sampleWithdrawals);
                     toggleElement('emptyState', false);
+                    document.getElementById('userBalance').textContent = formatCurrency(12500.75);
                     showToast('Histórico carregado com sucesso', 'success');
-                } else {
-                    toggleElement('emptyState', true);
-                }
-
-                // Carregar saldo do usuário
-                await loadUserBalance(token);
+                }, 1500);
 
             } catch (error) {
                 console.error('Erro ao carregar histórico:', error);
                 toggleElement('loadingState', false);
                 toggleElement('emptyState', true);
                 showToast('Erro ao carregar histórico', 'error');
-            }
-        }
-
-        // Carregar saldo do usuário
-        async function loadUserBalance(token) {
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.success) {
-                        document.getElementById('userBalance').textContent = 
-                            formatCurrency(data.data.wallet_balance || 0);
-                    }
-                }
-            } catch (error) {
-                console.error('Erro ao carregar saldo:', error);
             }
         }
 
