@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR" style="font-size: 47.2px;">
+<head>
+    <meta charset="utf-8">
+    <title>Microsoft - Plano Dourado</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="full-screen" content="true">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="360-fullscreen" content="true">
+    <meta name="renderer" content="webkit">
+    <style>
+        /* Tema azul Microsoft com cores atualizadas - SEM AMARELO */
+        :root {
+            --microsoft-blue: #0078D4; /* Azul oficial da Microsoft */
+            --microsoft-blue-dark: #005A9E; /* Azul escuro Microsoft */
+            --microsoft-blue-light: #50B0F0; /* Azul claro Microsoft */
+            --microsoft-gradient: linear-gradient(135deg, #0078D4, #005A9E);
+            --microsoft-shadow: 0 4px 15px rgba(0, 120, 212, 0.3);
+            --text-dark: #1a1a1a;
+            --text-light: #FFFFFF; /* BRANCO PURO */
+            --text-contrast: #FFFFFF; /* BRANCO PURO */
+            --bg-dark: #1a1a1a;
+            --bg-medium: #2a2a2a;
+            --bg-light: #3a3a3a;
+            --pure-white: #FFFFFF; /* BRANCO PURO */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.5;
+        }
+
+        /* Estrutura principal corrigida */
+        #app, .applang {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Cabeçalho fixo azul Microsoft */
+        .headers {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--microsoft-gradient) !important;
+            box-shadow: 0 2px 10px rgba(0, 90, 158, 0.5);
+        }
+
+        .head {
+            background: var(--microsoft-gradient) !important;
+        }
+
+        /* Container de conteúdo rolável */
+        .content-container {
+            flex: 1;
+            overflow-y: auto;
+            padding-top: 45px; /* Altura do cabeçalho */
+            padding-bottom: 54px; /* Altura do rodapé */
+            -webkit-overflow-scrolling: touch; /* Scroll suave em dispositivos móveis */
+            background-color: var(--bg-dark);
+        }
+
+        .content-scroll {
+            min-height: 100%;
+        }
+
+        /* Rodapé fixo azul Microsoft */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--microsoft-gradient) !important;
+            box-shadow: 0 -2px 10px rgba(0, 90, 158, 0.5);
+        }
+
+        /* Estilos para o rodapé */
+        .footers {
+            background: transparent !important;
+        }
+
+        .footers .item {
+            color: var(--pure-white) !important; /* BRANCO PURO */
+            text-align: center;
+            padding: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .footers .item:hover {
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        .footers img {
+            width: 24px;
+            height: 24px;
+            display: block;
+            margin: 0 auto 3px;
+        }
+
+        .footers span {
+            font-size: 12px;
+            color: var(--pure-white) !important; /* BRANCO PURO */
+            font-weight: 600;
+        }
+
+        /* Estilos para os elementos da lista */
+        .container {
+            padding: 0 13px !important;
+            background-color: transparent;
+        }
+
+        .list li[data-v-11bc267c] {
+            padding: 15px;
+            background-color: var(--bg-medium);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 120, 212, 0.3);
+            box-shadow: var(--microsoft-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .list li[data-v-11bc267c]:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .list li .he[data-v-11bc267c] {
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .ico img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid var(--microsoft-blue);
+        }
+
+        .n {
+            font-weight: bold;
+            color: var(--pure-white) !important; /* BRANCO PURO */
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .tag span {
+            display: inline-block;
+            background-color: var(--microsoft-blue);
+            color: var(--pure-white) !important; /* BRANCO PURO */
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-right: 5px;
+            font-weight: 600;
+        }
+
+        button.on {
+            background: var(--microsoft-gradient);
+            color: var(--pure-white) !important; /* BRANCO PURO */
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: var(--microsoft-shadow);
+        }
+
+        button.on:hover {
+            background: var(--microsoft-gradient);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 120, 212, 0.5);
+        }
+
+        .it.flex {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .li {
+            text-align: center;
+            flex: 1;
+            padding: 5px;
+        }
+
+        .s {
+            font-weight: bold;
+            color: var(--pure-white) !important; /* BRANCO PURO para números */
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .li .n {
+            font-size: 13px;
+            color: var(--pure-white) !important; /* BRANCO PURO */
+            font-weight: normal;
+        }
+
+        .jindu {
+            margin-top: 15px;
+        }
+
+        .txt {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: var(--pure-white) !important; /* BRANCO PURO */
+            font-weight: 600;
+        }
+
+        .x {
+            background-color: var(--bg-light);
+            border-radius: 10px;
+            height: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .x span {
+            display: block;
+            height: 100%;
+            background: var(--microsoft-gradient);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .x var {
+            position: absolute;
+            right: 5px;
+            top: -20px;
+            font-size: 12px;
+            color: var(--pure-white) !important; /* BRANCO PURO */
+            font-weight: bold;
+        }
+
+        /* Texto em branco para elementos importantes */
+        .head .name {
+            color: var(--pure-white) !important; /* BRANCO PURO */
+            font-weight: bold;
+        }
+
+        .myName img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .lang img, .notice img {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Imagem de fundo com overlay para melhor legibilidade */
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+        }
+
+        .bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        /* Melhorias de legibilidade para texto */
+        .list li[data-v-11bc267c] .n {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--pure-white) !important; /* BRANCO PURO */
+            margin-bottom: 8px;
+        }
+
+        .tag span {
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .s {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .txt div {
+            font-weight: 600;
+        }
+
+        /* Efeitos de brilho removidos (eram amarelos) */
+        .microsoft-glow {
+            box-shadow: 0 0 15px rgba(0, 120, 212, 0.7);
+        }
+
+        .microsoft-text {
+            color: var(--microsoft-blue-light);
+        }
+
+        /* Animações suaves */
+        .list li, button.on {
+            transition: all 0.3s ease;
+        }
+
+        /* Garantir que TODOS os textos sejam brancos */
+        .list li[data-v-11bc267c] * {
+            color: var(--pure-white) !important;
+        }
+
+        .txt div, .txt div:first-child, .txt div:last-child {
+            color: var(--pure-white) !important;
+        }
+
+        /* Números em branco */
+        .s, .li .s, .it.flex .s {
+            color: var(--pure-white) !important;
+        }
+
+        /* Porcentagens em branco */
+        .x var {
+            color: var(--pure-white) !important;
+        }
+    </style>
+    <!-- Resto do código HTML permanece igual -->
+    <link href="app.c1933b14.css" rel="preload" as="style">
+    <link href="chunk-vant.d14f5539.css" rel="preload" as="style">
+    <link href="chunk-vendors.794edbf9.css" rel="preload" as="style">
+    <link href="chunk-vant.d14f5539.css" rel="stylesheet">
+    <link href="chunk-vendors.794edbf9.css" rel="stylesheet">
+    <link href="app.c1933b14.css" rel="stylesheet">
+    <link href="css/dark-theme.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="chunk-159f11a9.a3a3db2b.css">
+    <link rel="stylesheet" type="text/css" href="chunk-5576a184.9f52f39a.css">
+    <link rel="stylesheet" type="text/css" href="chunk-3b94db02.5929650c.css">
+    <link rel="stylesheet" type="text/css" href="chunk-a6d04a00.3a1821fc.css">
+    <link rel="stylesheet" type="text/css" href="chunk-5ba702ec.7902583a.css">
+    <link rel="stylesheet" type="text/css" href="chunk-9884782a.e91864af.css">
+    <link rel="stylesheet" type="text/css" href="chunk-07731f62.d388cdd4.css">
+    <link rel="stylesheet" type="text/css" href="chunk-15e30c0e.9dcbd293.css">
+    <style>
+        .list .it .n[data-v-35d43c50] {
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body class="w856">
+    <div id="app" class="applang">
+        <div data-v-6e534c71="" data-v-11bc267c="" class="page">
+            <!-- Imagem de fundo com overlay para melhor legibilidade -->
+            <div data-v-11bc267c="" data-v-6e534c71="" class="bg">
+                <img data-v-11bc267c="" data-v-6e534c71="" src="img/pro.jpg" alt="">
+            </div>
+            
+            <!-- Cabeçalho fixo dourado -->
+            <div data-v-6e534c71="" class="headers">
+                <div data-v-a53c4a36="" data-v-11bc267c="" class="head" data-v-6e534c71="">
+                    <div data-v-a53c4a36="" class="container flex">
+                        <div data-v-a53c4a36="" class="myName">
+                            <img data-v-a53c4a36="" src="img/logo1.jpg" alt="">
+                        </div>
+                        <div data-v-a53c4a36="" class="name tac">Microsoft</div>
+                        <div data-v-a53c4a36="" class="flex1"></div>
+                        <div data-v-a53c4a36="" class="lang">
+                            <img data-v-a53c4a36="" src="img/logo.png" alt="">
+                        </div>
+                        <div data-v-a53c4a36="" class="notice">
+                            <img data-v-a53c4a36="" src="data:image/png;base64,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" alt="">
+                        </div>
+                    </div>
+                    <div data-v-a53c4a36=""></div>
+                </div>
+            </div>
+            
+          <!-- Conteúdo rolável -->
+<div data-v-6e534c71="" id="scroll" class="content-container">
+    <div data-v-6e534c71="" id="content" class="content-scroll">
+        <div data-v-11bc267c="" data-v-6e534c71="" class="container">
+            <div data-v-11bc267c="" data-v-6e534c71="">
+                <ul data-v-11bc267c="" data-v-6e534c71="" class="list">
+                    <li data-v-11bc267c="" data-v-6e534c71="">
+                        <div data-v-11bc267c="" data-v-6e534c71="" class="he flex">
+                            <div data-v-11bc267c="" data-v-6e534c71="" class="ico">
+                                <img data-v-11bc267c="" data-v-6e534c71="" alt="VIP 1" data-src="img/baner1.jpg" src="img/baner2.jpg" lazy="loaded">
+                            </div>
+                            <div data-v-11bc267c="" data-v-6e534c71="" class="flex1">
+                                <div data-v-11bc267c="" data-v-6e534c71="" class="n">VIP 1</div>
+                                <div data-v-11bc267c="" data-v-6e534c71="" class="tag">
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Investimento: 5.000 Kz</span>
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Ganho diário: 500 Kz</span>
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Prazo: 90 dias</span>
+                                </div>
+                            </div>
+                            <button data-v-11bc267c="" data-v-6e534c71="" class="on" onclick="window.location.href='/vip.html'">Comprar</button>
+                        </div>
+                    </li>
+                    <li data-v-11bc267c="" data-v-6e534c71="">
+                        <div data-v-11bc267c="" data-v-6e534c71="" class="he flex">
+                            <div data-v-11bc267c="" data-v-6e534c71="" class="ico">
+                                <img data-v-11bc267c="" data-v-6e534c71="" alt="VIP 2" data-src="img/baner1.jpg" src="img/baner3.jpg" lazy="loaded">
+                            </div>
+                            <div data-v-11bc267c="" data-v-6e534c71="" class="flex1">
+                                <div data-v-11bc267c="" data-v-6e534c71="" class="n">VIP 2</div>
+                                <div data-v-11bc267c="" data-v-6e534c71="" class="tag">
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Investimento: 10.000 Kz</span>
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Ganho diário: 1.000 Kz</span>
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Prazo: 90 dias</span>
+                                </div>
+                            </div>
+                            <button data-v-11bc267c="" data-v-6e534c71="" class="on" onclick="window.location.href='/vip2.html'">Comprar</button>
+                        </div>
+                    </li>
+                    <li data-v-11bc267c="" data-v-6e534c71="">
+                        <div data-v-11bc267c="" data-v-6e534c71="" class="he flex">
+                            <div data-v-11bc267c="" data-v-6e534c71="" class="ico">
+                                <img data-v-11bc267c="" data-v-6e534c71="" alt="VIP 3" data-src="img/baner4.jpg" src="img/baner4.jpg" lazy="loaded">
+                            </div>
+                            <div data-v-11bc267c="" data-v-6e534c71="" class="flex1">
+                                <div data-v-11bc267c="" data-v-6e534c71="" class="n">VIP 3</div>
+                                <div data-v-11bc267c="" data-v-6e534c71="" class="tag">
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Investimento: 20.000 Kz</span>
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Ganho diário: 2.000 Kz</span>
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Prazo: 90 dias</span>
+                                </div>
+                            </div>
+                            <button data-v-11bc267c="" data-v-6e534c71="" class="on" onclick="window.location.href='/vip3.html'">Comprar</button>
+                        </div>
+                    </li>
+                    <li data-v-11bc267c="" data-v-6e534c71="">
+                        <div data-v-11bc267c="" data-v-6e534c71="" class="he flex">
+                            <div data-v-11bc267c="" data-v-6e534c71="" class="ico">
+                                <img data-v-11bc267c="" data-v-6e534c71="" alt="VIP 4" data-src="img/baner5.jpg" src="img/baner5.jpg" lazy="loaded">
+                            </div>
+                            <div data-v-11bc267c="" data-v-6e534c71="" class="flex1">
+                                <div data-v-11bc267c="" data-v-6e534c71="" class="n">VIP 4</div>
+                                <div data-v-11bc267c="" data-v-6e534c71="" class="tag">
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Investimento: 40.000 Kz</span>
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Ganho diário: 4.000 Kz</span>
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Prazo: 90 dias</span>
+                                </div>
+                            </div>
+                            <button data-v-11bc267c="" data-v-6e534c71="" class="on" onclick="window.location.href='/vip4.html'">Comprar</button>
+                        </div>
+                    </li>
+                    <li data-v-11bc267c="" data-v-6e534c71="">
+                        <div data-v-11bc267c="" data-v-6e534c71="" class="he flex">
+                            <div data-v-11bc267c="" data-v-6e534c71="" class="ico">
+                                <img data-v-11bc267c="" data-v-6e534c71="" alt="VIP 5" data-src="img/baner6.jpg" src="img/baner6.jpg" lazy="loaded">
+                            </div>
+                            <div data-v-11bc267c="" data-v-6e534c71="" class="flex1">
+                                <div data-v-11bc267c="" data-v-6e534c71="" class="n">VIP 5</div>
+                                <div data-v-11bc267c="" data-v-6e534c71="" class="tag">
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Investimento: 80.000 Kz</span>
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Ganho diário: 8.000 Kz</span>
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Prazo: 90 dias</span>
+                                </div>
+                            </div>
+                            <button data-v-11bc267c="" data-v-6e534c71="" class="on" onclick="window.location.href='/vip5.html'">Comprar</button>
+                        </div>
+                    </li>
+                    <li data-v-11bc267c="" data-v-6e534c71="">
+                        <div data-v-11bc267c="" data-v-6e534c71="" class="he flex">
+                            <div data-v-11bc267c="" data-v-6e534c71="" class="ico">
+                                <img data-v-11bc267c="" data-v-6e534c71="" alt="VIP 6" data-src="img/baner7.jpg" src="img/baner7.jpg" lazy="loaded">
+                            </div>
+                            <div data-v-11bc267c="" data-v-6e534c71="" class="flex1">
+                                <div data-v-11bc267c="" data-v-6e534c71="" class="n">VIP 6</div>
+                                <div data-v-11bc267c="" data-v-6e534c71="" class="tag">
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Investimento: 100.000 Kz</span>
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Ganho diário: 10.000 Kz</span>
+                                    <span data-v-11bc267c="" data-v-6e534c71="">Prazo: 90 dias</span>
+                                </div>
+                            </div>
+                            <button data-v-11bc267c="" data-v-6e534c71="" class="on" onclick="window.location.href='/vip6.html'">Comprar</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+            
+            <!-- Rodapé fixo dourado -->
+        <div data-v-6e534c71="" class="footer">
+    <div data-v-47e63dc4="" data-v-98526a88="" class="footers" data-v-6e534c71="">
+        <div data-v-47e63dc4="" class="item" onclick="window.location.href='/principal.html'">
+            <div data-v-47e63dc4="" class="on"><img data-v-47e63dc4=""
+                                                    src="img/lar.png"
+                                                    alt=""><span data-v-47e63dc4="" style="color: var(--text-contrast) !important;"> Lar </span></div>
+        </div>
+        <div data-v-47e63dc4="" class="item" onclick="window.location.href='/tarefa.html'">
+            <div data-v-47e63dc4="" class=""><img data-v-47e63dc4=""
+                                                  src="img/ganho.png"
+                                                  alt=""><span data-v-47e63dc4="" style="color: var(--text-contrast) !important;"> Meus ganhos </span></div>
+        </div>
+        <div data-v-47e63dc4="" class="item" onclick="window.location.href='/produtos.html'">
+            <div data-v-47e63dc4="" class=""><img data-v-47e63dc4="" src="img/produtos.png"
+                                                  alt=""><span data-v-47e63dc4="" style="color: var(--text-contrast) !important;">Plano Dourado </span></div>
+        </div>
+        <div data-v-47e63dc4="" class="item" onclick="window.location.href='/equipe.html'">
+            <div data-v-47e63dc4="" class=""><img data-v-47e63dc4=""
+                                                  src="img/equipe.png"
+                                                  alt=""><span data-v-47e63dc4="" style="color: var(--text-contrast) !important;"> Equipe </span></div>
+        </div>
+        <div data-v-47e63dc4="" class="item" onclick="window.location.href='/dashboard.html'">
+            <div data-v-47e63dc4="" class=""><img data-v-47e63dc4=""
+                                                  src="img/meu.png"
+                                                  alt=""><span data-v-47e63dc4="" style="color: var(--text-contrast) !important;"> Meu </span></div>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+</body>
+</html>

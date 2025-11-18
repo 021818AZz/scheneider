@@ -1,0 +1,177 @@
+body {
+    font-family: Tahoma, Helvetica, Arial, "Microsoft YaHei", sans-serif;
+    font-size: 14px;
+    color: #333;
+    background: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: #27cd87;
+}
+
+ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.clear {
+    clear: both;
+}
+
+/* Botão voltar */
+.classreturn {
+    height: 45px;
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 45px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+}
+
+.classreturn .ds-in-bl {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.classreturn .return {
+    position: absolute;
+    left: 10px;
+    top: 0;
+    line-height: 45px;
+    font-size: 18px;
+    color: #666;
+}
+
+/* Botão verde */
+.btn {
+    display: inline-block;
+    background: #27cd87;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #20b974;
+}
+
+/* Camadas / modal */
+.layui-m-layer {
+    position: fixed;
+    z-index: 99999999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.layui-m-layer .layui-m-layershade {
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,.6);
+    width: 100%;
+    height: 100%;
+}
+
+.layui-m-layer .layui-m-layermain {
+    display: table;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.layui-m-layer .layui-m-layersection {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.layui-m-layer .layui-m-layerchild {
+    display: inline-block;
+    position: relative;
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+.layui-m-layer .layui-m-layercont {
+    padding: 20px;
+    line-height: 22px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.layui-m-layerbtn {
+    display: flex;
+    border-top: 1px solid #d0d0d0;
+}
+
+.layui-m-layerbtn span {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 15px;
+    color: #666;
+    border-right: 1px solid #d0d0d0;
+}
+
+.layui-m-layerbtn span:last-child {
+    border-right: none;
+}
+
+.layui-m-layerbtn span[data-yes] {
+    color: #27cd87 !important;
+}
+
+/* Direção reversa (RTL override) */
+.daoxu {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+}
+
+/* Toast */
+.layui-m-layer0 .layui-m-layerchild {
+    width: 90%;
+    max-width: 320px;
+}
+
+.layui-m-layer0 .layui-m-layercont {
+    padding: 20px;
+}
+
+/* Loading */
+.layui-m-layerload .layui-m-layercont {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.layui-m-layerload .layui-m-layercont i {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 3px solid #27cd87;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: layui-m-rotate 1s linear infinite;
+}
+
+@keyframes layui-m-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html style="font-size: 48.5333px; height: 100%;">
+<head>
+    <meta charset="utf-8">
+    <title>Assets</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="full-screen" content="true">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="360-fullscreen" content="true">
+    <meta name="renderer" content="webkit">
+    <style>
+        /* Tema Microsoft Natural - Mesmo esquema do formulário */
+        :root {
+            --ms-blue-primary: #0078D4;
+            --ms-blue-secondary: #0078D4;
+            --ms-blue-dark: #0078D4;
+            --ms-blue-light: #0078D4;
+            --ms-blue-accent: #0078D4;
+            --ms-gray-light: #0078D4;
+            --ms-gray-medium: #0078D4;
+            --ms-gray-dark: #0078D4;
+            --ms-white: #FFFFFF;
+            --ms-black: #000000;
+            --ms-shadow: rgba(0, 120, 212, 0.3);
+            --ms-gradient: linear-gradient(135deg, #0078D4 0%, #0078D4 100%);
+            --ms-gradient-light: linear-gradient(135deg, #0078D4 0%, #0078D4 100%);
+            --ms-bg-light: rgba(255, 255, 255, 0.1);
+            --ms-bg-dark: rgba(45, 45, 45, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0078D4 0%, #0078D4 100%);
+            background-size: 100% 300px;
+            background-repeat: no-repeat;
+            color: var(--ms-white);
+            overflow-x: hidden;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        /* Estrutura principal corrigida */
+        #app, .applang {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Cabeçalho fixo */
+        .headers {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--ms-gradient) !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid var(--ms-blue-primary);
+        }
+
+        .head {
+            background: var(--ms-gradient) !important;
+        }
+
+        /* Container de conteúdo rolável */
+        .content-container {
+            flex: 1;
+            overflow-y: auto;
+            padding-top: 43px; /* Altura do cabeçalho */
+            padding-bottom: 50px; /* Altura do rodapé */
+            -webkit-overflow-scrolling: touch; /* Scroll suave em dispositivos móveis */
+        }
+
+        .content-scroll {
+            min-height: 100%;
+        }
+
+        /* Rodapé fixo */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--ms-white) !important;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid var(--ms-blue-primary);
+        }
+
+        /* Estilos existentes mantidos */
+        .container {
+            background-color: transparent;
+        }
+
+        .bgs {
+            background-color: transparent;
+        }
+
+        .itemBox {
+            background-color: var(--ms-bg-dark);
+            border-radius: 12px;
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid var(--ms-blue-primary);
+            box-shadow: 0 4px 15px var(--ms-shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .income_box {
+            background: var(--ms-gradient) !important;
+            color: var(--ms-white) !important;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid var(--ms-blue-primary);
+            box-shadow: 0 4px 15px var(--ms-shadow);
+        }
+
+        .income_box .name {
+            color: var(--ms-white) !important;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .income_box .am {
+            color: var(--ms-white) !important;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .income_box .qb li {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 5px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .income_box .qb li:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .income_box .qb .n {
+            color: var(--ms-white) !important;
+            font-weight: 500;
+        }
+
+        .income_box .qb .s {
+            color: var(--ms-white) !important;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .bonus-info {
+            background: var(--ms-bg-dark) !important;
+            border: 1px solid var(--ms-blue-primary) !important;
+            color: var(--ms-white) !important;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 15px var(--ms-shadow);
+        }
+
+        .tab {
+            background-color: var(--ms-bg-dark);
+            border-radius: 12px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid var(--ms-blue-primary);
+            box-shadow: 0 4px 15px var(--ms-shadow);
+        }
+
+        .tab li {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--ms-blue-primary);
+            border-radius: 8px;
+            padding: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .tab li:hover {
+            background-color: var(--ms-blue-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--ms-shadow);
+        }
+
+        .tab .s0, .tab .s1 {
+            color: var(--ms-white) !important;
+            font-weight: 600;
+        }
+
+        .tab li:hover .s0, .tab li:hover .s1 {
+            color: var(--ms-white) !important;
+        }
+
+        .nav1 {
+            background-color: transparent;
+        }
+
+        .nav1 li {
+            background-color: var(--ms-bg-dark);
+            border: 1px solid var(--ms-blue-primary);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin: 5px 0;
+            box-shadow: 0 4px 15px var(--ms-shadow);
+        }
+
+        .nav1 li:hover {
+            background-color: var(--ms-blue-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--ms-shadow);
+        }
+
+        .nav1 li p {
+            color: var(--ms-white) !important;
+            font-weight: 500;
+        }
+
+        .nav1 li:hover p {
+            color: var(--ms-white) !important;
+        }
+
+        .lucku_bann {
+            background-color: var(--ms-bg-dark);
+            border-radius: 12px;
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid var(--ms-blue-primary);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--ms-shadow);
+        }
+
+        .lucku_bann:hover {
+            background-color: var(--ms-blue-primary);
+            color: var(--ms-white) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--ms-shadow);
+        }
+
+        .lucku_bann .item {
+            color: var(--ms-white);
+            font-weight: bold;
+        }
+
+        .lucku_bann:hover .item {
+            color: var(--ms-white) !important;
+        }
+
+        .footers {
+            background: transparent;
+        }
+
+        .footers .item {
+            color: var(--ms-blue-primary) !important;
+            transition: all 0.3s ease;
+            padding: 8px 0;
+            border-radius: 8px;
+            margin: 0 2px;
+        }
+
+        .footers .item:hover {
+            background-color: var(--ms-blue-primary);
+            color: var(--ms-white) !important;
+        }
+
+        .footers .item .on {
+            color: var(--ms-blue-primary) !important;
+            background-color: rgba(0, 120, 212, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Texto em branco para elementos importantes */
+        .head .name {
+            color: var(--ms-white) !important;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+        }
+
+        #uid div {
+            color: var(--ms-white) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        #uid div:first-child {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        /* Popup e modais */
+        .popup_box {
+            background-color: var(--ms-bg-dark);
+            border: 1px solid var(--ms-blue-primary);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .line ul li {
+            color: var(--ms-white);
+            transition: all 0.3s ease;
+        }
+
+        .line ul li:hover {
+            background-color: var(--ms-blue-primary);
+            color: var(--ms-white) !important;
+        }
+
+        /* Botão de sair no final */
+        .logout-section {
+            margin: 20px 10px;
+            text-align: center;
+        }
+
+        .logout-btn {
+            background-color: var(--ms-bg-dark);
+            border: 1px solid var(--ms-blue-primary);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            width: 100%;
+            color: var(--ms-white);
+            box-shadow: 0 4px 15px var(--ms-shadow);
+        }
+
+        .logout-btn:hover {
+            background-color: var(--ms-blue-primary);
+            color: var(--ms-white) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--ms-shadow);
+        }
+
+        /* Efeitos visuais adicionais */
+        .headers::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--ms-blue-accent), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(0, 120, 212, 0.3);
+            border-top: 4px solid var(--ms-blue-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Botões com efeito de brilho */
+        .container .btn {
+            background: var(--ms-gradient) !important;
+            color: var(--ms-white) !important;
+            border: none !important;
+            border-radius: 12px !important;
+            padding: 15px 0 !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 15px var(--ms-shadow) !important;
+            transition: all 0.3s ease !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+
+        .container .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .container .btn:hover::before {
+            left: 100%;
+        }
+
+        .container .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 120, 212, 0.4);
+        }
+
+        /* Ajustes para imagens */
+        img {
+            transition: transform 0.3s ease;
+        }
+
+        .nav1 li:hover img,
+        .tab li:hover img,
+        .footers .item:hover img {
+            transform: scale(1.1);
+            filter: brightness(0) invert(1);
+        }
+
+        /* Efeito de brilho nos cards */
+        .itemBox::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--ms-blue-accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .itemBox:hover::before {
+            opacity: 1;
+        }
+    </style>
+    <link href="https://aitech360.site/public/static/css/app.c1933b14.css" rel="preload" as="style">
+    <link href="https://aitech360.site/public/static/css/chunk-vant.d14f5539.css" rel="preload" as="style">
+    <link href="https://aitech360.site/public/static/css/chunk-vendors.794edbf9.css" rel="preload" as="style">
+    <link href="https://aitech360.site/public/static/css/chunk-vant.d14f5539.css" rel="stylesheet">
+    <link href="https://aitech360.site/public/static/css/chunk-vendors.794edbf9.css" rel="stylesheet">
+    <link href="app.c1933b14.css" rel="stylesheet">
+<link href="css/dark-theme.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://aitech360.site/public/static/css/chunk-bb5a8aa2.30a0a654.css">
+    <link rel="stylesheet" type="text/css" href="https://aitech360.site/public/static/css/chunk-5576a184.9f52f39a.css">
+    <link rel="stylesheet" type="text/css" href="https://aitech360.site/public/static/css/chunk-3b94db02.5929650c.css">
+    <link rel="stylesheet" type="text/css" href="https://aitech360.site/public/static/css/chunk-a6d04a00.3a1821fc.css">
+    <link rel="stylesheet" type="text/css" href="https://aitech360.site/public/static/css/chunk-5ba702ec.7902583a.css">
+    <link rel="stylesheet" type="text/css" href="https://aitech360.site/public/static/css/chunk-9884782a.e91864af.css">
+    <style>
+        .list .it .n[data-v-35d43c50] {
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body class="w856">
+<div id="app" class="applang">
+    <div data-v-6e534c71="" data-v-35d43c50="" class="page">
+        <!-- Cabeçalho fixo -->
+        <div data-v-6e534c71="" class="headers">
+            <div data-v-a53c4a36="" data-v-35d43c50="" class="head" data-v-6e534c71="">
+                <div data-v-a53c4a36="" class="container flex">
+                    <div data-v-a53c4a36="" class="back"><img data-v-a53c4a36=""
+                                                              src="https://i.postimg.cc/0yGRHYfx/image.png"
+                                                              alt=""></div>
+                    <div data-v-a53c4a36="" class="name tac" style="color: white !important;"> Microsoft</div>
+                    <div data-v-a53c4a36="" class="flex1"></div>
+                </div>
+                <div data-v-a53c4a36=""></div>
+            </div>
+        </div>
+        
+        <!-- Conteúdo rolável -->
+        <div data-v-6e534c71="" id="scroll" class="content-container">
+            <div data-v-6e534c71="" id="content" class="content-scroll">
+                <div data-v-35d43c50="" data-v-6e534c71="" class="bgs">
+                    <div data-v-35d43c50="" data-v-6e534c71="" class="container">
+                        <div data-v-35d43c50="" data-v-6e534c71="" class="itemBox">
+                            <div data-v-35d43c50="" data-v-6e534c71="" class="income_box b">
+                              <div data-v-35d43c50="" data-v-6e534c71="" class="name" style="color: white !important;">Saldo Real</div>
+<div data-v-35d43c50="" data-v-6e534c71="" class="flex" style="justify-content: space-between; align-items: center;">
+
+    <!-- Saldo -->
+    <div class="am" style="white-space: nowrap; font-weight: bold; color: #fff !important;">
+        KZ 
+    </div>
+
+    <!-- Telefone -->
+    <div style="text-align: right; color: #fff !important; font-size: 14px;" id="uid">
+        <div style="font-size: 12px; color: rgba(255,255,255,0.8) !important; font-weight: normal; margin-bottom: 2px;">
+            Número telefone
+        </div>
+        <div style="font-weight: bold; color: #fff !important;">
+            
+        </div>
+    </div>
+
+</div>
+
+                                
+                                <ul data-v-35d43c50="" data-v-6e534c71="" class="qb wrap bet">
+                                    <li data-v-35d43c50="" data-v-6e534c71="">
+                                        <div data-v-35d43c50="" data-v-6e534c71="" class="n" style="color: white !important;">Comissão da equipe de hoje</div>
+                                        <div data-v-35d43c50="" data-v-6e534c71="" class="s" style="color: white !important;">
+                                                                                        KZ 0
+                                        </div>
+                                    </li>
+                                    <li data-v-35d43c50="" data-v-6e534c71="">
+                                        <div data-v-35d43c50="" data-v-6e534c71="" class="n" style="color: white !important;">Hoje minha comissão</div>
+                                        <div data-v-35d43c50="" data-v-6e534c71="" class="s" style="color: white !important;">
+                                                                                        KZ 0
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                               
+                                                <ul data-v-35d43c50="" data-v-6e534c71="" class="tab flex">
+                            <li data-v-35d43c50="" data-v-6e534c71=""
+                                onclick="window.location.href='/deposito.html'"><img data-v-35d43c50=""
+                                                                                            data-v-6e534c71=""
+                                                                                            src="img/recarregar.png"
+                                                                                            alt="">
+                                <div data-v-35d43c50="" data-v-6e534c71="" class="s0" style="color: var(--ms-white) !important;">Recarregar</div>
+                            </li>
+                            <li data-v-35d43c50="" data-v-6e534c71=""
+                                onclick="window.location.href='/retirada.html'"><img data-v-35d43c50=""
+                                                                                                 data-v-6e534c71=""
+                                                                                                 src="img/retirar.png"
+                                                                                                 alt="">
+                                <div data-v-35d43c50="" data-v-6e534c71="" class="s1" style="color: var(--ms-white) !important;">Retirar</div>
+                            </li>
+                        </ul> <div data-v-98526a88="" data-v-6e534c71="" class="lucku_bann"
+                    </div>
+               
+                 
+                
+                
+                
+                                 </div> <div data-v-98526a88="" data-v-6e534c71="" class="itemBox">
+                    <ul data-v-98526a88="" data-v-6e534c71="" class="nav1">
+                        <li data-v-98526a88="" data-v-6e534c71=""
+                            onclick="window.location.href='/historico1.html'">
+                            <div data-v-98526a88="" data-v-6e534c71=""><img data-v-98526a88="" data-v-6e534c71=""
+                                                                            src="img/reca1.png"
+                                                                            alt="">
+                                <p data-v-98526a88="" data-v-6e534c71="" style="color: var(--ms-white) !important;">Registro de recarga</p></div>
+                        </li>
+                        <li data-v-98526a88="" data-v-6e534c71=""
+                            onclick="window.location.href='/historico.html'">
+                            <div data-v-98526a88="" data-v-6e534c71=""><img data-v-98526a88="" data-v-6e534c71=""
+                                                                            src="img/reca2.png"
+                                                                            alt="">
+                                <p data-v-98526a88="" data-v-6e534c71="" style="color: var(--ms-white) !important;">Retirar registro</p></div>
+                        </li>
+
+                        <li data-v-98526a88="" data-v-6e534c71="" onclick="window.location.href='/seting.html'">
+                            <div data-v-98526a88="" data-v-6e534c71=""><img data-v-98526a88="" data-v-6e534c71=""
+                                                                            src="img/seting.png"
+                                                                            alt="">
+                                <p data-v-98526a88="" data-v-6e534c71="" style="color: var(--ms-white) !important;">Alteração de senha</p></div>
+                        </li>
+
+         </div>
+                
+                                                 <div data-v-98526a88="" data-v-6e534c71="" class="itemBox">
+                    <ul data-v-98526a88="" data-v-6e534c71="" class="nav1">
+                        <li data-v-98526a88="" data-v-6e534c71=""
+                            onclick="window.location.href='depois'">
+                            <div data-v-98526a88="" data-v-6e534c71=""><img data-v-98526a88="" data-v-6e534c71=""
+                                                                            src="img/vip.png"
+                                                                            alt="">
+                                <p data-v-98526a88="" data-v-6e534c71="#" style="color: var(--ms-white) !important;">Cadastrar Chave Pix</p></div>
+                        </li>
+
+                         <li data-v-98526a88="" data-v-6e534c71=""
+                            onclick="window.location.href='/geral.html'">
+                            <div data-v-98526a88="" data-v-6e534c71=""><img data-v-98526a88="" data-v-6e534c71=""
+                                                                            src="img/registros.png"
+                                                                            alt="">
+                                <p data-v-98526a88="" data-v-6e534c71="" style="color: var(--ms-white) !important;">Registro <br> Geral</p></div>
+                        </li>
+                        
+
+                        <li data-v-98526a88="" data-v-6e534c71="" onclick="window.location.href='https://t.me/+owf3P6kVIvxiZWU0'">
+                            <div data-v-98526a88="" data-v-6e534c71=""><img data-v-98526a88="" data-v-6e534c71=""
+                                                                            src="img/ajuda.png"
+                                                                            alt="">
+                                <p data-v-98526a88="" data-v-6e534c71="" style="color: var(--ms-white) !important;">Ajuda</p></div>
+                        </li>
+                   </div>
+                   
+                   <!-- Botão de Sair adicionado no final -->
+                    <img src="" alt="">
+                   <div class="logout-section">
+                       <div class="logout-btn" onclick="logout()">
+                           Sair
+                       </div>
+                   </div>
+                   
+                <div data-v-35d43c50="" data-v-6e534c71="" class="container">
+                    <div data-v-a386f8f2="" class="popup_box" id="sidebar">
+                        <div data-v-a2a35538="" data-v-a386f8f2="" class="my">
+                            <div data-v-a2a35538="" class="container">
+                                <link rel="stylesheet" type="text/css" href="chunk-57673b88.2a470e9d.css">
+                                <link rel="stylesheet" type="text/css" href="chunk-5576a184.9f52f39a.css">
+                                <link rel="stylesheet" type="text/css" href="chunk-3b94db02.5929650c.css">
+                                <link rel="stylesheet" type="text/css" href="chunk-a6d04a00.3a1821fc.css">
+                                <link rel="stylesheet" type="text/css" href="chunk-9884782a.e91864af.css">
+                                <link rel="stylesheet" type="text/css" href="chunk-7d55f7da.3489dd4d.css">
+                                <link rel="stylesheet" type="text/css" href="chunk-8917473a.d09efe5c.css">
+                                <link rel="stylesheet" type="text/css" href="chunk-159f11a9.a3a3db2b.css">
+                                <link rel="stylesheet" type="text/css" href="chunk-5ba702ec.7902583a.css">
+                                <link rel="stylesheet" type="text/css" href="chunk-17da4a2a.50c915cc.css">
+                                <link rel="stylesheet" type="text/css" href="chunk-c84dac42.bdbf9084.css">
+                                <style>
+                                    .line li[data-v-a2a35538] {
+                                        position: relative;
+                                        height: 46px;
+                                        padding: 0;
+                                    }
+                                </style>
+                                <div data-v-a2a35538="" class="line">
+                                    <ul data-v-a2a35538="">
+                                       
+                  <div data-v-98526a88="" data-v-6e534c71="" class="lucku_bann"
+                    
+                    </div>
+                 </div>
+                </div>  
+                                        
+                </div>
+                <!-- Removido o botão de sair duplicado -->
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-v-a53c4a36=""></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Rodapé fixo -->
+        <div data-v-6e534c71="" class="footer">
+    <div data-v-47e63dc4="" data-v-98526a88="" class="footers" data-v-6e534c71="">
+        <div data-v-47e63dc4="" class="item" onclick="window.location.href='/principal.html'">
+            <div data-v-47e63dc4="" class="on"><img data-v-47e63dc4=""
+                                                    src="img/lar.png"
+                                                    alt=""><span data-v-47e63dc4="" style="color: var(--ms-blue-primary) !important;"> Lar </span></div>
+        </div>
+        <div data-v-47e63dc4="" class="item" onclick="window.location.href='/tarefa.html'">
+            <div data-v-47e63dc4="" class=""><img data-v-47e63dc4=""
+                                                  src="img/ganho.png"
+                                                  alt=""><span data-v-47e63dc4="" style="color: var(--ms-blue-primary) !important;"> Meus ganhos </span></div>
+        </div>
+        <div data-v-47e63dc4="" class="item" onclick="window.location.href='/produtos.html'">
+            <div data-v-47e63dc4="" class=""><img data-v-47e63dc4="" src="img/produtos.png"
+                                                  alt=""><span data-v-47e63dc4="" style="color: var(--ms-blue-primary) !important;">Plano Dourado </span></div>
+        </div>
+        <div data-v-47e63dc4="" class="item" onclick="window.location.href='/equipe.html'">
+            <div data-v-47e63dc4="" class=""><img data-v-47e63dc4=""
+                                                  src="img/equipe.png"
+                                                  alt=""><span data-v-47e63dc4="" style="color: var(--ms-blue-primary) !important;"> Equipe </span></div>
+        </div>
+        <div data-v-47e63dc4="" class="item" onclick="window.location.href='/dashboard.html'">
+            <div data-v-47e63dc4="" class=""><img data-v-47e63dc4=""
+                                                  src="img/meu.png"
+                                                  alt=""><span data-v-47e63dc4="" style="color: var(--ms-blue-primary) !important;"> Meu </span></div>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+</div>
+
+<script>
+// Suas funções JavaScript permanecem exatamente as mesmas
+// Configuração da API
+const API_BASE_URL = 'https://bd-p4q7.onrender.com';
+const TOKEN_EXPIRY_HOURS = 5;
+
+// Função para seleção de código de área
+function quhao_select() {
+    layer.open({
+        type: 1,
+        content: '<div style="padding:0 10px;"><div style="height:200px;overflow-y:scroll;"><div class="guojia-list-item" onclick="qhselect(1)">(USA) +1</div><div class="guojia-list-item" onclick="qhselect(7)">(Russia) +7</div><div class="guojia-list-item" onclick="qhselect(20)">(Egypt) +20</div><div class="guojia-list-item" onclick="qhselect(27)">(South Africa) +27</div><div class="guojia-list-item" onclick="qhselect(30)">(Greece) +30</div><div class="guojia-list-item" onclick="qhselect(31)">(Netherlands) +31</div><div class="guojia-list-item" onclick="qhselect(32)">(Belgium) +32</div><div class="guojia-list-item" onclick="qhselect(33)">(France) +33</div><div class="guojia-list-item" onclick="qhselect(34)">(Spain) +34</div><div class="guojia-list-item" onclick="qhselect(39)">(Italy) +39</div><div class="guojia-list-item" onclick="qhselect(40)">(Romania) +40</div><div class="guojia-list-item" onclick="qhselect(41)">(Switzerland) +41</div><div class="guojia-list-item" onclick="qhselect(43)">(Austria) +43</div><div class="guojia-list-item" onclick="qhselect(44)">(United Kingdom) +44</div><div class="guojia-list-item" onclick="qhselect(45)">(Denmark) +45</div><div class="guojia-list-item" onclick="qhselect(46)">(Sweden) +46</div><div class="guojia-list-item" onclick="qhselect(47)">(Norway) +47</div><div class="guojia-list-item" onclick="qhselect(48)">(Poland) +48</div><div class="guojia-list-item" onclick="qhselect(49)">(Germany) +49</div><div class="guojia-list-item" onclick="qhselect(51)">(Peru) +51</div><div class="guojia-list-item" onclick="qhselect(52)">(Mexico) +52</div><div class="guojia-list-item" onclick="qhselect(53)">(Cuba) +53</div><div class="guojia-list-item" onclick="qhselect(54)">(Argentina) +54</div><div class="guojia-list-item" onclick="qhselect(55)">(Brazil) +55</div><div class="guojia-list-item" onclick="qhselect(56)">(Chile) +56</div><div class="guojia-list-item" onclick="qhselect(57)">(Colombia) +57</div><div class="guojia-list-item" onclick="qhselect(58)">(Venezuela) +58</div><div class="guojia-list-item" onclick="qhselect(60)">(Malaysia) +60</div><div class="guojia-list-item" onclick="qhselect(61)">(Australia) +61</div><div class="guojia-list-item" onclick="qhselect(62)">(Indonesia) +62</div><div class="guojia-list-item" onclick="qhselect(63)">(Philippines) +63</div><div class="guojia-list-item" onclick="qhselect(64)">(New Zealand) +64</div><div class="guojia-list-item" onclick="qhselect(65)">(Singapore) +65</div><div class="guojia-list-item" onclick="qhselect(66)">(Thailand) +66</div><div class="guojia-list-item" onclick="qhselect(81)">(Japan) +81</div><div class="guojia-list-item" onclick="qhselect(82)">(South Korea) +82</div><div class="guojia-list-item" onclick="qhselect(84)">(Vietnam) +84</div><div class="guojia-list-item" onclick="qhselect(86)">(China) +86</div><div class="guojia-list-item" onclick="qhselect(90)">(Turkey) +90</div><div class="guojia-list-item" onclick="qhselect(91)">(India) +91</div><div class="guojia-list-item" onclick="qhselect(92)">(Pakistan) +92</div><div class="guojia-list-item" onclick="qhselect(93)">(Afghanistan) +93</div><div class="guojia-list-item" onclick="qhselect(94)">(Sri Lanka) +94</div><div class="guojia-list-item" onclick="qhselect(95)">(Myanmar) +95</div><div class="guojia-list-item" onclick="qhselect(98)">(Iran) +98</div><div class="guojia-list-item" onclick="qhselect(213)">(Algeria) +213</div><div class="guojia-list-item" onclick="qhselect(216)">(Tunisia) +216</div><div class="guojia-list-item" onclick="qhselect(218)">(Libya) +218</div><div class="guojia-list-item" onclick="qhselect(220)">(Gambia) +220</div><div class="guojia-list-item" onclick="qhselect(221)">(Senegal) +221</div><div class="guojia-list-item" onclick="qhselect(222)">(Mauritania) +222</div><div class="guojia-list-item" onclick="qhselect(223)">(Mali) +223</div><div class="guojia-list-item" onclick="qhselect(224)">(Guinea) +224</div><div class="guojia-list-item" onclick="qhselect(225)">(Côte d\'Ivoire) +225</div><div class="guojia-list-item" onclick="qhselect(226)">(Burkina Faso) +226</div><div class="guojia-list-item" onclick="qhselect(227)">(Niger) +227</div><div class="guojia-list-item" onclick="qhselect(228)">(Togo) +228</div><div class="guojia-list-item" onclick="qhselect(229)">(Benin) +229</div><div class="guojia-list-item" onclick="qhselect(230)">(Mauritius) +230</div><div class="guojia-list-item" onclick="qhselect(231)">(Liberia) +231</div><div class="guojia-list-item" onclick="qhselect(232)">(Sierra Leone) +232</div><div class="guojia-list-item" onclick="qhselect(233)">(Ghana) +233</div><div class="guojia-list-item" onclick="qhselect(234)">(Nigeria) +234</div><div class="guojia-list-item" onclick="qhselect(235)">(Chad) +235</div><div class="guojia-list-item" onclick="qhselect(237)">(Cameroon) +237</div><div class="guojia-list-item" onclick="qhselect(238)">(Cape Verde) +238</div><div class="guojia-list-item" onclick="qhselect(244)">(Angola) +244</div><div class="guojia-list-item" onclick="qhselect(974)">(Qatar) +974</div><div class="guojia-list-item" onclick="qhselect(994)">(Azerbaijan) +994</div></div></div>',
+        anim: 'up',
+        style: 'position:fixed; bottom:0; left:0; width: 100%; height: 200px; padding:10px 0; border:none;'
+    });
+}
+
+function qhselect(quhao) {
+    quhao = quhao || $("#quhaose").val();
+    $("#area_code").html(quhao);
+    $("#area_codei").val(quhao);
+    layer.closeAll();
+}
+
+// Função para mostrar/ocultar loading
+function showLoading(show) {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if (loadingOverlay) {
+        loadingOverlay.style.display = show ? 'flex' : 'none';
+    } else if (show) {
+        // Criar overlay de loading se não existir
+        const overlay = document.createElement('div');
+        overlay.id = 'loadingOverlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        `;
+        overlay.innerHTML = `
+            <div style="background: #000; padding: 20px; border-radius: 8px;">
+                <p>Carregando...</p>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+    }
+}
+
+// Função para carregar dados do usuário
+async function loadUserData() {
+    try {
+        const tokenData = localStorage.getItem('user_token');
+        if (!tokenData) {
+            window.location.href = '/index.html';
+            return;
+        }
+
+        const { token } = JSON.parse(tokenData);
+        
+        const response = await fetch(`${API_BASE_URL}/user/profile`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data.success) {
+                // Atualizar os dados na página
+                document.querySelector('.am').textContent = `KZ ${data.data.wallet_balance || 0}`;
+                document.getElementById('uid').querySelector('div:last-child').textContent = data.data.mobile || 'N/A';
+                
+                // Atualizar comissões (você pode adicionar chamadas para outras APIs aqui)
+                updateCommissionData(token);
+            }
+        } else {
+            console.error('Erro ao carregar dados do usuário');
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+// Função para atualizar dados de comissão
+async function updateCommissionData(token) {
+    try {
+        // Buscar dados da equipe
+        const teamResponse = await fetch(`${API_BASE_URL}/api/team/statistics`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (teamResponse.ok) {
+            const teamData = await teamResponse.json();
+            if (teamData.success) {
+                // Atualizar comissões na página (ajuste os seletores conforme necessário)
+                const commissionElements = document.querySelectorAll('.s');
+                if (commissionElements.length >= 2) {
+                    // Comissão da equipe de hoje
+                    commissionElements[0].textContent = `KZ ${teamData.data.income_analysis.valid_withdrawal || 0}`;
+                    // Minha comissão de hoje
+                    commissionElements[1].textContent = `KZ ${teamData.data.income_analysis.valid_withdrawal || 0}`;
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Erro ao carregar dados de comissão:', error);
+    }
+}
+
+// Função principal de login
+async function dosubmit() {
+    const areaCode = $("#area_code").html();
+    const user_name = $("#user_name").val();
+    const password = $("#password").val();
+    
+    // Validações
+    if (!user_name) {
+        layer.open({
+            content: 'Digite o número de telefone',
+            skin: 'msg',
+            time: 2
+        });
+        return false;
+    }
+    
+    if (!password) {
+        layer.open({
+            content: 'Digite a senha',
+            skin: 'msg',
+            time: 2
+        });
+        return false;
+    }
+
+    // Combinar código do país com número de telefone
+    const mobile = areaCode + user_name;
+
+    showLoading(true);
+
+    try {
+        // Fazer requisição para a API de login
+        const response = await fetch(`${API_BASE_URL}/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                mobile: mobile,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            // Login bem-sucedido - Armazenar no localStorage com expiração
+            const tokenData = {
+                token: data.data.token,
+                expiry: Date.now() + (TOKEN_EXPIRY_HOURS * 60 * 60 * 1000) // 5 horas a partir de agora
+            };
+            
+            // Salvar no localStorage (sem cookies)
+            localStorage.setItem('user_token', JSON.stringify(tokenData));
+            localStorage.setItem('user_mobile', user_name);
+            localStorage.setItem('user_id', data.data.user.id);
+            
+            layer.open({
+                content: 'Login realizado com sucesso!',
+                skin: 'msg',
+                time: 2,
+                end: function() {
+                    // Redirecionar para a página principal/dashboard
+                    window.location.href = '/dashboard.html';
+                }
+            });
+        } else {
+            layer.open({
+                content: data.message || 'Erro ao fazer login',
+                skin: 'msg',
+                time: 3
+            });
+        }
+    } catch (error) {
+        console.error('Erro no login:', error);
+        layer.open({
+            content: 'Erro de conexão com o servidor',
+            skin: 'msg',
+            time: 3
+        });
+    } finally {
+        showLoading(false);
+    }
+}
+
+// Função para verificar se o token no localStorage ainda é válido
+function isTokenValid() {
+    const tokenData = localStorage.getItem('user_token');
+    
+    if (!tokenData) return false;
+    
+    try {
+        const { token, expiry } = JSON.parse(tokenData);
+        
+        // Verificar se o token expirou
+        if (Date.now() > expiry) {
+            // Token expirado, remover do localStorage
+            localStorage.removeItem('user_token');
+            localStorage.removeItem('user_mobile');
+            localStorage.removeItem('user_id');
+            return false;
+        }
+        
+        return true;
+    } catch (e) {
+        console.error('Erro ao verificar token:', e);
+        return false;
+    }
+}
+
+// Carregar dados do usuário quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    // Verificar se há token válido no localStorage
+    if (isTokenValid()) {
+        // Carregar dados do usuário
+        loadUserData();
+        
+        // Carregar número salvo se existir
+        const savedMobile = localStorage.getItem('user_mobile');
+        if (savedMobile && document.getElementById('user_name')) {
+            document.getElementById('user_name').value = savedMobile;
+        }
+    } else {
+        // Se não tem token válido, redirecionar para login
+        window.location.href = '/index.html';
+    }
+    
+    // Tecla Enter para submeter o formulário (apenas se o campo existir)
+    const passwordField = document.getElementById('password');
+    if (passwordField) {
+        passwordField.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                dosubmit();
+            }
+        });
+    }
+});
+
+// Função para fazer logout
+function logout() {
+    localStorage.removeItem('user_token');
+    localStorage.removeItem('user_mobile');
+    localStorage.removeItem('user_id');
+    window.location.href = '/index.html';
+}
+</script>
+
+</body>
+</html>
